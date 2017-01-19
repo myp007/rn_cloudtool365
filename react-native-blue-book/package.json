@@ -1,0 +1,25 @@
+{
+  "name": "react-native-blue-book",
+  "version": "0.0.1392",
+  "description": "蓝书react-native包",
+  "main": "react-native-blue-book.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": ""
+  },
+  "keywords": [
+    "react-component",
+    "react-native",
+    "ios",
+    "android"
+  ],
+  "author": "陈元",
+  "license": "MIT",
+  "bugs": {
+    "url": ""
+  },
+  "homepage": ""
+}

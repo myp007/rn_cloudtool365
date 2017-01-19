@@ -1,0 +1,26 @@
+{
+  "name": "app",
+  "version": "0.0.1",
+  "private": true,
+  "scripts": {
+    "start": "node node_modules/react-native/local-cli/cli.js start",
+    "test": "jest",
+    "android-create-keystore": "cd android/app & keytool -genkey -v -keystore release-key.keystore -alias key-android-app-365 -keyalg RSA -keysize 2048 -validity 10000 -storepass bluebook999 -keypass bluebook000 -dname \"CN=Chen Yuan, OU=Blue Book, O=Blue Book, L=ShenZhen, S=ShenZhen, C=CN\"",
+    "android-build-apk": "cd android & gradlew assembleRelease"
+  },
+  "dependencies": {
+    "react": "15.4.1",
+    "react-native": "0.39.2",
+    "react-native-blue-book": "file:react-native-blue-book",
+    "react-native-tab-navigator": "^0.3.3"
+  },
+  "devDependencies": {
+    "babel-jest": "18.0.0",
+    "babel-preset-react-native": "1.9.1",
+    "jest": "18.0.0",
+    "react-test-renderer": "15.4.1"
+  },
+  "jest": {
+    "preset": "react-native"
+  }
+}
