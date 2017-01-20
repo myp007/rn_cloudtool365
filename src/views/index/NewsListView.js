@@ -35,7 +35,6 @@ export default class NewsListView extends PageComponent {
                 <View style={styles.itemInfoBox}>
                     <View style={{flex:1, backgroundColor:'#FFF'}}>
                         <Text style={styles.text1}>{row.title}</Text>
-
                         {StringUtils(row['litpic']).isEmpty() ?
                             <Text style={styles.text2}>{row.description}</Text> : null}
                     </View>
@@ -65,21 +64,25 @@ const styles = StyleSheet.create({
         marginTop: pxToDp(15),
         flexDirection: 'row',
         paddingLeft: pxToDp(30),
-        paddingRight: pxToDp(30)
+        paddingRight: pxToDp(30),
+        borderBottomColor: '#CCC',
+        borderBottomWidth: StyleSheet.getMinLineWidth(),
+        paddingBottom: pxToDp(9)
     }, itemImg: {
         width: pxToDp(200),
         marginRight: pxToDp(45),
-        height: pxToDp(145)
+        height: pxToDp(135)
     }, itemInfoBox: {
         flex: 1,
-        height: pxToDp(145)
+        height: pxToDp(135)
     }, text1: {
         fontSize: pxToDp(30),
         color: '#000'
     }, text2: {
         fontSize: pxToDp(24),
         color: '#737373',
-        marginTop: pxToDp(15)
+        marginTop: pxToDp(0),
+        height: pxToDp(60)
     }, text3: {
         fontSize: pxToDp(18),
         color: '#777777',
