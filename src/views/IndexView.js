@@ -12,6 +12,7 @@ const {View} = ReactNative;
 // 导入blue-book工具包{页面组件}
 import {PageComponent, StyleSheet, Services, Storage} from 'react-native-blue-book';
 import  ScrollableTabView from 'react-native-scrollable-tab-view';
+const {DefaultTabBar} = ScrollableTabView;
 import NewsListView from './index/NewsListView';
 const {pxToDp} = StyleSheet;
 
@@ -37,7 +38,7 @@ export default class IndexView extends PageComponent {
         (async() => {
             let newsTypes = await Storage.getItem('NEWS_TYPE');
             this.setState({
-                newsTypes: newsTypes
+                newsTypes: newsTypes || []
             });
             let data = await Services.Function10000201({pageNum: 1, pageSize: 5});
             if (!!data) {
@@ -54,6 +55,7 @@ export default class IndexView extends PageComponent {
             <View style={styles.body}>
                 <ScrollableTabView
                     style={styles.tab}
+                    renderTabBar={() => <DefaultTabBar style={{height: pxToDp(60), backgroundColor:'#3397fb'}} tabStyle={{paddingBottom:0}}/>}
                     tabBarTextStyle={{fontSize:pxToDp(20)}}
                     tabBarInactiveTextColor="#b7dafd"
                     tabBarUnderlineStyle={{height:0}}
@@ -73,7 +75,7 @@ export default class IndexView extends PageComponent {
 
 const styles = StyleSheet.create({
     body: {
-        backgroundColor: '#3397fb',
+        backgroundColor: '#FFF',
         position: 'absolute',
         left: 0,
         right: 0,
