@@ -44,7 +44,7 @@ export default class NewsView extends PageComponent {
         html.push(`<p style="color: #111111;font-size: ${pxToDp(17)};height: ${pxToDp(15)};">${info['pubDate']}</p>`);
         html.push(`</div>`);
         html.push(`</div>`);
-        html.push(`<div style="margin-top: ${pxToDp(30)};">${info['info'] || '此文章无内容'}</div>`);
+        html.push(`<div style="margin-top: ${context};"</div>`);
         return html.join('');
     }
 
