@@ -7,6 +7,8 @@
  * 创建时间: 2017/1/1 14:52
  */
 import React from 'react';
+import ReactNative from 'react-native';
+const {BackAndroid} = ReactNative;
 import {Router} from './Router';
 import Modal from './components/Modal';
 
@@ -36,6 +38,14 @@ export class PageComponent extends React.Component {
                 return this.setNavigatorLeftButton(route, navigator, index, navState);
             });
         }
+        BackAndroid.addEventListener('hardwareBackPress', () => {
+            // 路由栈
+            let routes = this.props.navigator.getCurrentRoutes();
+            if (routes.length > 1) {
+                this.goBack();
+                return true;
+            }
+        });
     }
 
     /**

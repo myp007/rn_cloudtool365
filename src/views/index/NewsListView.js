@@ -84,7 +84,7 @@ const styles = StyleSheet.create({
         marginTop: pxToDp(0),
         height: pxToDp(60)
     }, text3: {
-        fontSize: pxToDp(18),
+        fontSize: pxToDp(22),
         color: '#777777',
         textAlign: 'right'
     }

@@ -55,8 +55,8 @@ export default class IndexView extends PageComponent {
             <View style={styles.body}>
                 <ScrollableTabView
                     style={styles.tab}
-                    renderTabBar={() => <DefaultTabBar style={{height: pxToDp(60), backgroundColor:'#3397fb'}} tabStyle={{paddingBottom:0}}/>}
-                    tabBarTextStyle={{fontSize:pxToDp(20)}}
+                    renderTabBar={() => <DefaultTabBar style={{height: pxToDp(80), backgroundColor:'#3397fb'}} tabStyle={{paddingBottom:0, flex:1}}/>}
+                    tabBarTextStyle={{fontSize:pxToDp(28)}}
                     tabBarInactiveTextColor="#b7dafd"
                     tabBarUnderlineStyle={{height:0}}
                     tabBarActiveTextColor="#FFF">

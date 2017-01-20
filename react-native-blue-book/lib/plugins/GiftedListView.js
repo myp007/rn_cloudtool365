@@ -235,7 +235,6 @@ class GiftedListView extends React.Component {
     }
 
     _onPaginate() {
-        console.info(this);
         if (this.state.paginationStatus === 'allLoaded') {
             return null
         } else {
