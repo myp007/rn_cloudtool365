@@ -36,15 +36,14 @@ export default class NewsView extends PageComponent {
 
         let html = [];
         html.push(`<style>img{max-width: 100%;}</style>`);
-        html.push(`<div style="text-align: center;font-size: ${pxToDp(27)};">${info.title}</div>`);
+        html.push(`<div style="text-align: center;font-size: ${pxToDp(40)};">${info.title}</div>`);
         html.push(`<div style="display: flex;margin-top: ${pxToDp(30)};margin-left: ${pxToDp(30)};">`);
-        html.push(`<Image style="width:${pxToDp(80)};height: ${pxToDp(80)};border-radius: ${pxToDp(40)};" src="https://www.baidu.com/img/bd_logo1.png" />`);
         html.push(`<div style="flex: 1;margin-left: ${pxToDp(15)};">`);
-        html.push(`<p style="color: #111111;font-size: ${pxToDp(17)};margin-top: ${pxToDp(15)};height: ${pxToDp(15)};">作者：${info['writer']}</p>`);
-        html.push(`<p style="color: #111111;font-size: ${pxToDp(17)};height: ${pxToDp(15)};">${info['pubDate']}</p>`);
+        html.push(`<p style="color: #111111;font-size: ${pxToDp(26)};margin-top: ${pxToDp(15)};height: ${pxToDp(15)};">作者：${info['writer']}</p>`);
+        html.push(`<p style="color: #111111;font-size: ${pxToDp(26)};height: ${pxToDp(15)};">${info['pubDate']}</p>`);
         html.push(`</div>`);
         html.push(`</div>`);
-        html.push(`<div style="margin-top: ${context};"</div>`);
+        html.push(`<div style="margin-top: ${pxToDp(20)};">${context}</div>`);
         return html.join('');
     }
 

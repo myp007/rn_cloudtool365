@@ -56,6 +56,7 @@ export default class IndexView extends PageComponent {
                     style={styles.tab}
                     tabBarTextStyle={{fontSize:pxToDp(20)}}
                     tabBarInactiveTextColor="#b7dafd"
+                    tabBarUnderlineStyle={{height:0}}
                     tabBarActiveTextColor="#FFF">
                     {this.state.newsTypes.map((newsType) => {
                         return <NewsListView

@@ -33,8 +33,11 @@ export default class NewsListView extends PageComponent {
                 {StringUtils(row['litpic']).isNotEmpty() ?
                     <Image style={styles.itemImg} source={{uri: row['litpic']}}/> : null}
                 <View style={styles.itemInfoBox}>
-                    <View style={{flex:1}}>
+                    <View style={{flex:1, backgroundColor:'#FFF'}}>
                         <Text style={styles.text1}>{row.title}</Text>
+
+                        {StringUtils(row['litpic']).isEmpty() ?
+                            <Text style={styles.text2}>{row.description}</Text> : null}
                     </View>
                     <Text style={styles.text3}>{row['pubDate']}</Text>
                 </View>
@@ -71,10 +74,10 @@ const styles = StyleSheet.create({
         flex: 1,
         height: pxToDp(145)
     }, text1: {
-        fontSize: pxToDp(21),
+        fontSize: pxToDp(30),
         color: '#000'
     }, text2: {
-        fontSize: pxToDp(18),
+        fontSize: pxToDp(24),
         color: '#737373',
         marginTop: pxToDp(15)
     }, text3: {
