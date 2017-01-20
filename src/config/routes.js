@@ -16,5 +16,7 @@ Router.addRoute('/PersonalCenterView', require('./../views/PersonalCenterView'))
 // =====================================主页
 // 主页
 Router.addRoute('/IndexView', require('./../views/IndexView'));
-// 主页-地址
-Router.addRoute('/index/AddressView', require('./../views/index/AddressView'));
+// 主页-新闻列表
+Router.addRoute('/index/NewsListView', require('./../views/index/NewsListView'));
+// 主页-新闻详情
+Router.addRoute('/index/NewsView', require('./../views/index/NewsView'));

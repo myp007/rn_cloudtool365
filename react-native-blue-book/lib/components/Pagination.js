@@ -76,7 +76,6 @@ export default class Pagination extends React.Component {
                 onFetch={(page = 1, callback, options)=>{
                     (async function () {
                         let data = await props.onFetch(page);
-                        console.log(data);
                         if(!!data) {
                             if (page == data.results['totalPage']) {
                                 callback(data.results.items, {allLoaded: true});
@@ -101,7 +100,8 @@ export default class Pagination extends React.Component {
                 emptyView={this._renderEmptyView}
                 // 阻止报错(具体什么情况以后再研究)
                 enableEmptySections={true}
-            />
+                showsVerticalScrollIndicator={false}
+                style={this.props.style || {}}/>
         );
     }
 }
