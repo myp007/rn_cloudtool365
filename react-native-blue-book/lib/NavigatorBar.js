@@ -15,7 +15,7 @@ import {Icon, StyleSheet} from 'react-native-blue-book';
 const styles = StyleSheet.create({
     navigatorBar: {
         // paddingTop: Platform.OS === 'ios' ? 0 : 20
-        backgroundColor:'#1384f9'
+        backgroundColor: '#1486fa'
     }, layout: {
         flex: 1,
         paddingTop: StyleSheet.getNavigatorBarHeight()
@@ -35,6 +35,9 @@ const styles = StyleSheet.create({
 class NavigatorBar extends React.Component {
     constructor(props) {
         super(props);
+        this.state = {
+            layout: null
+        }
     }
 
     render() {
@@ -43,7 +46,7 @@ class NavigatorBar extends React.Component {
             <Navigator
                 style={styles.navigatorBar}
                 initialRoute={{component: this.props.initialRoute}}
-                sceneStyle={styles.layout}
+                sceneStyle={[styles.layout, this.state.layout]}
                 configureScene={this.configureScene}
                 renderScene={(route, navigator)=>{return this.renderScene(route, navigator)}}
                 navigationBar={
@@ -127,7 +130,7 @@ const NavigationBarMapper = {
     Title(route, navigator, index, navState) {
         return (
             <View style={styles.navContent}>
-                <Text style={styles.navText}>{route.title || ''}</Text>
+                <Text style={styles.navText}>{route.title || '云助手365'}</Text>
             </View>
         );
     }

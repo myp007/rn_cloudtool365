@@ -87,6 +87,7 @@ const styles = StyleSheet.create({
     barStyle: {
         borderTopWidth: StyleSheet.getMinLineWidth(),
         borderTopColor: '#cccccc',
+        height: pxToDp(0)
     }, tabStyle: {
         backgroundColor: '#FFFFFF',
     }, tabText: {

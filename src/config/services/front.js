@@ -6,29 +6,25 @@
  * 版本: 1.0.0
  * 创建时间: 2016/12/26 16:41
  */
-import {Services, Api, Components, Storage} from 'react-native-blue-book';
+import {Services, Api, Components, Storage, StringUtils} from 'react-native-blue-book';
 const {Modal} = Components;
 
-// 登陆
-Services.Function10000100 = function (params) {
+// 获取新闻分类
+Services.Function10000201 = async function (params) {
     let map = new Map();
-    map.set('name', params.name);
-    map.set('password', params.password);
-    return Api.getService('10000100', map);
-};
-
-// 通过token获取用户信息
-Services.Function10000101 = async function () {
-    // 从本地获取用户信息
-    let userInfo = await Storage.getItem('USER_INFO');
-    if (!userInfo) {
+    // 页码
+    map.set('pageNum', params['pageNum'] ||1);
+    // 分页数
+    map.set('pageSize', params['pageSize'] ||5);
+    if (StringUtils(map.get('pageNum')).isEmpty()) {
+        Modal.showAlert('页码不能为空');
         return;
     }
-    let map = new Map();
-    // 身份标识
-    map.set('token', userInfo.token);
-    // 获取接口数据
-    let data = await Api.getService('10000101', map);
+    if (StringUtils(map.get('pageSize')).isEmpty()) {
+        Modal.showAlert('分页数不能为空');
+        return;
+    }
+    let data = await Api.getService('10000201', map);
     if (data.errorCode == 0) {
         return data;
     } else {
@@ -36,13 +32,45 @@ Services.Function10000101 = async function () {
     }
 };
 
-// 获取数据字典
-Services.Function10000400 = async function (code) {
+// 获取新闻列表
+Services.Function10000203 = async function (params) {
     let map = new Map();
-    // 身份标识
-    map.set('dicCode', code);
-    // 获取接口数据
-    let data = await Api.getService('10000400', map);
+    // 页码
+    map.set('pageNum', params['pageNum']||1);
+    // 分页数
+    map.set('pageSize', params['pageSize']||10);
+    // 分类ID
+    map.set('typeId', params['typeId']);
+    if (StringUtils(map.get('pageNum')).isEmpty()) {
+        Modal.showAlert('页码不能为空');
+        return;
+    }
+    if (StringUtils(map.get('pageSize')).isEmpty()) {
+        Modal.showAlert('分页数不能为空');
+        return;
+    }
+    if (StringUtils(map.get('typeId')).isEmpty()) {
+        Modal.showAlert('分类ID不能为空');
+        return;
+    }
+    let data = await Api.getService('10000203', map, null, false);
+    if (data.errorCode == 0) {
+        return data;
+    } else {
+        Modal.showAlert(data.errorMsg);
+    }
+};
+
+// 获取文章详情
+Services.Function10000204 = async function (id) {
+    let map = new Map();
+    // 文章ID
+    map.set('id', id);
+    if (StringUtils(map.get('id')).isEmpty()) {
+        Modal.showAlert('文章ID');
+        return;
+    }
+    let data = await Api.getService('10000204', map, null, false);
     if (data.errorCode == 0) {
         return data;
     } else {
