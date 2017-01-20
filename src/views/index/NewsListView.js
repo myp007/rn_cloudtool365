@@ -24,24 +24,39 @@ export default class NewsListView extends PageComponent {
         return Services.Function10000203({pageNum: page, typeId: this.props['newsType']});
     }
 
-    // 渲染行
-    _renderRowView(row) {
+    // 图文
+    _renderImageTextView(row) {
         return (
             <TouchableOpacity
                 onPress={()=>this.go('/index/NewsView', '新闻详情', {id: row.id})}
                 style={styles.itemBox}>
-                {StringUtils(row['litpic']).isNotEmpty() ?
-                    <Image style={styles.itemImg} source={{uri: row['litpic']}}/> : null}
+                <Image style={styles.itemImg} source={{uri: row['litpic']}}/>
                 <View style={styles.itemInfoBox}>
                     <View style={{flex:1, backgroundColor:'#FFF'}}>
                         <Text style={styles.text1}>{row.title}</Text>
-                        {StringUtils(row['litpic']).isEmpty() ?
-                            <Text style={styles.text2}>{row.description}</Text> : null}
                     </View>
                     <Text style={styles.text3}>{row['pubDate']}</Text>
                 </View>
             </TouchableOpacity>
         );
+    }
+
+    // 纯文字
+    _renderTextView(row) {
+        return (
+            <TouchableOpacity
+                onPress={()=>this.go('/index/NewsView', '新闻详情', {id: row.id})}
+                style={styles.itemBox1}>
+                <Text style={styles.text1}>{row.title}</Text>
+                <Text style={styles.text2}>{row.description}</Text>
+                <Text style={styles.text3}>{row['pubDate']}</Text>
+            </TouchableOpacity>
+        );
+    }
+
+    // 渲染行
+    _renderRowView(row) {
+        return StringUtils(row['litpic']).isNotEmpty() ? this._renderImageTextView(row) : this._renderTextView(row);
     }
 
     render() {
@@ -81,11 +96,17 @@ const styles = StyleSheet.create({
     }, text2: {
         fontSize: pxToDp(24),
         color: '#737373',
-        marginTop: pxToDp(0),
-        height: pxToDp(60)
+        marginTop: pxToDp(5)
     }, text3: {
         fontSize: pxToDp(22),
         color: '#777777',
         textAlign: 'right'
+    }, itemBox1: {
+        marginTop: pxToDp(15),
+        paddingLeft: pxToDp(30),
+        paddingRight: pxToDp(30),
+        borderBottomColor: '#CCC',
+        borderBottomWidth: StyleSheet.getMinLineWidth(),
+        paddingBottom: pxToDp(9)
     }
 });
