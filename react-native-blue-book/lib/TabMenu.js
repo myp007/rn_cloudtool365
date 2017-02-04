@@ -86,8 +86,7 @@ class TabMenu extends PageComponent {
 const styles = StyleSheet.create({
     barStyle: {
         borderTopWidth: StyleSheet.getMinLineWidth(),
-        borderTopColor: '#cccccc',
-        height: pxToDp(0)
+        borderTopColor: '#cccccc'
     }, tabStyle: {
         backgroundColor: '#FFFFFF',
     }, tabText: {
