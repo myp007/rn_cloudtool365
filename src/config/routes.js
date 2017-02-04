@@ -20,3 +20,17 @@ Router.addRoute('/IndexView', require('./../views/IndexView'));
 Router.addRoute('/index/NewsListView', require('./../views/index/NewsListView'));
 // 主页-新闻详情
 Router.addRoute('/index/NewsView', require('./../views/index/NewsView'));
+
+// =====================================个人中心
+// 编辑资料
+Router.addRoute('/personalCenter/EditDataView', require('./../views/personalCenter/EditDataView'));
+// 消息提示
+Router.addRoute('/personalCenter/MessageView', require('./../views/personalCenter/MessageView'));
+// 系统设置
+Router.addRoute('/personalCenter/SettingsView', require('./../views/personalCenter/SettingsView'));
+// 系统设置
+Router.addRoute('/personalCenter/AboutView', require('./../views/personalCenter/AboutView'));
+
+// =====================================登录注册
+// 登录
+Router.addRoute('/loginregister/LoginView', require('./../views/loginregister/LoginView'));

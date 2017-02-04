@@ -18,3 +18,5 @@ Icon.add('ICON_PERSONAL', require('./../assets/images/icon/personal.png'));
 Icon.add('ICON_PERSONAL_LIGHT', require('./../assets/images/icon/personal_light.png'));
 // 返回
 Icon.add('ICON_BACK', require('./../assets/images/icon/back.png'));
+// 箭头
+Icon.add('ICON_MORE', require('./../assets/images/icon/more.png'));
