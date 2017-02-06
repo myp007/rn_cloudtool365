@@ -32,6 +32,9 @@ Router.addRoute('/personalCenter/SettingsView', require('./../views/personalCent
 Router.addRoute('/personalCenter/AboutView', require('./../views/personalCenter/AboutView'));
 // 编辑资料
 Router.addRoute('/personalCenter/EditUserNameView', require('./../views/personalCenter/EditUserNameView'));
+// 消息详情
+Router.addRoute('/personalCenter/MessageDetailsView', require('./../views/personalCenter/MessageDetailsView'));
+
 
 // =====================================登录注册
 // 登录

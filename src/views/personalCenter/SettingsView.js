@@ -39,13 +39,16 @@ export default class SettingsView extends PageComponent {
                     style={styles.itemBox}>
                     <View style={styles.styleView}>
                       <Text style={styles.itemText}>推送消息</Text>
-                      <Switch
-                        style={styles.switchs}
-                        //动态改变value
-                        value={this.state.value}
-                        //当切换开关室回调此方法
-                        onValueChange={(value)=>{this.setState({value: value})}}
-                    />
+                      <View style={styles.switchView}>
+                          <Switch
+
+                            //动态改变value
+                            value={this.state.value}
+                            //当切换开关室回调此方法
+                            onValueChange={(value)=>{this.setState({value: value})}}
+                        />
+                      </View>
+
                     </View>
                 </View>
                 <View
@@ -74,13 +77,15 @@ const styles = StyleSheet.create({
       flexDirection: 'row',
       alignItems: 'center',
     },itemText: {
-        fontSize: pxToDp(24),
-        color: '#000000',
-          alignSelf:'flex-end',
+      flex:7,
+      fontSize: pxToDp(24),
+      color: '#000000',
     },flexend:{
-      alignItems:'flex-end',
-    },switchs:{
-      width:50,
-      height:40
+      flex:1,
+      textAlign:'right',
+    },switchView:{
+      fontSize:pxToDp(20),
+      flex: 2,
+      alignItems: 'center',
     }
 });

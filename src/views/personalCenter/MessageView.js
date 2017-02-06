@@ -35,24 +35,28 @@ export default class MessageView extends PageComponent {
         return (
             <PageView style={{backgroundColor: '#FFFFFF'}}>
                 <RowMore
+                    onPress={()=>this.go('/personalCenter/MessageDetailsView', '详情')}
                     style={styles.itemBox}>
                     <View style={styles.styleView}>
                       <Text style={styles.itemText}>系统消息：12月工信部执行新一轮的检查</Text>
                     </View>
                 </RowMore>
                 <RowMore
+                    onPress={()=>this.go('/personalCenter/MessageDetailsView', '详情')}
                     style={styles.itemBox}>
                     <View style={styles.styleView}>
                       <Text style={styles.itemText}>系统消息：12月工信部执行新一轮的检查</Text>
                     </View>
                 </RowMore>
                 <RowMore
+                    onPress={()=>this.go('/personalCenter/MessageDetailsView', '详情')}
                     style={styles.itemBox}>
                     <View style={styles.styleView}>
                       <Text style={styles.itemText}>系统消息：12月工信部执行新一轮的检查</Text>
                     </View>
                 </RowMore>
                 <RowMore
+                    onPress={()=>this.go('/personalCenter/MessageDetailsView', '详情')}
                     style={styles.itemBox}>
                     <View style={styles.styleView}>
                       <Text style={styles.itemText}>系统消息：12月工信部执行新一轮的检查</Text>
