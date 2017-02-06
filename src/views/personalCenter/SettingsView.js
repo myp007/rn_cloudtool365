@@ -14,7 +14,7 @@ const {Text, View, Image,AppRegistry,Switch} = ReactNative;
 import {PageComponent, StyleSheet, Components, Icon, Services} from 'react-native-blue-book';
 const {pxToDp} = StyleSheet;
 const {PageView, RowMore} = Components;
-export default class WithdrawListView extends PageComponent {
+export default class SettingsView extends PageComponent {
     constructor(props) {
         super(props);
 

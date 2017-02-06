@@ -30,7 +30,15 @@ Router.addRoute('/personalCenter/MessageView', require('./../views/personalCente
 Router.addRoute('/personalCenter/SettingsView', require('./../views/personalCenter/SettingsView'));
 // 系统设置
 Router.addRoute('/personalCenter/AboutView', require('./../views/personalCenter/AboutView'));
+// 编辑资料
+Router.addRoute('/personalCenter/EditUserNameView', require('./../views/personalCenter/EditUserNameView'));
 
 // =====================================登录注册
 // 登录
 Router.addRoute('/loginregister/LoginView', require('./../views/loginregister/LoginView'));
+// 注册
+Router.addRoute('/loginregister/RegisterView', require('./../views/loginregister/RegisterView'));
+// 找回密码
+Router.addRoute('/loginregister/ForgetPwdView', require('./../views/loginregister/ForgetPwdView'));
+// 重置密码
+Router.addRoute('/loginregister/ResetPwdView', require('./../views/loginregister/ResetPwdView'));

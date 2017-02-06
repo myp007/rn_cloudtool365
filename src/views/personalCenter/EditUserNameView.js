@@ -8,11 +8,11 @@
  */
 import React from 'react';
 import ReactNative from 'react-native';
-const {Text, View} = ReactNative;
+const {Text, View, TextInput} = ReactNative;
 // 引入blue-book工具包
 import {PageComponent, StyleSheet, Components, Icon, Services} from 'react-native-blue-book';
 const {pxToDp} = StyleSheet;
-const {PageView, RowMore} = Components;
+const {PageView, SimpleButton} = Components;
 export default class EditDataView extends PageComponent {
     constructor(props) {
         super(props);
@@ -34,18 +34,20 @@ export default class EditDataView extends PageComponent {
     render() {
         return (
             <PageView style={{backgroundColor: '#FFFFFF'}}>
-                <RowMore
-                    style={styles.itemBox}>
-                    <View style={styles.styleView}>
-                      <Text style={styles.itemText}>头像</Text>
-                    </View>
-                </RowMore>
-                <RowMore
-                    style={styles.itemBox} onPress={()=>this.go('/personalCenter/EditUserNameView', '编辑用户名')}>
-                    <View style={styles.styleView} >
-                      <Text style={styles.itemText} >用户名</Text>
-                    </View>
-                </RowMore>
+                <View style={styles.itemBox}>
+                    <TextInput
+                        style={styles.input}
+                        underlineColorAndroid='transparent'
+                        placeholderTextColor='#CCCCCC'
+                        onChangeText={(text)=>{
+                            this.setState({name: text});
+                        }}
+                        //站位符
+                        placeholder='用户名'/>
+                </View>
+                <View style={styles.buttonBox}>
+                    <SimpleButton style={{backgroundColor:'#3397fb',borderColor:'#3397fb',height:pxToDp(80),width:pxToDp(690)}} >确定</SimpleButton>
+                </View>
             </PageView>
         );
     }
@@ -53,6 +55,7 @@ export default class EditDataView extends PageComponent {
 
 const styles = StyleSheet.create({
      itemBox: {
+        flex:1,
         height: pxToDp(88),
         backgroundColor: '#FFFFFF',
         paddingLeft: pxToDp(30),
@@ -63,14 +66,16 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center'
 
-    },styleView:{
-        flexDirection: 'row',
-        alignItems: 'center',
-        justifyContent: 'center'
-    },itemText: {
+    },input: {
         flex:1,
-        fontSize: pxToDp(24),
-        color: '#999999',
+        height: pxToDp(70),
+        paddingLeft: pxToDp(15),
+        marginTop: pxToDp(10),
+        backgroundColor: '#00000000',
+        color: '#000000',
+        fontSize:pxToDp(28),
+    }, buttonBox: {
         alignItems: 'center',
+        marginTop: pxToDp(250),
     }
 });

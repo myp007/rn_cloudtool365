@@ -8,13 +8,13 @@
  */
 import React from 'react';
 import ReactNative from 'react-native';
-const {Text, View,TextInput} = ReactNative;
+const {Text, View,TextInput,TouchableOpacity} = ReactNative;
 // 引入blue-book工具包
 
-import {PageComponent, StyleSheet, Icon,Components, Services} from 'react-native-blue-book';
+import {PageComponent, StyleSheet,Components} from 'react-native-blue-book';
 const {pxToDp} = StyleSheet;
 const {PageView,SimpleButton} = Components;
-export default class LoginView extends PageComponent {
+export default class RegisterView extends PageComponent {
     constructor(props) {
         super(props);
 
@@ -50,29 +50,23 @@ export default class LoginView extends PageComponent {
                       //站位符
                       placeholder='手机号'/>
               </View>
-              {/*密码输入框*/}
+              {/*验证码输入框*/}
               <View style={styles.inputBox}>
-
                   <TextInput
-                      style={styles.input}
+                      style={[styles.input,styles.codeinput]}
                       underlineColorAndroid='transparent'
                       placeholderTextColor='#CCCCCC'
-                      placeholder='密码'
+                      placeholder='验证码'
                       onChangeText={(text)=>{
-                          this.setState({password: text});
-                      }}
-                      //密文
-                      secureTextEntry={true}/>
-              </View>
-              <View style={styles.textCenter}>
-                  <Text style={[styles.goText,{flex:1}]}
-                        onPress={()=>this.go('/loginregister/RegisterView', '用户注册')}>用户注册</Text>
-                  <Text style={[styles.goText]}
-                        onPress={()=>this.go('/loginregister/ForgetPwdView', '找回密码')}>忘记密码</Text>
+                          this.setState({code: text});
+                      }}/>
+                    <TouchableOpacity style={styles.codeBox}>
+                          <Text style={[styles.codeText]}>获取验证码</Text>
+                      </TouchableOpacity>
               </View>
 
               <View style={styles.buttonBox}>
-                  <SimpleButton style={{backgroundColor:'#3397fb',borderColor:'#3397fb',height:pxToDp(80),width:pxToDp(690)}} >登录</SimpleButton>
+                  <SimpleButton  style={{backgroundColor:'#3397fb',borderColor:'#3397fb',height:pxToDp(80),width:pxToDp(690)}} onPress={()=>this.go('/loginregister/ResetPwdView', '重置密码')}>下一步</SimpleButton>
               </View>
           </View>
           </PageView>
@@ -97,9 +91,7 @@ const styles = StyleSheet.create({
      borderColor: '#CCCCCC',
      //设置边框的宽度
      borderWidth: StyleSheet.getMinLineWidth(),
-     //内边距
-     paddingLeft: pxToDp(30),
-     paddingRight: pxToDp(30),
+
      //外边距
      marginTop: pxToDp(40),
      //设置相对父控件居中
@@ -108,22 +100,29 @@ const styles = StyleSheet.create({
  }, input: {
      width: pxToDp(690),
      height: pxToDp(70),
-     paddingLeft: pxToDp(15),
-     marginTop: pxToDp(10),
+     //内边距
+     paddingLeft: pxToDp(45),
+     paddingRight: pxToDp(30),
+     marginTop: pxToDp(8),
      backgroundColor: '#00000000',
      color: '#000000',
      fontSize:pxToDp(30),
- }, textCenter: {
-     flexDirection: 'row',
-     paddingTop: pxToDp(15),
-     paddingLeft: pxToDp(50),
-     paddingRight: pxToDp(50),
- }, goText: {
-     backgroundColor: 'transparent',
-     color: '#999999',
-     fontSize: pxToDp(26)
- }, buttonBox: {
+ },codeinput:{
+   flex:4,
+ },codeBox: {
+      flex:2,
+      justifyContent: 'center',
+      alignItems: 'center',
+      borderLeftColor: '#FFFFFF',
+      borderLeftWidth: StyleSheet.getMinLineWidth(),
+      backgroundColor:'#3397fb',
+      borderTopRightRadius:pxToDp(8),
+      borderBottomRightRadius:pxToDp(8)
+  },codeText:{
+    fontSize:pxToDp(26),
+    color:'#FFFFFF'
+  }, buttonBox: {
      alignItems: 'center',
-     marginTop: pxToDp(50),
+     marginTop: pxToDp(500),
  }
 });
