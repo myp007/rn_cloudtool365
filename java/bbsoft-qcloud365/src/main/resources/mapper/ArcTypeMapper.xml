@@ -7,7 +7,7 @@
 	</select>	
 	
 	<select id="getArcTypeList" parameterType="map" resultType="map">
-		select id as id,typename as typeName from dede_arctype 
+		select id as id,keywords as typeName from dede_arctype 
 		where ishidden=0 and topid=0 and reid = 0 
 		order by sortrank ASC limit #{startPage},#{pageSize}
 	</select>
