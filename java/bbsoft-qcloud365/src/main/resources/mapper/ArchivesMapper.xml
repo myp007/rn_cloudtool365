@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.bbsoft.api.mapper.ArchivesMapper" >
+
+	<select id="getArcListCount" parameterType="map" resultType="java.lang.Integer">
+		select count(id) FROM dede_archives a where 
+		a.typeid=#{typeId} and a.arcrank != -2 
+		ORDER BY pubdate DESC
+	</select>	
+	
+	<select id="getArcList" parameterType="map" resultType="map">
+		select 
+		a.id as id ,a.typeid as typeId,a.title as title,
+		a.litpic as litpic,a.writer as writer ,
+		a.pubdate as pubDate,a.description as description
+		 FROM dede_archives a where 
+		a.typeid=#{typeId} and a.arcrank != -2 
+		ORDER BY pubdate DESC
+		limit #{startPage},#{pageSize}
+	</select>
+	
+	<select id="getArcById" parameterType="String" resultType="map">
+	select 
+		a.id as id ,a.typeid as typeId,a.title as title,
+		a.litpic as litpic,a.writer as writer ,
+		a.pubdate as pubDate,a.description as description,
+		(SELECT b.body from dede_addonarticle b where b.aid=a.id) info
+	 from dede_archives a where a.id=#{id}
+	</select>
+	
+	<select id="getBannerPic" parameterType="String" resultType="map">
+	select 
+		a.id as id ,a.title as title,
+		a.litpic as litpic 
+		 FROM dede_archives a where 
+		a.flag like CONCAT('%',#{type},'%')  and a.arcrank != -2 
+		ORDER BY pubdate DESC limit 3
+	</select>
+
+</mapper>

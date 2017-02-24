@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # OSX
 #
 .DS_Store
@@ -52,3 +53,7 @@ android/app/libs
 fastlane/report.xml
 fastlane/Preview.html
 fastlane/screenshots
+=======
+/java/bbsoft-qcloud365/target
+/java/bbsoft-qcloud365/.settings
+>>>>>>> 5f7516f5039adb40e1081dcab5e821b5a6a174f9

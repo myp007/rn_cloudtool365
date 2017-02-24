@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.bbsoft.api.mapper.ArcTypeMapper" >
+
+	<select id="getArcTypeListCount" resultType="java.lang.Integer">
+		select count(id) from dede_arctype where ishidden=0 and topid=0 and reid = 0 order by sortrank ASC
+	</select>	
+	
+	<select id="getArcTypeList" parameterType="map" resultType="map">
+		select id as id,keywords as typeName from dede_arctype 
+		where ishidden=0 and topid=0 and reid = 0 
+		order by sortrank ASC limit #{startPage},#{pageSize}
+	</select>
+
+</mapper>
