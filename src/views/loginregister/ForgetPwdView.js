@@ -11,7 +11,7 @@ import ReactNative from 'react-native';
 const {Text, View,TextInput,TouchableOpacity} = ReactNative;
 // 引入blue-book工具包
 
-import {PageComponent, StyleSheet,Components} from 'react-native-blue-book';
+import {PageComponent, StyleSheet,Components,Services} from 'react-native-blue-book';
 const {pxToDp} = StyleSheet;
 const {PageView,SimpleButton} = Components;
 export default class RegisterView extends PageComponent {
@@ -21,7 +21,8 @@ export default class RegisterView extends PageComponent {
         let msg = this.getRouteParams()['msg'] || '';
 
         this.state = {
-            msg: msg
+            phone: '',
+            code: '',
         };
     }
 
@@ -45,7 +46,7 @@ export default class RegisterView extends PageComponent {
                       underlineColorAndroid='transparent'
                       placeholderTextColor='#CCCCCC'
                       onChangeText={(text)=>{
-                          this.setState({name: text});
+                          this.setState({phone: text});
                       }}
                       //站位符
                       placeholder='手机号'/>
@@ -60,17 +61,36 @@ export default class RegisterView extends PageComponent {
                       onChangeText={(text)=>{
                           this.setState({code: text});
                       }}/>
-                    <TouchableOpacity style={styles.codeBox}>
+                    <TouchableOpacity style={styles.codeBox} onPress={()=>this.getCode()}>
                           <Text style={[styles.codeText]}>获取验证码</Text>
                       </TouchableOpacity>
               </View>
 
               <View style={styles.buttonBox}>
-                  <SimpleButton  style={{backgroundColor:'#3397fb',borderColor:'#3397fb',height:pxToDp(80),width:pxToDp(690)}} onPress={()=>this.go('/loginregister/ResetPwdView', '重置密码')}>下一步</SimpleButton>
+                  <SimpleButton onPress={()=>this.checkCode()}  style={{backgroundColor:'#3397fb',borderColor:'#3397fb',height:pxToDp(80),width:pxToDp(690)}} >下一步</SimpleButton>
               </View>
           </View>
           </PageView>
         );
+    }
+    //获取验证码
+    getCode(){
+        (async() => {
+            let data = await Services.Function10000101({phone:this.state.phone,time:1,type:3});
+            // let code =data.results.code;
+
+        })();
+    }
+    //校验验证码
+    checkCode(){
+        (async() =>{
+            //校验验证码
+            let data = await Services.Function10000103({phone:this.state.phone,code:this.state.code,type:3});
+            if(data.errorCode==0){
+                this.go('/loginregister/ResetPwdView', '重置密码', {phone:this.state.phone},{
+                });
+            }
+        })();
     }
 }
 

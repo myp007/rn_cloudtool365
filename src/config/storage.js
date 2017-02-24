@@ -8,5 +8,7 @@
  */
 import {Storage} from 'react-native-blue-book';
 
+// 用户信息
+Storage.add('USER_INFO');
 // 新闻分类
 Storage.add('NEWS_TYPE');

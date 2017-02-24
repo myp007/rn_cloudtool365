@@ -9,6 +9,146 @@
 import {Services, Api, Components, Storage, StringUtils} from 'react-native-blue-book';
 const {Modal} = Components;
 
+// 登陆
+Services.Function10000100 = async function (params) {
+    let map = new Map();
+    // 用户名
+    map.set('phone', params.phone);
+    // 密码
+    map.set('pwd', params.password);
+    if (StringUtils(map.get('phone')).isEmpty()) {
+        Modal.showAlert('用户名不能为空');
+        return;
+    }
+    if (StringUtils(map.get('pwd')).isEmpty()) {
+        Modal.showAlert('密码不能为空');
+        return;
+    }
+    // 获取接口数据
+    let data = await Api.getService('qcloud365-api/user/login', map,'GET');
+    if (data.errorCode == 0) {
+        Modal.showAlert('登录成功')
+        Storage.setItem('USER_INFO', {
+            token: data.results.token || '',
+            tag: data.results.tag || '',
+            userName: data.results.userName || '',
+            nickName: data.results.nickName || '',
+            email: data.results.email || '',
+            phone: data.results.phone || ''
+
+        });
+
+        console.log(data);
+        return data;
+    } else {
+        Modal.showAlert(data.errorMsg);
+    }
+};
+// 获取验证码
+Services.Function10000101 = async function (params) {
+    let map = new Map();
+    // 手机号
+    map.set('phone', params.phone);
+    map.set('time', params.time);
+    map.set('type', params.type);
+    if (StringUtils(map.get('phone')).isEmpty()) {
+        Modal.showAlert('手机号不能为空');
+        return;
+    }
+
+    // 获取接口数据
+    let data = await Api.getService('qcloud365-api/user/getPhoneCode', map,'GET');
+    if (data.errorCode == 0) {
+        Modal.showAlert('验证码也发送，请注意查收')
+        console.log(data);
+        return data;
+    } else {
+        Modal.showAlert(data.errorMsg);
+    }
+};
+// 校验验证码
+Services.Function10000103 = async function (params) {
+    let map = new Map();
+    // 手机号
+    map.set('phone', params.phone);
+    map.set('code', params.code);
+    map.set('type', params.type);
+    if (StringUtils(map.get('code')).isEmpty()) {
+        Modal.showAlert('验证码不能为空');
+        return;
+    }
+
+    // 获取接口数据
+    let data = await Api.getService('qcloud365-api/user/checkCode', map,'GET');
+    if (data.errorCode == 0) {
+        console.log(data);
+        return data;
+    } else {
+        Modal.showAlert(data.errorMsg);
+    }
+};
+// 注册
+Services.Function10000102 = async function (params) {
+    let map = new Map();
+    // 手机号
+    map.set('phone', params.phone);
+    map.set('code', params.code);
+    map.set('pwd', params.pwd);
+    map.set('commitPwd', params.cpwd);
+    if (StringUtils(map.get('phone')).isEmpty()) {
+        Modal.showAlert('手机号不能为空');
+        return;
+    }
+    if (StringUtils(map.get('code')).isEmpty()) {
+        Modal.showAlert('验证码不能为空');
+        return;
+    }
+    if (StringUtils(map.get('pwd')).isEmpty()) {
+        Modal.showAlert('密码不能为空');
+        return;
+    }
+    if (StringUtils(map.get('commitPwd')).isEmpty()) {
+        Modal.showAlert('确认密码不能为空');
+        return;
+    }
+
+    // 获取接口数据
+    let data = await Api.getService('qcloud365-api/user/register', map,'GET');
+    if (data.errorCode == 0) {
+        Modal.showAlert('注册成功')
+        console.log(data);
+        return data;
+    } else {
+        Modal.showAlert(data.errorMsg);
+    }
+};
+// 找回密码
+Services.Function10000104 = async function (params) {
+    let map = new Map();
+    // 手机号
+    map.set('phone', params.phone);
+    map.set('pwd', params.pwd);
+    map.set('commitPwd', params.cpwd);
+    if (StringUtils(map.get('pwd')).isEmpty()) {
+        Modal.showAlert('密码不能为空');
+        return;
+    }
+    if (StringUtils(map.get('commitPwd')).isEmpty()) {
+        Modal.showAlert('确认密码不能为空');
+        return;
+    }
+
+    // 获取接口数据
+    let data = await Api.getService('qcloud365-api/user/updateFindPwd', map,'GET');
+    if (data.errorCode == 0) {
+        Modal.showAlert('找回密码成功')
+        console.log('======'+data);
+        return data;
+    } else {
+        Modal.showAlert(data.errorMsg);
+    }
+};
+
 // 获取新闻分类
 Services.Function10000201 = async function (params) {
     let map = new Map();

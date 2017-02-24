@@ -11,7 +11,7 @@ import ReactNative from 'react-native';
 const {Text, View,TextInput,TouchableOpacity} = ReactNative;
 // 引入blue-book工具包
 
-import {PageComponent, StyleSheet,Components} from 'react-native-blue-book';
+import {PageComponent, StyleSheet,Components,Services} from 'react-native-blue-book';
 const {pxToDp} = StyleSheet;
 const {PageView,SimpleButton} = Components;
 export default class RegisterView extends PageComponent {
@@ -19,9 +19,12 @@ export default class RegisterView extends PageComponent {
         super(props);
 
         let msg = this.getRouteParams()['msg'] || '';
-
+        let phone = this.getRouteParams()['phone'] || '';
+        console.log('============phone:'+phone);
         this.state = {
-            msg: msg
+            pwd: '',
+            cpwd:'',
+            phone:phone
         };
     }
 
@@ -44,6 +47,9 @@ export default class RegisterView extends PageComponent {
                         placeholder='新密码'
                         underlineColorAndroid='transparent'
                         placeholderTextColor='#CCCCCC'
+                        onChangeText={(text)=>{
+                            this.setState({pwd:text})
+                        }}
                         //密文
                         secureTextEntry={true}/>
                 </View>
@@ -54,16 +60,30 @@ export default class RegisterView extends PageComponent {
                         placeholder='再次输入密码'
                         underlineColorAndroid='transparent'
                         placeholderTextColor='#CCCCCC'
+                        onChangeText={(text)=>{
+                            this.setState({cpwd:text})
+                        }}
                         //密文
                         secureTextEntry={true}/>
 
                 </View>
               <View style={styles.buttonBox}>
-                  <SimpleButton style={{backgroundColor:'#3397fb',borderColor:'#3397fb',height:pxToDp(80),width:pxToDp(690)}} >确认重置</SimpleButton>
+                  <SimpleButton onPress={()=>this.Register()} style={{backgroundColor:'#3397fb',borderColor:'#3397fb',height:pxToDp(80),width:pxToDp(690)}} >确认重置</SimpleButton>
               </View>
           </View>
           </PageView>
         );
+    }
+    //注册
+    Register(){
+        (async() => {
+            console.log('============phone===:'+this.state.phone);
+            let data = await Services.Function10000104({phone:this.state.phone,pwd:this.state.pwd,cpwd:this.state.cpwd});
+            if(data.errorCode==0){
+                this.go('/loginregister/LoginView', '用户登录',{
+                });
+            }
+        })();
     }
 }
 

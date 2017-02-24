@@ -11,19 +11,28 @@ import ReactNative from 'react-native';
 const {Text, View,TextInput,TouchableOpacity} = ReactNative;
 // 引入blue-book工具包
 
-import {PageComponent, StyleSheet,Components} from 'react-native-blue-book';
+import {PageComponent, StyleSheet,Components, Services} from 'react-native-blue-book';
+
 const {pxToDp} = StyleSheet;
 const {PageView,SimpleButton} = Components;
 export default class RegisterView extends PageComponent {
+
     constructor(props) {
         super(props);
 
         let msg = this.getRouteParams()['msg'] || '';
 
         this.state = {
-            msg: msg
-        };
+            phone: '',
+            code: '',
+            pwd: '',
+            cpwd: '',
+            backgroundColor: '#3397fb',
+        }
+
     }
+
+
 
     componentWillMount() {
         (async function () {
@@ -45,13 +54,13 @@ export default class RegisterView extends PageComponent {
                       underlineColorAndroid='transparent'
                       placeholderTextColor='#CCCCCC'
                       onChangeText={(text)=>{
-                          this.setState({name: text});
+                          this.setState({phone: text});
                       }}
                       //站位符
                       placeholder='手机号'/>
               </View>
               {/*验证码输入框*/}
-              <View style={styles.inputBox}>
+              <View style={[styles.inputBox,{paddingRight:0}]}>
                   <TextInput
                       style={[styles.input,styles.codeinput]}
                       underlineColorAndroid='transparent'
@@ -60,7 +69,7 @@ export default class RegisterView extends PageComponent {
                       onChangeText={(text)=>{
                           this.setState({code: text});
                       }}/>
-                    <TouchableOpacity style={styles.codeBox}>
+                    <TouchableOpacity style={styles.codeBox} onPress={()=>this.getCode() }>
                           <Text style={[styles.codeText]}>获取验证码</Text>
                       </TouchableOpacity>
               </View>
@@ -71,6 +80,9 @@ export default class RegisterView extends PageComponent {
                         placeholder='密码'
                         underlineColorAndroid='transparent'
                         placeholderTextColor='#CCCCCC'
+                        onChangeText={(text)=>{
+                            this.setState({pwd:text})
+                        }}
                         //密文
                         secureTextEntry={true}/>
                 </View>
@@ -81,12 +93,15 @@ export default class RegisterView extends PageComponent {
                         placeholder='再次输入密码'
                         underlineColorAndroid='transparent'
                         placeholderTextColor='#CCCCCC'
+                        onChangeText={(text)=>{
+                            this.setState({cpwd:text})
+                        }}
                         //密文
                         secureTextEntry={true}/>
 
                 </View>
               <View style={styles.buttonBox}>
-                  <SimpleButton style={{backgroundColor:'#3397fb',borderColor:'#3397fb',height:pxToDp(80),width:pxToDp(690)}} >注册</SimpleButton>
+                  <SimpleButton onPress={()=>this.Register()} style={{backgroundColor:'#3397fb',borderColor:'#3397fb',height:pxToDp(80),width:pxToDp(690)}} >注册</SimpleButton>
                   <View style={styles.agreementview}>
                     <Text style={styles.agreementtext}>点击上面的“注册”按钮，即表示您同意<Text style={styles.agreement}>《云助手365软件许可以及服务协议》</Text></Text>
                   </View>
@@ -94,6 +109,20 @@ export default class RegisterView extends PageComponent {
           </View>
           </PageView>
         );
+    }
+    //获取验证码
+    getCode(){
+        (async() => {
+            this.state.backgroundColor='#dedede';
+            let data = await Services.Function10000101({phone:this.state.phone,time:1,type:2});
+
+        })();
+    }
+    //注册
+    Register(){
+        (async() => {
+            let data = await Services.Function10000102({phone:this.state.phone,code:this.state.code,pwd:this.state.pwd,cpwd:this.state.cpwd});
+        })();
     }
 }
 
@@ -114,7 +143,6 @@ const styles = StyleSheet.create({
      borderColor: '#CCCCCC',
      //设置边框的宽度
      borderWidth: StyleSheet.getMinLineWidth(),
-
      //外边距
      marginTop: pxToDp(40),
      //设置相对父控件居中
@@ -123,12 +151,14 @@ const styles = StyleSheet.create({
  }, input: {
      width: pxToDp(690),
      height: pxToDp(70),
+
      //内边距
      paddingLeft: pxToDp(45),
      paddingRight: pxToDp(30),
      marginTop: pxToDp(8),
-     backgroundColor: '#00000000',
+     backgroundColor: '#fff',
      color: '#000000',
+    marginHorizontal:pxToDp(5),
      fontSize:pxToDp(30),
  },codeinput:{
    flex:4,
@@ -151,7 +181,6 @@ const styles = StyleSheet.create({
    paddingLeft:pxToDp(25),
    paddingRight:pxToDp(25),
    marginTop:pxToDp(5),
-   color:'#CCCCCC',
  },agreementtext:{
    fontSize:pxToDp(20),
    color:'#CCCCCC',

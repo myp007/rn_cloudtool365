@@ -11,7 +11,7 @@ import ReactNative from 'react-native';
 const {Text, View,TextInput} = ReactNative;
 // 引入blue-book工具包
 
-import {PageComponent, StyleSheet, Icon,Components, Services} from 'react-native-blue-book';
+import {PageComponent, StyleSheet,Icon,Components, Services} from 'react-native-blue-book';
 const {pxToDp} = StyleSheet;
 const {PageView,SimpleButton} = Components;
 export default class LoginView extends PageComponent {
@@ -21,14 +21,15 @@ export default class LoginView extends PageComponent {
         let msg = this.getRouteParams()['msg'] || '';
 
         this.state = {
-            msg: msg
+            phone: '',
+            password: ''
         };
     }
 
     componentWillMount() {
         (async function () {
-            let data = await Services.Function10000100();
-            console.log('===');
+            // let data = await Services.Function10000100();
+            // console.log('===');
         })();
     }
 
@@ -45,7 +46,7 @@ export default class LoginView extends PageComponent {
                       underlineColorAndroid='transparent'
                       placeholderTextColor='#CCCCCC'
                       onChangeText={(text)=>{
-                          this.setState({name: text});
+                          this.setState({phone: text});
                       }}
                       //站位符
                       placeholder='手机号'/>
@@ -72,11 +73,21 @@ export default class LoginView extends PageComponent {
               </View>
 
               <View style={styles.buttonBox}>
-                  <SimpleButton style={{backgroundColor:'#3397fb',borderColor:'#3397fb',height:pxToDp(80),width:pxToDp(690)}} >登录</SimpleButton>
+                  <SimpleButton onPress={()=>this._login()} style={{backgroundColor:'#3397fb',borderColor:'#3397fb',height:pxToDp(80),width:pxToDp(690)}} >登录</SimpleButton>
               </View>
           </View>
           </PageView>
         );
+    }
+    _login() {
+        (async() => {
+            let data = await Services.Function10000100({phone: this.state.phone, password: this.state.password});
+            if (!!data) {
+                this.go('/PersonalCenterView', '个人中心', {
+
+                });
+            }
+        })();
     }
 }
 
@@ -89,6 +100,7 @@ const styles = StyleSheet.create({
      backgroundColor:'#FFFFFF',
      paddingLeft:pxToDp(30),
      paddingRight:pxToDp(30),
+
  }, inputBox: {
      height:pxToDp(85) ,
      //设置圆角程度
@@ -104,7 +116,8 @@ const styles = StyleSheet.create({
      marginTop: pxToDp(40),
      //设置相对父控件居中
      alignSelf: 'center',
-     flexDirection: 'row'
+     flexDirection: 'row',
+
  }, input: {
      width: pxToDp(690),
      height: pxToDp(70),
