@@ -17,10 +17,12 @@ const {pxToDp} = StyleSheet;
 export default class NewsListView extends PageComponent {
     constructor(props) {
         super(props);
+        console.log('@@@@@@');
     }
 
     // 获取列表数据
     _fetchList(page) {
+        console.log(page);
         return Services.Function10000203({pageNum: page, typeId: this.props['newsType']});
     }
 

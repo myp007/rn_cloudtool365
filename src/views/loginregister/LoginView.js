@@ -27,9 +27,10 @@ export default class LoginView extends PageComponent {
     }
 
     componentWillMount() {
+        //
         (async function () {
-            // let data = await Services.Function10000100();
-            // console.log('===');
+            let data = await Services.Function10000000(false);
+            console.log(data);
         })();
     }
 
@@ -83,10 +84,9 @@ export default class LoginView extends PageComponent {
         (async() => {
             let data = await Services.Function10000100({phone: this.state.phone, password: this.state.password});
             if (!!data) {
-                this.go('/PersonalCenterView', '个人中心', {
-
-                });
+                this.goBack(null, true);
             }
+
         })();
     }
 }
@@ -109,9 +109,7 @@ const styles = StyleSheet.create({
      borderColor: '#CCCCCC',
      //设置边框的宽度
      borderWidth: StyleSheet.getMinLineWidth(),
-     //内边距
-     paddingLeft: pxToDp(30),
-     paddingRight: pxToDp(30),
+
      //外边距
      marginTop: pxToDp(40),
      //设置相对父控件居中

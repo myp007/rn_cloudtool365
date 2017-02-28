@@ -11,7 +11,14 @@ import {Config} from 'react-native-blue-book';
 Config.config({
     // react-native-blue-book配置：接口地址
     //BLUE_BOOK_API_PATH: 'http://192.168.2.4:8080/bbsoft-qcloud365/',
-     BLUE_BOOK_API_PATH: 'http://192.168.1.28:8080/',
+    BLUE_BOOK_API_PATH: 'http://192.168.1.28:8080/',//登录注册
+
+
+
+    TENCENT_API_PATH: 'http://192.168.2.4:8080/bbsoft-qcloud365/',//外网
+
+    //TENCENT_API_PATH: 'http://119.29.139.49/bbsoft-qcloud365/',//外网
+    // BLUE_BOOK_API_PATH: 'http://192.168.89.1:8000/',
     //BLUE_BOOK_API_PATH: 'http://119.29.139.49/bbsoft-qcloud365/',
     // react-native-blue-book配置：是否打印接口信息到控制台
     BLUE_BOOK_API_PRINT_CONSOLE: true,
@@ -23,4 +30,5 @@ Config.config({
     // 默认打开主页面
     DEFAULT_OPEN_VIEW: 'personalCenter'
 });
+
 console.disableYellowBox = true;

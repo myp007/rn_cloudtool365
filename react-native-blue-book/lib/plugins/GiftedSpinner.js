@@ -18,9 +18,7 @@ class GiftedSpinner extends React.Component {
     render() {
         return (
             <View>
-                {Platform.OS === 'android' ?
-                    <ActivityIndicator animating={true} size="small" {...this.props} /> :
-                    <ActivityIndicatorIOS animating={true} size="small" {...this.props} />}
+                <ActivityIndicator animating={true} size="small" {...this.props} />
             </View>
         );
     }

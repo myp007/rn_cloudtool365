@@ -10,7 +10,7 @@ import React from 'react';
 import ReactNative  from 'react-native';
 let {View, Text,Image,ListView} = ReactNative;
 // 导入blue-book工具包{页面组件}
-import {PageComponent, StyleSheet,Components,Icon} from 'react-native-blue-book';
+import {PageComponent, StyleSheet,Components,Icon,Services,Storage} from 'react-native-blue-book';
 const {pxToDp} = StyleSheet;
 const {PageView,RowMore}= Components;
 export default class PersonalCenterView extends PageComponent {
@@ -18,6 +18,11 @@ export default class PersonalCenterView extends PageComponent {
         super(props);
 
         this.state = {
+            isLOgin:false,
+            headImg:'',
+            userInfo:{
+                phone:'点击登录',
+            },
             columns: [
                 {
                     "createBy": "1",
@@ -69,16 +74,7 @@ export default class PersonalCenterView extends PageComponent {
     }
 }
     componentWillMount() {
-        (async function () {
-            let token = await Storage.getItem('TOKEN_CODE');
-            console.info(token);
-            let data = await Services.Function10000110();
-            // if(data.errorCode == 0) {
-            //     this.setState({
-            //         columns: []
-            //     });
-            // }
-        })();
+        this._getUserInfo();
     }
 
     render() {
@@ -88,7 +84,7 @@ export default class PersonalCenterView extends PageComponent {
                 <View style={styles.infoBox}>
                     <View style={styles.infoHead}>
                     </View>
-                    <Text style={styles.infoText} onPress={()=>this.go('/loginregister/LoginView', '用户登录')}>点击登录</Text>
+                    <Text style={styles.infoText} onPress={()=>this.go('/loginregister/LoginView', '用户登录')}>{this.state.userInfo.phone}</Text>
                 </View>
 
             </View>
@@ -107,6 +103,31 @@ export default class PersonalCenterView extends PageComponent {
                 <Text style={styles.itemText}>{data.name}</Text>
             </RowMore>
         );
+    }
+    /**
+     * 获取用户信息
+     * @private
+     */
+    _getUserInfo() {
+        (async() => {
+            let data = await Services.Function10000000(false);
+            if (data) {
+                // 结果集
+                let results = data.results;
+                // 保存用户信息到本地
+                await Storage.setItem('USER_INFO', results);
+                // 修改登陆状态
+                this.setState({
+                    isLogin: true,
+                    headImg: results.headImg,
+                    userInfo: results,
+                    phone:results.phone,
+                });
+                console.info('================phone');
+                console.info(results.phone);
+                console.info(data);
+            }
+        })();
     }
 }
 

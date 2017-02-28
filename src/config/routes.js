@@ -28,7 +28,7 @@ Router.addRoute('/personalCenter/EditDataView', require('./../views/personalCent
 Router.addRoute('/personalCenter/MessageView', require('./../views/personalCenter/MessageView'));
 // 系统设置
 Router.addRoute('/personalCenter/SettingsView', require('./../views/personalCenter/SettingsView'));
-// 系统设置
+// 关于我们
 Router.addRoute('/personalCenter/AboutView', require('./../views/personalCenter/AboutView'));
 // 编辑资料
 Router.addRoute('/personalCenter/EditUserNameView', require('./../views/personalCenter/EditUserNameView'));
@@ -45,3 +45,5 @@ Router.addRoute('/loginregister/RegisterView', require('./../views/loginregister
 Router.addRoute('/loginregister/ForgetPwdView', require('./../views/loginregister/ForgetPwdView'));
 // 重置密码
 Router.addRoute('/loginregister/ResetPwdView', require('./../views/loginregister/ResetPwdView'));
+// 用户协议
+Router.addRoute('/personalCenter/AgreementView', require('./../views/personalCenter/AgreementView'));

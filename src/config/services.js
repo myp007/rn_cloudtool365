@@ -8,3 +8,5 @@
  */
 // 前台接口
 import './services/front';
+// 腾讯云接口
+import './services/other';

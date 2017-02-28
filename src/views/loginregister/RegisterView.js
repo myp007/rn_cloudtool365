@@ -27,18 +27,12 @@ export default class RegisterView extends PageComponent {
             code: '',
             pwd: '',
             cpwd: '',
-            backgroundColor: '#3397fb',
+            // 是否发送
+            sending: false,
+            // 发送按钮文本
+            sendingText: '发送验证码'
         }
 
-    }
-
-
-
-    componentWillMount() {
-        (async function () {
-            let data = await Services.Function10000100();
-            console.log('===');
-        })();
     }
 
     render() {
@@ -70,7 +64,7 @@ export default class RegisterView extends PageComponent {
                           this.setState({code: text});
                       }}/>
                     <TouchableOpacity style={styles.codeBox} onPress={()=>this.getCode() }>
-                          <Text style={[styles.codeText]}>获取验证码</Text>
+                          <Text style={[styles.codeText]}>{this.state.sendingText}</Text>
                       </TouchableOpacity>
               </View>
               {/*密码输入框*/}
@@ -102,26 +96,72 @@ export default class RegisterView extends PageComponent {
                 </View>
               <View style={styles.buttonBox}>
                   <SimpleButton onPress={()=>this.Register()} style={{backgroundColor:'#3397fb',borderColor:'#3397fb',height:pxToDp(80),width:pxToDp(690)}} >注册</SimpleButton>
-                  <View style={styles.agreementview}>
+                  <TouchableOpacity onPress={()=>this.go('/personalCenter/AgreementView', '用户协议')} style={styles.agreementview}>
                     <Text style={styles.agreementtext}>点击上面的“注册”按钮，即表示您同意<Text style={styles.agreement}>《云助手365软件许可以及服务协议》</Text></Text>
-                  </View>
+                  </TouchableOpacity>
               </View>
           </View>
           </PageView>
         );
     }
-    //获取验证码
-    getCode(){
+    /**
+     * 发送验证码
+     * @private
+     */
+    getCode() {
+        // 正在发送，则不发送验证码
+        if (this.state.sending === true) {
+            return;
+        }
+        this._sendingState();
         (async() => {
-            this.state.backgroundColor='#dedede';
             let data = await Services.Function10000101({phone:this.state.phone,time:1,type:2});
 
+            // if (!!data) {
+            //     this.showSimpleMsg('邮件发送成功');
+            // }
         })();
     }
+
+    /**
+     * 发送中状态
+     * @private
+     */
+    _sendingState() {
+        // 发送中文本
+        let sendingText = '重新发送';
+        // 发送
+        let sendText = '发送验证码';
+        this.setState({
+            sending: true
+        });
+        let index = 60;
+        let interval = setInterval(() => {
+            if (index < 0) {
+                clearInterval(interval);
+                this.setState({
+                    sendingText: sendText,
+                    sending: false
+                });
+            } else {
+                this.setState({
+                    sendingText: sendingText + '(' + index + ')'
+                });
+                index--;
+            }
+        }, 1000);
+    }
+
     //注册
     Register(){
         (async() => {
             let data = await Services.Function10000102({phone:this.state.phone,code:this.state.code,pwd:this.state.pwd,cpwd:this.state.cpwd});
+            if (!!data) {
+                this.go('/loginregister/LoginView', '用户登录',{
+
+                });
+                console.info(data);
+            }
         })();
     }
 }

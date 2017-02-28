@@ -8,7 +8,53 @@
  */
 import {Services, Api, Components, Storage, StringUtils} from 'react-native-blue-book';
 const {Modal} = Components;
+/**
+ * 获取本地用户信息
+ * @returns {Promise.<void>}
+ */
+let getLocalUserInfo = Services.getLocalUserInfo = async function () {
+    // 获取用户信息
+    let userInfo = await Storage.getItem('USER_INFO');
+    if (!userInfo) {
+        Modal.showAlert('登陆过期，请重新登陆！');
+        PageComponent.prototype.go('/loginregister/LoginView', '用户登录');
+    }
+    return userInfo;
+};
 
+/**
+ * 设置本地用户信息
+ * @param params 用户信息
+ * @returns {Promise.<*|Promise>}
+ */
+Services.setLocalUserInfo = async function (params) {
+    // 获取用户信息
+    let userInfo = await this.getLocalUserInfo();
+    if (!!userInfo) {
+        userInfo = {...userInfo, ...params};
+        Storage.setItem('USER_INFO', userInfo);
+    }
+};
+// 通过token获取用户信息
+Services.Function10000000 = async function (isShowErrorMsg) {
+    // 从本地获取用户信息
+    let userInfo = await Storage.getItem('USER_INFO');
+    if (!userInfo) {
+        return;
+    }
+    let map = new Map();
+    // 身份标识
+    map.set('token', userInfo.token);
+    console.info('token===========')
+    console.info(userInfo.token)
+    // 获取接口数据
+    let data = await Api.getService('qcloud365-api/user/getByToken', map,'GET');
+    if (data.errorCode == 0) {
+        return data;
+    } else {
+        if (isShowErrorMsg !== false) Modal.showAlert(data.errorMsg);
+    }
+};
 // 登陆
 Services.Function10000100 = async function (params) {
     let map = new Map();
@@ -25,7 +71,7 @@ Services.Function10000100 = async function (params) {
         return;
     }
     // 获取接口数据
-    let data = await Api.getService('qcloud365-api/user/login', map,'GET');
+    let data = await Api.getService('qcloud365-api/user/login', map,'POST');
     if (data.errorCode == 0) {
         Modal.showAlert('登录成功')
         Storage.setItem('USER_INFO', {
@@ -33,12 +79,9 @@ Services.Function10000100 = async function (params) {
             tag: data.results.tag || '',
             userName: data.results.userName || '',
             nickName: data.results.nickName || '',
-            email: data.results.email || '',
-            phone: data.results.phone || ''
-
+            phone: data.results.phone || '',
+            headImg:data.results.headImg || '',
         });
-
-        console.log(data);
         return data;
     } else {
         Modal.showAlert(data.errorMsg);
@@ -59,28 +102,7 @@ Services.Function10000101 = async function (params) {
     // 获取接口数据
     let data = await Api.getService('qcloud365-api/user/getPhoneCode', map,'GET');
     if (data.errorCode == 0) {
-        Modal.showAlert('验证码也发送，请注意查收')
-        console.log(data);
-        return data;
-    } else {
-        Modal.showAlert(data.errorMsg);
-    }
-};
-// 校验验证码
-Services.Function10000103 = async function (params) {
-    let map = new Map();
-    // 手机号
-    map.set('phone', params.phone);
-    map.set('code', params.code);
-    map.set('type', params.type);
-    if (StringUtils(map.get('code')).isEmpty()) {
-        Modal.showAlert('验证码不能为空');
-        return;
-    }
-
-    // 获取接口数据
-    let data = await Api.getService('qcloud365-api/user/checkCode', map,'GET');
-    if (data.errorCode == 0) {
+        Modal.showAlert('验证码已发送')
         console.log(data);
         return data;
     } else {
@@ -113,7 +135,7 @@ Services.Function10000102 = async function (params) {
     }
 
     // 获取接口数据
-    let data = await Api.getService('qcloud365-api/user/register', map,'GET');
+    let data = await Api.getService('qcloud365-api/user/register', map,'POST');
     if (data.errorCode == 0) {
         Modal.showAlert('注册成功')
         console.log(data);
@@ -122,6 +144,28 @@ Services.Function10000102 = async function (params) {
         Modal.showAlert(data.errorMsg);
     }
 };
+// 校验验证码
+Services.Function10000103 = async function (params) {
+    let map = new Map();
+    // 手机号
+    map.set('phone', params.phone);
+    map.set('code', params.code);
+    map.set('type', params.type);
+    if (StringUtils(map.get('code')).isEmpty()) {
+        Modal.showAlert('验证码不能为空');
+        return;
+    }
+
+    // 获取接口数据
+    let data = await Api.getService('qcloud365-api/user/checkCode', map,'GET');
+    if (data.errorCode == 0) {
+        console.log(data);
+        return data;
+    } else {
+        Modal.showAlert(data.errorMsg);
+    }
+};
+
 // 找回密码
 Services.Function10000104 = async function (params) {
     let map = new Map();
@@ -139,79 +183,10 @@ Services.Function10000104 = async function (params) {
     }
 
     // 获取接口数据
-    let data = await Api.getService('qcloud365-api/user/updateFindPwd', map,'GET');
+    let data = await Api.getService('qcloud365-api/user/updateFindPwd', map,'POST');
     if (data.errorCode == 0) {
         Modal.showAlert('找回密码成功')
-        console.log('======'+data);
-        return data;
-    } else {
-        Modal.showAlert(data.errorMsg);
-    }
-};
-
-// 获取新闻分类
-Services.Function10000201 = async function (params) {
-    let map = new Map();
-    // 页码
-    map.set('pageNum', params['pageNum'] ||1);
-    // 分页数
-    map.set('pageSize', params['pageSize'] ||5);
-    if (StringUtils(map.get('pageNum')).isEmpty()) {
-        Modal.showAlert('页码不能为空');
-        return;
-    }
-    if (StringUtils(map.get('pageSize')).isEmpty()) {
-        Modal.showAlert('分页数不能为空');
-        return;
-    }
-    let data = await Api.getService('10000201', map);
-    if (data.errorCode == 0) {
-        return data;
-    } else {
-        Modal.showAlert(data.errorMsg);
-    }
-};
-
-// 获取新闻列表
-Services.Function10000203 = async function (params) {
-    let map = new Map();
-    // 页码
-    map.set('pageNum', params['pageNum']||1);
-    // 分页数
-    map.set('pageSize', params['pageSize']||10);
-    // 分类ID
-    map.set('typeId', params['typeId']);
-    if (StringUtils(map.get('pageNum')).isEmpty()) {
-        Modal.showAlert('页码不能为空');
-        return;
-    }
-    if (StringUtils(map.get('pageSize')).isEmpty()) {
-        Modal.showAlert('分页数不能为空');
-        return;
-    }
-    if (StringUtils(map.get('typeId')).isEmpty()) {
-        Modal.showAlert('分类ID不能为空');
-        return;
-    }
-    let data = await Api.getService('10000203', map, null, false);
-    if (data.errorCode == 0) {
-        return data;
-    } else {
-        Modal.showAlert(data.errorMsg);
-    }
-};
-
-// 获取文章详情
-Services.Function10000204 = async function (id) {
-    let map = new Map();
-    // 文章ID
-    map.set('id', id);
-    if (StringUtils(map.get('id')).isEmpty()) {
-        Modal.showAlert('文章ID');
-        return;
-    }
-    let data = await Api.getService('10000204', map, null, false);
-    if (data.errorCode == 0) {
+        console.log(data);
         return data;
     } else {
         Modal.showAlert(data.errorMsg);
