@@ -15,7 +15,7 @@ Config.config({
 
 
 
-    TENCENT_API_PATH: 'http://192.168.2.4:8080/bbsoft-qcloud365/',//外网
+    TENCENT_API_PATH: 'https://apit.cloudtool365.com/bbsoft-qcloud365/',//外网
 
     //TENCENT_API_PATH: 'http://119.29.139.49/bbsoft-qcloud365/',//外网
     // BLUE_BOOK_API_PATH: 'http://192.168.89.1:8000/',

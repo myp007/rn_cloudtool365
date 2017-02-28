@@ -83,6 +83,10 @@ export default class PersonalCenterView extends PageComponent {
             <View style={styles.infoBg}>
                 <View style={styles.infoBox}>
                     <View style={styles.infoHead}>
+                        <Image
+                            style={styles.headImg}
+                            source={require('../assets/images/hand.png')}
+                        />
                     </View>
                     <Text style={styles.infoText} onPress={()=>this.go('/loginregister/LoginView', '用户登录')}>{this.state.userInfo.phone}</Text>
                 </View>
@@ -148,6 +152,9 @@ const styles = StyleSheet.create({
         borderRadius: pxToDp(75),
         backgroundColor: '#FFFFFF',
         alignItems: 'center',
+    },headImg:{
+        width: pxToDp(150),
+        height: pxToDp(150),
     }, infoText: {
         flex: 1,
         textAlign: 'center',

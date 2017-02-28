@@ -63,6 +63,7 @@ Services.Function10000203 = async function (params) {
     }
     let data = await getService('10000203', map);
     if (data.errorCode == 0) {
+        console.log(data.results.litpic)
         return data;
     } else {
         Modal.showAlert(data.errorMsg);
