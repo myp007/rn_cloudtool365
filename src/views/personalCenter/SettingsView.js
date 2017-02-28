@@ -13,7 +13,7 @@ const {Text, View, Image,AppRegistry,Switch} = ReactNative;
 
 import {PageComponent, StyleSheet, Components, Icon, Services} from 'react-native-blue-book';
 const {pxToDp} = StyleSheet;
-const {PageView, RowMore} = Components;
+const {PageView, RowMore,SimpleButton} = Components;
 export default class SettingsView extends PageComponent {
     constructor(props) {
         super(props);
@@ -58,6 +58,10 @@ export default class SettingsView extends PageComponent {
                       <Text style={[styles.itemText,styles.flexend]}>V1.0</Text>
                     </View>
                 </View>
+                <View style={[styles.butView]}>
+                  <SimpleButton onPress={()=>this.go('/loginregister/LoginView', '用户登录')} style={{marginTop:pxToDp(150),backgroundColor:'#3397fb',borderColor:'#3397fb',height:pxToDp(80),width:pxToDp(690)}} >注销登录</SimpleButton>
+                </View>
+
             </PageView>
         );
     }
@@ -87,5 +91,7 @@ const styles = StyleSheet.create({
       fontSize:pxToDp(20),
       flex: 2,
       alignItems: 'center',
+    },butView:{
+      alignItems:'center'
     }
 });

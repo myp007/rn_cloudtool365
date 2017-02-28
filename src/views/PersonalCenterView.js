@@ -88,7 +88,7 @@ export default class PersonalCenterView extends PageComponent {
                             source={require('../assets/images/hand.png')}
                         />
                     </View>
-                    <Text style={styles.infoText} onPress={()=>this.go('/loginregister/LoginView', '用户登录')}>{this.state.userInfo.phone}</Text>
+                    <Text style={styles.infoText} onPress={()=>this.isLogin()}>{this.state.userInfo.phone}</Text>
                 </View>
 
             </View>
@@ -132,6 +132,22 @@ export default class PersonalCenterView extends PageComponent {
                 console.info(data);
             }
         })();
+    }
+    /**
+     * 判断是否登录
+     * @private
+     */
+    isLogin() {
+        (async() => {
+
+        // 修改登陆状态
+        this.setState({
+            isLogin: true,
+            headImg: '',
+            phone:'',
+        });
+      })();
+
     }
 }
 
