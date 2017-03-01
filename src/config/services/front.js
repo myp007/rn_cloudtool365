@@ -140,7 +140,6 @@ Services.Function10000102 = async function (params) {
     let data = await Api.getService('qcloud365-api/user/register', map,'POST');
     if (data.errorCode == 0) {
         Modal.showAlert('注册成功')
-        console.log(data);
         return data;
     } else {
         Modal.showAlert(data.errorMsg);
