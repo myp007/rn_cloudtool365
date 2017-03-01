@@ -115,7 +115,7 @@ export default class PersonalCenterView extends PageComponent {
     _getUserInfo() {
         (async() => {
             let data = await Services.Function10000000(false);
-            if (data) {
+            if (!!data) {
                 // 结果集
                 let results = data.results;
                 // 保存用户信息到本地
@@ -139,13 +139,25 @@ export default class PersonalCenterView extends PageComponent {
      */
     isLogin() {
         (async() => {
+            let userInfo = await Services.getLocalUserInfo();
+            console.info(userInfo)
+            if (!userInfo) {
+                // Modal.showAlert('登陆过期，请重新登陆！');
+                this.go('/loginregister/LoginView', '用户登录',{
+                });
+            }
+            // let isLOgin = this.setState.isLogin;
+            // console.info("==============")
+            // console.info(isLOgin)
+            // if (isLOgin){
+            //     this._getUserInfo();
+            //     this.go('/personalCenter/EditDataView', '编辑资料', {
+            //     });
+            // }else {
+            //     this.go('/loginregister/LoginView', '用户登录', {
+            //     });
+            // }
 
-        // 修改登陆状态
-        this.setState({
-            isLogin: true,
-            headImg: '',
-            phone:'',
-        });
       })();
 
     }

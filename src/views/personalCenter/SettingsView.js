@@ -11,7 +11,7 @@ import ReactNative from 'react-native';
 const {Text, View, Image,AppRegistry,Switch} = ReactNative;
 // 引入blue-book工具包
 
-import {PageComponent, StyleSheet, Components, Icon, Services} from 'react-native-blue-book';
+import {PageComponent, StyleSheet, Components, Icon, Services,Storage} from 'react-native-blue-book';
 const {pxToDp} = StyleSheet;
 const {PageView, RowMore,SimpleButton} = Components;
 export default class SettingsView extends PageComponent {
@@ -59,11 +59,22 @@ export default class SettingsView extends PageComponent {
                     </View>
                 </View>
                 <View style={[styles.butView]}>
-                  <SimpleButton onPress={()=>this.go('/loginregister/LoginView', '用户登录')} style={{marginTop:pxToDp(150),backgroundColor:'#3397fb',borderColor:'#3397fb',height:pxToDp(80),width:pxToDp(690)}} >注销登录</SimpleButton>
+                  <SimpleButton onPress={()=>this.signOutLogin()} style={{marginTop:pxToDp(150),backgroundColor:'#3397fb',borderColor:'#3397fb',height:pxToDp(80),width:pxToDp(690)}} >注销登录</SimpleButton>
                 </View>
 
             </PageView>
         );
+    }
+    /**
+     * 退出登录
+     * @private
+     */
+    signOutLogin() {
+        (async() => {
+            await Storage.clear('USER_INFO');
+            this.goBackRoot(true)
+        })();
+
     }
 }
 

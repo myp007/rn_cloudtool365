@@ -16,8 +16,10 @@ let getLocalUserInfo = Services.getLocalUserInfo = async function () {
     // 获取用户信息
     let userInfo = await Storage.getItem('USER_INFO');
     if (!userInfo) {
-        Modal.showAlert('登陆过期，请重新登陆！');
-        PageComponent.prototype.go('/loginregister/LoginView', '用户登录');
+        // Modal.showAlert('登陆过期，请重新登陆！');
+        // PageComponent.prototype.go('/loginregister/LoginView', '用户登录');
+        // this.go('/loginregister/LoginView', '用户登录',{
+        // });
     }
     return userInfo;
 };
