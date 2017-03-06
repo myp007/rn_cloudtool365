@@ -27,8 +27,7 @@ export default class SettingsView extends PageComponent {
 
     componentWillMount() {
         (async function () {
-            let data = await Services.Function10000100();
-            console.log('===');
+
         })();
     }
 
@@ -98,11 +97,7 @@ const styles = StyleSheet.create({
     },flexend:{
       flex:1,
       textAlign:'right',
-    },switchView:{
-      fontSize:pxToDp(20),
-      flex: 2,
-      alignItems: 'center',
     },butView:{
-      alignItems:'center'
+      alignItems:'center',
     }
 });

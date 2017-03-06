@@ -157,9 +157,7 @@ export default class RegisterView extends PageComponent {
         (async() => {
             let data = await Services.Function10000102({phone:this.state.phone,code:this.state.code,pwd:this.state.pwd,cpwd:this.state.cpwd});
             if (!!data) {
-                this.go('/loginregister/LoginView', '用户登录',{
-
-                });
+                this.goBackRoot(true);
                 console.info(data);
             }
         })();
