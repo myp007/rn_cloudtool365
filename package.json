@@ -6,7 +6,7 @@
     "start": "node node_modules/react-native/local-cli/cli.js start",
     "test": "jest",
     "android-create-keystore": "cd android/app && keytool -genkey -v -keystore release-key.keystore -alias cloudtool365-key-alias -keyalg RSA -keysize 2048 -validity 10000 -storepass cloudtool365 -keypass cloudtool365 -dname \"CN=Chen Yuan, OU=Blue Book, O=Blue Book, L=ShenZhen, S=ShenZhen, C=CN\"",
-    "build-android": "cd android & gradlew assembleRelease",
+    "build-apk": "cd android & gradlew assembleRelease",
     "mac-build-apk": "cd android && ./gradlew assembleRelease"
   },
   "dependencies": {
