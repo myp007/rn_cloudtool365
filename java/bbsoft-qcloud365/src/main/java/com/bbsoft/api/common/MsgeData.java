@@ -8,7 +8,7 @@ package com.bbsoft.api.common;
  */
 public enum MsgeData {
 	/*** 域名 */
-	ATTACHMENT_URL("http://www.qcloud0755.com","http://www.qcloud0755.com"),
+	ATTACHMENT_URL("https://www.cloudtool365.com","https://www.cloudtool365.com"),
 	
 	/*** 服务器异常 */
 	SYSTEM_10100("-10100", "服务器异常"),
