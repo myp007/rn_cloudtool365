@@ -57,6 +57,13 @@ class GiftedListView extends React.Component {
                 paginationStatus: 'firstLoad'
             };
         }
+
+        // 向外暴露分页控制方法
+        if (!!this.props.paginationControl) {
+            this.props.paginationControl.refresh = ()=>{
+                this._refresh();
+            };
+        }
     }
 
     static defaultProps = {
@@ -86,6 +93,8 @@ class GiftedListView extends React.Component {
     };
 
     static propTypes = {
+        // 分页组件控制
+        paginationControl: React.PropTypes.object,
         customStyles: React.PropTypes.object,
         initialListSize: React.PropTypes.number,
         firstLoader: React.PropTypes.bool,

@@ -19,9 +19,10 @@ export default class PersonalCenterView extends PageComponent {
 
         this.state = {
             isLOgin:false,
-            headImg:'',
+
             userInfo:{
                 phone:'点击登录',
+                headImg:'',
             },
             columns: [
                 {
@@ -99,6 +100,12 @@ export default class PersonalCenterView extends PageComponent {
           </PageView>
         );
     }
+    //顶部标题
+    setNavigatorTitle(route, navigator, home, navState) {
+        return (
+            <View style={styles.titleView}><Text style={styles.titleText}>个人中心</Text></View>
+        );
+    }
     _renderRow(data) {
         return (
             <RowMore
@@ -123,9 +130,7 @@ export default class PersonalCenterView extends PageComponent {
                 // 修改登陆状态
                 this.setState({
                     isLogin: true,
-                    headImg: results.headImg,
                     userInfo: results,
-                    phone:results.phone,
                 });
                 console.info('================phone');
                 console.info(results.phone);
@@ -204,5 +209,10 @@ const styles = StyleSheet.create({
     }, itemText: {
         fontSize: pxToDp(30),
         color: '#999999',
+    },titleView:{
+        padding:0,
+        paddingTop:pxToDp(30),
+    },titleText:{
+        color:'#fff'
     }
 });

@@ -8,7 +8,7 @@
  */
 import ReactNative from 'react-native';
 // {设备信息获取类}
-const {Dimensions, PixelRatio, Platform} = ReactNative;
+const {Dimensions, PixelRatio, Platform, Navigator} = ReactNative;
 // react-native样式工具
 const Style = ReactNative.StyleSheet;
 // {当前设备窗口宽}
@@ -20,6 +20,9 @@ let UI_ALL_WIDTH = Config.get('BLUE_BOOK_STYLESHEET_UI_ALL_WIDTH');
 
 // 样式工具
 export const StyleSheet = {};
+
+// 导航条高度
+let NAVIGATORBAR_HEIGHT = null;
 
 /**
  * 设置UI设计总宽度
@@ -62,8 +65,30 @@ StyleSheet.getWindowHeight = function () {
     return height;
 };
 
+/**
+ * 获取导航条高度
+ */
 StyleSheet.getNavigatorBarHeight = function () {
-    return Platform.OS === 'ios' ? 68 : 48;
+    if (NAVIGATORBAR_HEIGHT !== null) {
+        return NAVIGATORBAR_HEIGHT;
+    }
+    let NavigationBarStyles = Platform.OS === 'android' ? Navigator.NavigationBar.StylesAndroid : Navigator.NavigationBar.StylesIOS;
+    return NavigationBarStyles.General.NavBarHeight;
+};
+
+/**
+ * 设置导航条高度
+ * @param height 导航条高度
+ */
+StyleSheet.setNavigatorBarHeight = function (height) {
+    NAVIGATORBAR_HEIGHT = height;
+};
+
+/**
+ * 获取状态栏高度
+ */
+StyleSheet.getStatusBarHeight = function () {
+    return Platform.OS === 'ios' ? 20 : 0;
 };
 
 // 全局样式

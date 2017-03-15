@@ -8,6 +8,7 @@
  */
 import React from 'react';
 import ReactNative from 'react-native';
+import Swiper from 'react-native-swiper';
 const {Text, Image, View, TouchableOpacity} = ReactNative;
 // 引入blue-book工具包
 import {PageComponent, StyleSheet, Components, Services, StringUtils} from 'react-native-blue-book';
@@ -64,6 +65,37 @@ export default class NewsListView extends PageComponent {
     render() {
         return (
             <View style={styles.body}>
+                <View style={{backgroundColor:'#000'}}>
+                    <Swiper style={[styles.wrapper]}
+                            showsButtons={false}
+                            height={pxToDp(360)}
+                            loop={true}
+                            index={0}
+                            autoplay={true}
+                            horizontal={true}
+                            paginationStyle={{bottom:10}}
+                            dot={<View style={styles.dot_default}></View>}
+                            activeDot={<View style={styles.dot_active}></View>}>
+                        <TouchableOpacity style={styles.slide}>
+                            <Image
+                                style={styles.bannnerImg}
+                                source={{uri:'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1488867231321&di=17410487cadb1458272e235a7acf847d&imgtype=0&src=http%3A%2F%2Fimages2.china.com%2Fgrab%2Fimg%2F20151012%2F87431444640185.png'}}
+                            />
+                        </TouchableOpacity>
+                        <TouchableOpacity style={styles.slide}>
+                            <Image
+                                style={styles.bannnerImg}
+                                source={{uri:'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1488867231318&di=2bd60e14f3f66ee01fdf81665fb9639d&imgtype=0&src=http%3A%2F%2Fwww.hui.net%2Fstatic%2Fuploads%2Fcontents%2Fimages%2F20150910%2F1441877913563710.png'}}
+                            />
+                        </TouchableOpacity>
+                        <TouchableOpacity style={styles.slide}>
+                            <Image
+                                style={styles.bannnerImg}
+                                source={{uri:'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1488867231319&di=b61653894688a17c89d9f88b6b0e70e9&imgtype=0&src=http%3A%2F%2Ftmtimg.lanjinger.com%2Fueditor%2Fupload1%2F20160321%2F1458557169501873.jpg'}}
+                            />
+                        </TouchableOpacity>
+                    </Swiper>
+                </View>
                 <Pagination
                     rowView={(...args)=>this._renderRowView(...args)}
                     onFetch={(...args)=>this._fetchList(...args)}/>
@@ -110,5 +142,22 @@ const styles = StyleSheet.create({
         borderBottomColor: '#CCC',
         borderBottomWidth: StyleSheet.getMinLineWidth(),
         paddingBottom: pxToDp(9)
-    }
+    },
+    //轮播图样式
+    wrapper:{
+
+    },slide: {
+        flex: 1,
+        backgroundColor: '#FFFFFF',
+        height:pxToDp(360),
+    },bannnerImg:{
+        width:pxToDp(750),
+        height:pxToDp(360)
+    },dot_default:{
+        backgroundColor:'#FFFFFF',
+        width: pxToDp(10), height: pxToDp(10),borderRadius: pxToDp(5), marginLeft: pxToDp(6), marginRight: pxToDp(6), marginTop: pxToDp(6), marginBottom: pxToDp(6),
+    },dot_active:{
+        backgroundColor:'#cccccc',
+        width: pxToDp(10), height: pxToDp(10),borderRadius: pxToDp(5), marginLeft: pxToDp(6), marginRight: pxToDp(6), marginTop: pxToDp(6), marginBottom: pxToDp(6),
+    },
 });

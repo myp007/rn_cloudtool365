@@ -72,6 +72,7 @@ export default class Pagination extends React.Component {
         let props = this.props;
         return (
             <GiftedListView
+                {...this.props}
                 rowView={this.props.rowView}
                 onFetch={(page = 1, callback, options)=>{
                     (async function () {
@@ -101,6 +102,7 @@ export default class Pagination extends React.Component {
                 // 阻止报错(具体什么情况以后再研究)
                 enableEmptySections={true}
                 showsVerticalScrollIndicator={false}
+                paginationControl={props.paginationControl || {}}
                 style={this.props.style || {}}/>
         );
     }
@@ -122,7 +124,7 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center'
     }, loadMore: {
-        color: '#9b7fff'
+        color: '#ccc'
     }, loadFinishText: {
         color: '#CCC',
         fontSize: pxToDp(26)

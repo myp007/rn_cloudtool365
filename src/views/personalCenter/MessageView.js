@@ -17,18 +17,13 @@ export default class MessageView extends PageComponent {
     constructor(props) {
         super(props);
 
-        let msg = this.getRouteParams()['msg'] || '';
-
         this.state = {
-            msg: msg
+
         };
     }
 
     componentWillMount() {
-        (async function () {
-            let data = await Services.Function10000100();
-            console.log('===');
-        })();
+
     }
 
     render() {
@@ -64,6 +59,14 @@ export default class MessageView extends PageComponent {
                 </RowMore>
             </PageView>
         );
+    }
+    _getUserInfo() {
+        (async() => {
+            let data = await Services.Function10000302(false);
+            if (!!data) {
+
+            }
+        })();
     }
 }
 

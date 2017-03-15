@@ -27,8 +27,19 @@ Api.request = function (path, options) {
      * @param response
      * @returns {*|Promise<any>}
      */
-    function parseJSON(response) {
-        let data = response.json();
+    async function parseJSON(response) {
+        let data = await response.text();
+        try {
+            data = JSON.parse(data);
+        } catch (e) {
+            console.log('返回正文:');
+            console.log(data);
+            data = {
+                errorCode: -3,
+                errorMsg: '系统异常',
+                results: ''
+            }
+        }
         data.errorCode = parseInt(data.errorCode);
         return data;
     }
@@ -85,10 +96,39 @@ Api.request = function (path, options) {
         cache: 'default'
     };
 
+    // 设置POST请求参数
+    if (options.method.toLocaleUpperCase() == 'POST') {
+        let data = new FormData();
+        for (let [key, value] of params) {
+            if (value !== null && value !== undefined) {
+                data.append(key, value);
+            }
+        }
+        if (params.size > 0) {
+            setting.body = data;
+        }
+    }
+
+    // 设置文件上传请求参数
+    if (options.method.toLocaleUpperCase() == 'FILE') {
+        setting.method = 'POST';
+        setting.headers = {
+            'Content-Type': 'multipart/form-data',
+        };
+        delete setting.mode;
+        delete setting.cache;
+        // 文件路径
+        let uri = params.get('filePath') || '';
+        let data = new FormData();
+        data.append('file', {uri: uri, type: 'multipart/form-data', name: 'a1111.jpg'});
+        data.append('test', 'description');
+        setting.body = data;
+    }
+
     // 打印接口请求信息
     if (Config.get('BLUE_BOOK_API_PRINT_CONSOLE')) {
         let log = ['===============' + options.requestCode + '\n'];
-        log.push('请求方式: ' + options.method);
+        log.push('请求方式: ' + setting.method);
         log.push('请求地址: ');
         log.push(path);
         log.push('请求入参: ');
@@ -98,26 +138,36 @@ Api.request = function (path, options) {
         console.log(log.join('\n'));
     }
 
-    // 设置POST请求参数
-    if (options.method.toLocaleUpperCase() == 'POST') {
-        let data = new FormData();
-        for (let [key, value] of params) {
-            data.append(key, value);
-        }
-        setting.body = data;
-    }
-
-    return fetch(url, setting)
-        .then(checkStatus)
-        .then(parseJSON)
-        .catch((e) => {
-            console.log(e);
-            return {
-                errorCode: -1,
-                errorMsg: '网络错误',
-                results: {}
+    return new Promise((resolve, reject) => {
+        (async() => {
+            // 超时
+            let overtime = setTimeout(() => {
+                resolve({
+                    errorCode: -2,
+                    errorMsg: '请求超时',
+                    results: {}
+                });
+            }, 20000);
+            let results = await fetch(url, setting)
+                .then(checkStatus)
+                .then(parseJSON)
+                .catch((e) => {
+                    console.log(e);
+                    return {
+                        errorCode: -1,
+                        errorMsg: '网络错误',
+                        results: {}
+                    }
+                });
+            if (!!results) {
+                if (!!overtime) {
+                    clearTimeout(overtime);
+                    overtime = null;
+                }
+                resolve(results);
             }
-        });
+        })();
+    });
 };
 
 /**
@@ -187,4 +237,14 @@ Api.getServiceByUrl = function (url, apiCode, params, type = Config.get('BLUE_BO
  */
 Api.getService = function (apiCode, params, type = Config.get('BLUE_BOOK_API_DEFAULT_METHOD'), isOpenWait = true) {
     return this.getServiceByUrl(Config.get('BLUE_BOOK_API_PATH'), apiCode, params, type, isOpenWait)
+};
+
+/**
+ * 上传文件
+ * @param apiCode 接口地址
+ * @param params 请求入参
+ * @returns {Promise.<TResult>}
+ */
+Api.getUploadService = function (apiCode, params) {
+    return this.getServiceByUrl(Config.get('BLUE_BOOK_API_PATH'), apiCode, params, 'FILE', true)
 };

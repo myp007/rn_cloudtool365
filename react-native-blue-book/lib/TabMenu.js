@@ -16,8 +16,11 @@ import {PageComponent} from './PageComponent';
 const {pxToDp} = StyleSheet;
 
 let children = null;
+// 当前选中显示的视图
+let SELECTED_TAB = null;
 
 export function getTabMenu(_children) {
+    SELECTED_TAB = Config.get('DEFAULT_OPEN_VIEW');
     children = _children;
     return TabMenu;
 }
@@ -29,6 +32,9 @@ class TabMenu extends PageComponent {
             // 默认显示的视图
             selectedTab: Config.get('DEFAULT_OPEN_VIEW')
         };
+
+        // 当前Tab的场景
+        this.scenes = new Map();
     }
 
     componentWillMount() {
@@ -39,16 +45,40 @@ class TabMenu extends PageComponent {
 
     setNavigatorLeftButton(route, navigator, index, navState) {
         for (let i = 0; i < children.length; i++) {
-            if (this.state.selectedTab == children[i].props.id && !!children[i].props['renderView'].prototype.setNavigatorLeftButton) {
-                return children[i].props['renderView'].prototype.setNavigatorLeftButton.call(this, route, navigator, index, navState)
+            // 场景
+            let scene = children[i].props['renderView'];
+            if (SELECTED_TAB == children[i].props.id && !!scene.prototype.setNavigatorLeftButton) {
+                return scene.prototype.setNavigatorLeftButton.call(this.scenes.get(scene), route, navigator, index, navState)
             }
         }
     }
 
     setNavigatorRightButton(route, navigator, index, navState) {
         for (let i = 0; i < children.length; i++) {
-            if (this.state.selectedTab == children[i].props.id && !!children[i].props['renderView'].prototype.setNavigatorRightButton) {
-                return children[i].props['renderView'].prototype.setNavigatorRightButton.call(this, route, navigator, index, navState)
+            // 场景
+            let scene = children[i].props['renderView'];
+            if (SELECTED_TAB == children[i].props.id && !!scene.prototype.setNavigatorRightButton) {
+                return scene.prototype.setNavigatorRightButton.call(this.scenes.get(scene), route, navigator, index, navState)
+            }
+        }
+    }
+
+    setNavigatorTitle(route, navigator, index, navState) {
+        for (let i = 0; i < children.length; i++) {
+            // 场景
+            let scene = children[i].props['renderView'];
+            if (SELECTED_TAB == children[i].props.id && !!scene.prototype.setNavigatorTitle) {
+                return scene.prototype.setNavigatorTitle.call(this.scenes.get(scene), route, navigator, index, navState)
+            }
+        }
+    }
+
+    setNavigatorStyle(route, navigator, index, navState) {
+        for (let i = 0; i < children.length; i++) {
+            // 场景
+            let scene = children[i].props['renderView'];
+            if (SELECTED_TAB == children[i].props.id && !!scene.prototype.setNavigatorStyle) {
+                return scene.prototype.setNavigatorStyle.call(this.scenes.get(scene), route, navigator, index, navState)
             }
         }
     }
@@ -61,7 +91,7 @@ class TabMenu extends PageComponent {
                     let RenderView = children.props['renderView'];
                     return (
                         <TabNavigator.Item
-                            selected={this.state.selectedTab === children.props.id}
+                            selected={SELECTED_TAB === children.props.id}
                             title={children.props.title}
                             renderIcon={() => <Image style={styles.globalIcon} source={children.props.renderIcon}/>}
                             renderSelectedIcon={() => <Image style={styles.globalIcon} source={children.props.renderSelectedIcon}/>}
@@ -69,12 +99,15 @@ class TabMenu extends PageComponent {
                             selectedTitleStyle={children.props.selectedTitleStyle}
                             tabStyle={children.props.tabStyle}
                             onPress={()=>{
-                                this.setState({ selectedTab:children.props.id});
+                                SELECTED_TAB = children.props.id;
+                                this.setState({ r: Math.random()});
                                 // 刷新navigator
                                 this.props.navigator.setState({r: Math.random()});
                             }}
                             key={i}>
-                            <RenderView {...this.props}/>
+                            <RenderView {...this.props} getInstance={(instance)=>{
+                                this.scenes.set(RenderView, instance);
+                            }}/>
                         </TabNavigator.Item>
                     );
                 })}
@@ -88,7 +121,7 @@ const styles = StyleSheet.create({
         borderTopWidth: StyleSheet.getMinLineWidth(),
         borderTopColor: '#cccccc'
     }, tabStyle: {
-        backgroundColor: '#FFFFFF',
+        backgroundColor: '#FFFFFF'
     }, tabText: {
         color: "#333333",
         fontSize: pxToDp(22)

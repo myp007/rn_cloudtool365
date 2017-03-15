@@ -1,6 +1,6 @@
 {
   "name": "react-native-blue-book",
-  "version": "0.0.1392",
+  "version": "0.0.207",
   "description": "蓝书react-native包",
   "main": "react-native-blue-book.js",
   "scripts": {
@@ -21,5 +21,14 @@
   "bugs": {
     "url": ""
   },
-  "homepage": ""
+  "homepage": "",
+  "devDependencies": {},
+  "dependencies": {
+    "immutable": "^3.8.1",
+    "react-native-alipay": "^0.1.4",
+    "react-native-gifted-listview": "^0.0.15",
+    "react-native-image-picker": "0.25.1",
+    "react-native-modal-dropdown": "^0.4.1",
+    "react-native-tab-navigator": "^0.3.3"
+  }
 }

@@ -8,7 +8,9 @@
  */
 import React from 'react';
 import ReactNative from 'react-native';
-const {View, Text, Image, TouchableOpacity} = ReactNative;
+const {View, Image, TouchableOpacity} = ReactNative;
+import {ReactNativeComponent} from '../ReactNativeComponent';
+const {Text} = ReactNativeComponent;
 import {StyleSheet} from '../StyleSheet';
 import {Icon} from '../Icon';
 import SimpleButton from './SimpleButton';
@@ -135,15 +137,17 @@ class Alert extends React.Component {
         this.state = {
             // 是否打开等待框
             isShowAlert: false,
-            msg: ''
+            msg: '',
+            sureCallBack: null
         };
     }
 
     componentWillMount() {
-        Modal.alertFunction = (msg) => {
+        Modal.alertFunction = (msg, sureCallBack = null) => {
             this.setState({
                 isShowAlert: true,
-                msg: msg
+                msg: msg,
+                sureCallBack: sureCallBack
             });
         }
     }
@@ -165,7 +169,12 @@ class Alert extends React.Component {
                 </View>
                 <TouchableOpacity
                     style={styles.alertButtonBox}
-                    onPress={()=>this.setState({isShowAlert: false})}>
+                    onPress={()=> {
+                        this.setState({isShowAlert: false});
+                        if(!!this.state.sureCallBack) {
+                            this.state.sureCallBack();
+                        }
+                    }}>
                     <Text style={{color: '#1e90ff'}}>确定</Text>
                 </TouchableOpacity>
             </View>
@@ -199,7 +208,7 @@ class SimpleMsg extends React.Component {
                     isShowSimpleMsg: false,
                     msg: ''
                 });
-            }, time + 5000);
+            }, time);
         }
     }
 
@@ -276,9 +285,9 @@ Modal.closeWait = function () {
 /**
  * 显示一个警告框
  */
-Modal.showAlert = function (msg) {
+Modal.showAlert = function (msg, sureCallBack) {
     if (!!Modal.alertFunction) {
-        Modal.alertFunction(msg);
+        Modal.alertFunction(msg, sureCallBack);
     }
 };
 
@@ -368,7 +377,7 @@ const styles = StyleSheet.create({
         borderRadius: pxToDp(14),
         width: pxToDp(550)
     }, alertContentBox: {
-        width: pxToDp(550),
+        width: pxToDp(510),
         alignItems: 'center',
         borderBottomWidth: StyleSheet.getMinLineWidth(),
         borderBottomColor: '#CCCCCC',

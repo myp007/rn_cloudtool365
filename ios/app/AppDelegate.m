@@ -9,10 +9,23 @@
 
 #import "AppDelegate.h"
 
+#import <RCTWeChat.h>
+#import <React/RCTLinkingManager.h>
 #import <React/RCTBundleURLProvider.h>
 #import <React/RCTRootView.h>
 
 @implementation AppDelegate
+
+- (BOOL)application:(UIApplication *)application handleOpenURL:(NSURL *)url
+{
+  return [[RCTWeChat shareInstance] handleOpenURL: url];
+}
+
+- (BOOL)application:(UIApplication *)application openURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation {
+  
+  return [[RCTWeChat shareInstance] handleOpenURL: url];
+  
+}
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {

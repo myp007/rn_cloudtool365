@@ -10,12 +10,11 @@ import {Config} from 'react-native-blue-book';
 
 Config.config({
     // react-native-blue-book配置：接口地址
-    //BLUE_BOOK_API_PATH: 'http://192.168.2.4:8080/bbsoft-qcloud365/',
     TENCENT_API_PATH:'https://apim.cloudtool365.com/bbsoft-qcloud365/',//新闻
 
 
-
-    BLUE_BOOK_API_PATH:'https://apim.cloudtool365.com/',//用户注册
+    // BLUE_BOOK_API_PATH:'http://192.168.2.8:9999/qcloud365-api/',//张煌本地
+    BLUE_BOOK_API_PATH:'http://192.168.1.28:8080/qcloud365-api/',//服务器
 
 
     // react-native-blue-book配置：是否打印接口信息到控制台

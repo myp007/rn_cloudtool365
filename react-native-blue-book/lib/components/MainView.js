@@ -15,6 +15,7 @@ import {getTabMenu} from '../TabMenu';
 import NavigatorBar from '../NavigatorBar';
 import {StyleSheet} from '../StyleSheet';
 import Modal from './Modal';
+import {StringUtils} from '../StringUtils';
 
 let children = null;
 
@@ -24,16 +25,34 @@ export default class MainView extends React.Component {
         children = this.props.children;
     }
 
+    static propTypes = {
+        // 导航条背景图片
+        navigatorBarBackgroundImage: React.PropTypes.number,
+        // 导航条背景颜色
+        navigatorBarBackgroundColor: React.PropTypes.string,
+        // 导航条高度
+        navigatorBarHeight: React.PropTypes.number
+    };
+
+    static defaultProps = {
+        navigatorBarBackgroundImage: null,
+        navigatorBarBackgroundColor: null,
+        navigatorBarHeight: null
+    };
+
     componentWillMount() {
 
     }
 
     render() {
+        // 导航条背景颜色属性
+        let bgColor = StringUtils(this.props.navigatorBarBackgroundColor).isNotEmpty() ? {backgroundColor: this.props.navigatorBarBackgroundColor} : {};
         return (
             <View style={styles.container}>
                 <View style={styles.bgBox}>
                     {/*/!*导航栏背景图片*!/*/}
-                    <Image style={styles.bgImage} source={this.props['navigatorBarBackgroundImage'] || null}/>
+                    {StringUtils(this.props['navigatorBarBackgroundImage']).isNotEmpty() &&
+                    <Image style={styles.bgImage} source={this.props['navigatorBarBackgroundImage']}/>}
                 </View>
                 {/*加载框组件*/}
                 <Modal.Loading />
@@ -46,9 +65,12 @@ export default class MainView extends React.Component {
                 <StatusBar
                     hidden={false}
                     animated={true}
-                    backgroundColor="#564b6d"
+                    {...bgColor}
                     translucent={false}/>
-                <NavigatorBar initialRoute={this._getTabMenu()}/>
+                <NavigatorBar
+                    navigatorBarBackgroundColor={this.props.navigatorBarBackgroundColor}
+                    navigatorBarHeight={this.props.navigatorBarHeight}
+                    initialRoute={this._getTabMenu()}/>
             </View>
         );
     }
@@ -97,10 +119,10 @@ const styles = StyleSheet.create({
         flex: 1,
         backgroundColor: '#efeff4'
     }, bgBox: {
-        height: StyleSheet.getNavigatorBarHeight(),
+        height: StyleSheet.getNavigatorBarHeight() + StyleSheet.getStatusBarHeight(),
         position: 'absolute',
         width: StyleSheet.getWindowWidth(),
-        backgroundColor: '#FFFFFF'
+        backgroundColor: '#FFFFFF',
     }, bgImage: {
         position: 'absolute',
         width: StyleSheet.getWindowWidth(),

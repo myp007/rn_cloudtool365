@@ -8,14 +8,15 @@
  */
 import React from 'react';
 import ReactNative from 'react-native';
-const {View, Text, Navigator, TouchableOpacity, Image} = ReactNative;
+const {View, Text, Navigator, TouchableOpacity, Image, Platform} = ReactNative;
 // 导入blue-book工具包{图标组件}
 import {Icon, StyleSheet} from 'react-native-blue-book';
+// 导入blue-book工具包{图标组件}
+import {StringUtils} from './StringUtils';
 
 const styles = StyleSheet.create({
     navigatorBar: {
-        // paddingTop: Platform.OS === 'ios' ? 0 : 20
-        backgroundColor: '#1486fa'
+        paddingTop: StyleSheet.getStatusBarHeight()
     }, layout: {
         flex: 1,
         paddingTop: StyleSheet.getNavigatorBarHeight()
@@ -36,29 +37,69 @@ class NavigatorBar extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            layout: null
-        }
+            layout: null,
+            navigatorBarHeight: null
+        };
     }
+
+    static propTypes = {
+        // 导航条背景颜色
+        navigatorBarBackgroundColor: React.PropTypes.string,
+        // 导航条高度
+        navigatorBarHeight: React.PropTypes.number
+    };
+
+    static defaultProps = {
+        navigatorBarBackgroundColor: null,
+        navigatorBarHeight: null
+    };
 
     render() {
         // navigationStyles={Navigator.NavigationBar.StylesIOS}
+        // 导航条高度
+        let navigatorBarHeight = this.state.navigatorBarHeight == null ? this.props.navigatorBarHeight : this.state.navigatorBarHeight;
+        // 设置导航栏高度
+        StyleSheet.setNavigatorBarHeight(navigatorBarHeight);
+        // 导航条样式
+        let NavigationBarStyles = Platform.OS === 'android' ? Navigator.NavigationBar.StylesAndroid : Navigator.NavigationBar.StylesIOS;
+        // NavigationBarStyles.Stages.Center.Title.right = NavigationBarStyles.Stages.Center.Title.marginLeft;
+        // NavigationBarStyles.Stages.Center.Title.top = 0;
+        if (navigatorBarHeight !== null) {
+            // NavigationBarStyles.Stages.Center.Title.height = navigatorBarHeight;
+            // NavigationBarStyles.Stages.Center.LeftButton.height = navigatorBarHeight;
+            // NavigationBarStyles.Stages.Center.RightButton.height = navigatorBarHeight;
+        }
+        // console.log(JSON.parse(JSON.stringify(NavigationBarStyles.Stages.Center.Title)));
         return (
             <Navigator
-                style={styles.navigatorBar}
+                style={[styles.navigatorBar]}
                 initialRoute={{component: this.props.initialRoute}}
-                sceneStyle={[styles.layout, this.state.layout]}
+                sceneStyle={[styles.layout, this.state.layout, navigatorBarHeight !== null?{paddingTop: navigatorBarHeight}:{}]}
                 configureScene={this.configureScene}
+                navigationStyles={NavigationBarStyles}
                 renderScene={(route, navigator)=>{return this.renderScene(route, navigator)}}
-                navigationBar={
-                    <Navigator.NavigationBar
-                    style={styles.navContainer}
-                    routeMapper={{
+                navigationBar={this._renderNavigationBar(navigatorBarHeight)}
+            />
+        );
+    }
+
+    /**
+     * 渲染导航条
+     * @param navigatorBarHeight 导航条高度
+     * @returns {XML}
+     * @private
+     */
+    _renderNavigationBar(navigatorBarHeight) {
+        // 导航条背景颜色
+        let navigatorBarBackgroundColor = StringUtils(this.props.navigatorBarBackgroundColor).isNotEmpty() ? {backgroundColor: this.props.navigatorBarBackgroundColor} : {};
+        return (
+            <Navigator.NavigationBar
+                style={[styles.navContainer, navigatorBarBackgroundColor, navigatorBarHeight !== null?{height: navigatorBarHeight}:{}]}
+                routeMapper={{
                         LeftButton: this.props['leftButton'] || NavigationBarMapper.LeftButton,
                         RightButton: this.props['rightButton'] || NavigationBarMapper.RightButton,
                         Title: this.props['title'] || NavigationBarMapper.Title
                     }}/>
-                }
-            />
         );
     }
 
@@ -90,12 +131,12 @@ class NavigatorBar extends React.Component {
 const NavigationBarMapper = {
     // 左键
     LeftButton(_route, navigator, index, navState) {
-        // 左菜单设置列表
-        let leftButtons = navState.NavigatorLeftButtons || {};
         // 路由列表
         let routes = navigator.getCurrentRoutes();
         // 当前路由
         let route = routes[routes.length - 1];
+        // 左菜单设置列表
+        let leftButtons = navState.NavigatorLeftButtons || {};
         if (route.component === _route.component) {
             for (let [key, value] of leftButtons) {
                 if (key == route.component) {
@@ -127,12 +168,31 @@ const NavigationBarMapper = {
         }
     },
     // 标题
-    Title(route, navigator, index, navState) {
-        return (
-            <View style={styles.navContent}>
-                <Text style={styles.navText}>{route.title || '云助手365'}</Text>
-            </View>
-        );
+    Title(_route, navigator, index, navState) {
+        function getTitle() {
+            return (
+                <View style={styles.navContent}>
+                    <Text style={styles.navText}>{ _route.title || ''}</Text>
+                </View>
+            );
+        }
+
+        // 标题
+        let title = getTitle();
+        // 标题列表
+        let titles = navState.NavigatorTitles || {};
+        // 路由列表
+        let routes = navigator.getCurrentRoutes();
+        // 当前路由
+        let route = routes[routes.length - 1];
+        if (route.component === _route.component) {
+            for (let [key, value] of titles) {
+                if (key == route.component) {
+                    title = value(route, navigator, index, navState);
+                }
+            }
+        }
+        return title;
     }
 };
 

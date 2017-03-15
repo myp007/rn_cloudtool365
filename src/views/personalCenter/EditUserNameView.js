@@ -17,18 +17,14 @@ export default class EditDataView extends PageComponent {
     constructor(props) {
         super(props);
 
-        let msg = this.getRouteParams()['msg'] || '';
 
         this.state = {
-            msg: msg
+            name:''
         };
     }
 
     componentWillMount() {
-        (async function () {
-            let data = await Services.Function10000100();
-            console.log('===');
-        })();
+
     }
 
     render() {
@@ -46,10 +42,19 @@ export default class EditDataView extends PageComponent {
                         placeholder='用户名'/>
                 </View>
                 <View style={styles.buttonBox}>
-                    <SimpleButton style={{backgroundColor:'#3397fb',borderColor:'#3397fb',height:pxToDp(80),width:pxToDp(690)}} >确定</SimpleButton>
+                    <SimpleButton onPress={()=>this.updateUserName()} style={{backgroundColor:'#3397fb',borderColor:'#3397fb',height:pxToDp(80),width:pxToDp(690)}} >确定</SimpleButton>
                 </View>
             </PageView>
         );
+    }
+    //
+    updateUserName() {
+        (async() => {
+            let data = await Services.Function10000105({nickName: this.state.name});
+            if (!!data) {
+                this.goBackRoot(true);
+            }
+        })();
     }
 }
 

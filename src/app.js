@@ -25,6 +25,8 @@ const {pxToDp} = StyleSheet;
 const {MainView} = Components;
 // 主页视图
 const IndexView = Router.getRoute('/IndexView');
+// 控制台视图
+const ControlView = Router.getRoute('/ControlView');
 // 个人中心视图
 const PersonalCenterView = Router.getRoute('/PersonalCenterView');
 
@@ -35,7 +37,7 @@ class App extends React.Component {
 
     render() {
         return (
-            <MainView>
+            <MainView navigatorBarBackgroundColor="#1486fa">
                 <MainView.Item
                     id= 'index'
                     title="首页"
@@ -44,7 +46,17 @@ class App extends React.Component {
                     titleStyle={styles.tabText}
                     selectedTitleStyle={styles.selectedTabText}
                     renderView={IndexView}
-                    tabStyle={[styles.tabStyle, {borderRightWidth: 1, borderRightColor: '#cccccc'}]}>
+                    tabStyle={[styles.tabStyle]}>
+                </MainView.Item>
+                <MainView.Item
+                    id= 'control'
+                    title="控制台"
+                    renderIcon={Icon.get('ICON_CONTROL')}
+                    renderSelectedIcon={Icon.get('ICON_CONTROL_LIGHT')}
+                    titleStyle={styles.tabText}
+                    selectedTitleStyle={styles.selectedTabText}
+                    renderView={ControlView}
+                    tabStyle={[styles.tabStyle]}>
                 </MainView.Item>
                 <MainView.Item
                     id= 'personalCenter'
@@ -80,7 +92,7 @@ const styles = StyleSheet.create({
         color: "#333333",
         fontSize: pxToDp(22)
     }, selectedTabText: {
-        color: "#9b7fff",
+        color: "#3397fb",
         fontSize: pxToDp(22)
     }
 });

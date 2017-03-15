@@ -12,10 +12,14 @@ const {BackAndroid} = ReactNative;
 import {Router} from './Router';
 import Modal from './components/Modal';
 
-export class PageComponent extends React.Component {
+// 页面实例
+let instance = null;
 
+class PageComponent extends React.Component {
     constructor(props) {
         super(props);
+
+        instance = this;
 
         if (!props.navigator) {
             throw new Error('"' + this.constructor.name + '"视图,没有在props属性下找到navigator对象');
@@ -77,7 +81,9 @@ export class PageComponent extends React.Component {
      * @param params 传入参数
      */
     go(url = '', title = '', params = {}) {
-        return this.props.navigator.push({component: Router.getRoute(url), title, ...{route_params: params}});
+        if(!!this.props && !!this.props.navigator) {
+            return this.props.navigator.push({component: Router.getRoute(url), title, ...{route_params: params}});
+        }
     }
 
     /**
@@ -225,3 +231,10 @@ export class PageComponent extends React.Component {
         Modal.showSimpleMsg(msg, time || null);
     }
 }
+
+// 实现单例跳转方法
+PageComponent.go = function(...args){
+    this.prototype.go.call(instance, ...args);
+};
+
+export {PageComponent};
