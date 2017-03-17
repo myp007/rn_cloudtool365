@@ -48,6 +48,11 @@
 		6B7FC06C1E68424E000B8F87 /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6B7FC06B1E68424E000B8F87 /* CFNetwork.framework */; };
 		6B7FC06E1E684254000B8F87 /* CoreMotion.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6B7FC06D1E684254000B8F87 /* CoreMotion.framework */; };
 		6B7FC0701E684279000B8F87 /* AlipaySDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6B7FC06F1E684279000B8F87 /* AlipaySDK.framework */; };
+		6BC12F031E7A35DA00797389 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6B7FC05D1E684219000B8F87 /* SystemConfiguration.framework */; };
+		6BC12F041E7A35F000797389 /* CoreTelephony.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6B7FC05F1E684222000B8F87 /* CoreTelephony.framework */; };
+		6BC12F051E7A360C00797389 /* libsqlite3.0.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 6BC55E271E6FD29B0002732D /* libsqlite3.0.tbd */; };
+		6BC12F061E7A361E00797389 /* libc++.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 6B7FC0591E684206000B8F87 /* libc++.tbd */; };
+		6BC12F071E7A362C00797389 /* libz.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 6B7FC05B1E684210000B8F87 /* libz.tbd */; };
 		6BC55E281E6FD29B0002732D /* libsqlite3.0.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 6BC55E271E6FD29B0002732D /* libsqlite3.0.tbd */; };
 		7D433BBDC4404D9590EB7FB9 /* libRNImagePicker.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 9B9C588DF87143BA9D3831EE /* libRNImagePicker.a */; };
 		832341BD1AAA6AB300B99B32 /* libRCTText.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 832341B51AAA6A8300B99B32 /* libRCTText.a */; };
@@ -308,6 +313,11 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				6BC12F071E7A362C00797389 /* libz.tbd in Frameworks */,
+				6BC12F061E7A361E00797389 /* libc++.tbd in Frameworks */,
+				6BC12F051E7A360C00797389 /* libsqlite3.0.tbd in Frameworks */,
+				6BC12F041E7A35F000797389 /* CoreTelephony.framework in Frameworks */,
+				6BC12F031E7A35DA00797389 /* SystemConfiguration.framework in Frameworks */,
 				140ED2AC1D01E1AD002B40FF /* libReact.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

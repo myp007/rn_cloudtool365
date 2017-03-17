@@ -1,8 +1,8 @@
 /**
- * 描述: 视图：主页
+ * 描述: 视图：订单查询
  * 版权: Copyright (c) 2016
  * 公司: 深圳市蓝书信息技术有限公司
- * 作者: 陈元
+ * 作者: 毛耀平
  * 版本: 1.0.0
  * 创建时间: 2016/12/26 17:23
  */
@@ -91,7 +91,10 @@ export default class IndexView extends PageComponent {
             let data = await Services.Function10000301({qq: this.state.inputText});
             console.log(this.state.inputText);
             if(!!data){
-                this.go('/control/OrderDetailsView', '订单详细',{datas:data});
+                console.log(data.results.orders)
+                this.go('/control/OrderDetailsView', '订单详细',{datas:data.results.orders},{
+                });
+
             }
 
         })();

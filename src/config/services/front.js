@@ -263,3 +263,32 @@ Services.Function10000301 = async function (params) {
         Modal.showAlert(data.errorMsg);
     }
 };
+//向后台请求支付信息
+Services.Function10000401 = async function (params) {
+    let map = new Map();
+    // 订单串
+    map.set('dealName', params.dealName);
+    console.log(params.dealName)
+    // 支付方式
+    map.set('payType', params.payType);
+    if (StringUtils(map.get('dealName')).isEmpty()) {
+        Modal.showAlert('未选择订单支付');
+        return;
+    }
+    // 从本地获取用户信息
+    let userInfo = await Storage.getItem('USER_INFO');
+    if (!userInfo) {
+        return;
+    }
+    // 身份标识
+    map.set('token', userInfo.token);
+    // 获取接口数据
+    let data = await Api.getService('order/payOrder', map,'POST');
+    if (data.errorCode == 0) {
+
+        console.log(data);
+        return data;
+    } else {
+        Modal.showAlert(data.errorMsg);
+    }
+};

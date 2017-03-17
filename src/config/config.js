@@ -13,8 +13,8 @@ Config.config({
     TENCENT_API_PATH:'https://apim.cloudtool365.com/bbsoft-qcloud365/',//新闻
 
 
-    // BLUE_BOOK_API_PATH:'http://192.168.2.8:9999/qcloud365-api/',//张煌本地
-    BLUE_BOOK_API_PATH:'http://192.168.1.28:8080/qcloud365-api/',//服务器
+    BLUE_BOOK_API_PATH:'http://192.168.2.8:9999/qcloud365-api/',//张煌本地
+    // BLUE_BOOK_API_PATH:'http://192.168.1.28:8080/qcloud365-api/',//服务器
 
 
     // react-native-blue-book配置：是否打印接口信息到控制台
@@ -25,7 +25,7 @@ Config.config({
     BLUE_BOOK_STYLESHEET_UI_ALL_WIDTH: 750,
 
     // 默认打开主页面
-    DEFAULT_OPEN_VIEW: 'personalCenter'
+    DEFAULT_OPEN_VIEW: 'index'
 });
 
 console.disableYellowBox = true;
