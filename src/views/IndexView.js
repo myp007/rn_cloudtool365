@@ -31,7 +31,7 @@ export default class IndexView extends PageComponent {
     componentWillMount() {
         this.getNewsTypes();
         // Todo @@@@ 默认跳转，测试用
-        this.go('/control/InquiryView', '自助开通', {type: Math.round(Math.random() * 10) % 2});
+        // this.go('/control/InquiryView', '自助开通', {type: Math.round(Math.random() * 10) % 2});
     }
 
     /**
@@ -69,10 +69,11 @@ export default class IndexView extends PageComponent {
                     ScrollableTabBar={{true}}
                     tabBarActiveTextColor="#FFF">
 
-                    {this.state.newsTypes.map((newsType) => {
+                    {this.state.newsTypes.map((newsType, index) => {
                         return <NewsListView
                             tabLabel={newsType.typeName}
                             key={newsType.id}
+                            index={index}
                             newsType={newsType.id}
                             {...this.props} />;
                     })}

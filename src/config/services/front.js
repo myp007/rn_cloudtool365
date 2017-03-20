@@ -230,7 +230,7 @@ Services.Function11000140 = async function (params) {
         return;
     }
     // 获取接口数据
-    let data = await Api.updateUser('headImg', map,'POST');
+    let data = await Api.getUploadService('headImg', map,'POST');
     if (data.errorCode == 0) {
         return data;
     } else {
@@ -242,6 +242,7 @@ Services.Function10000301 = async function (params) {
     let map = new Map();
     // qq
     map.set('qq', params.qq);
+    console.log(params.qq)
     if (StringUtils(map.get('qq')).isEmpty()) {
         Modal.showAlert('账号不能为空');
         return;
@@ -255,6 +256,8 @@ Services.Function10000301 = async function (params) {
     map.set('token', userInfo.token);
     // 获取接口数据
     let data = await Api.getService('order/getOrderByUser', map,'GET');
+    console.log("=========")
+    console.log(data)
     if (data.errorCode == 0) {
 
         console.log(data);
@@ -268,7 +271,6 @@ Services.Function10000401 = async function (params) {
     let map = new Map();
     // 订单串
     map.set('dealName', params.dealName);
-    console.log(params.dealName)
     // 支付方式
     map.set('payType', params.payType);
     if (StringUtils(map.get('dealName')).isEmpty()) {
@@ -285,8 +287,6 @@ Services.Function10000401 = async function (params) {
     // 获取接口数据
     let data = await Api.getService('order/payOrder', map,'POST');
     if (data.errorCode == 0) {
-
-        console.log(data);
         return data;
     } else {
         Modal.showAlert(data.errorMsg);

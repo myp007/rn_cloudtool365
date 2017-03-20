@@ -8,39 +8,51 @@
  */
 import React from 'react';
 import ReactNative  from 'react-native';
-import WeChat from 'react-native-wechat';
+import * as WeChat  from 'react-native-wechat';
 
-const {View,Text,TouchableOpacity,Image,ListView} = ReactNative;
+let appid = 'wxf4e3a238b2f5265a';
+const {View, Text, TouchableOpacity, Image, ListView} = ReactNative;
 // 导入blue-book工具包{页面组件}
-import {PageComponent, StyleSheet, Services, Storage, Components,Icon} from 'react-native-blue-book';
+import {PageComponent, StyleSheet, Services, Storage, Components, Icon} from 'react-native-blue-book';
 const {pxToDp,} = StyleSheet;
-const {PageView,SimpleButton, RadioButton} = Components;
+const {PageView, SimpleButton, RadioButton,Modal} = Components;
 
 export default class IndexView extends PageComponent {
 
     constructor(props) {
         super(props);
         let datas = this.getRouteParams()['datas'];
-        for(let i=0;i<datas.length;i++){
-            datas[i].checked=false
+        for (let i = 0; i < datas.length; i++) {
+            datas[i].checked = false
         }
         this.state = {
-            orderNumber:'',//订单字符串
-            price:0,//原总价
-            discountprice:0,//优惠总价
+            apiVersion: 'waiting...',
+            wxAppInstallUrl: 'waiting...',
+            isWXAppSupportApi: 'waiting...',
+            isWXAppInstalled: 'waiting...',
+            orderNumber: '',//订单字符串
+            price: 0,//原总价
+            discountprice: 0,//优惠总价
             columns: datas,
             ds: new ListView.DataSource({rowHasChanged: (r1, r2) => r1 != r2})
         };
+
     }
 
     componentWillMount() {
-
+        (async() => {
+            let refister = await WeChat.registerApp(appid);
+            console.info('oooooooooooooooooo');
+            console.info(refister);
+            console.info('oooooooooooooooooo');
+        })();
     }
 
     render() {
         return (
             <PageView style={styles.body}>
-                <View style={{backgroundColor:'#fff',paddingTop:pxToDp(30),marginBottom:pxToDp(20),borderBottomColor:'#ccc',borderBottomWidth:StyleSheet.getMinLineWidth()}}>
+                <View
+                    style={{backgroundColor:'#fff',paddingTop:pxToDp(30),marginBottom:pxToDp(20),borderBottomColor:'#ccc',borderBottomWidth:StyleSheet.getMinLineWidth()}}>
 
                     <ListView
                         style={styles.globalBody}
@@ -48,7 +60,8 @@ export default class IndexView extends PageComponent {
                         renderRow={(...args)=>this._renderList(...args)}/>
                 </View>
                 <View style={[styles.priceView]}>
-                    <Text style={[styles.text,styles.text2]}>官网原价：<Text style={[{textDecorationLine:'line-through'}]}>{this.state.price}元</Text></Text>
+                    <Text style={[styles.text,styles.text2]}>官网原价：<Text
+                        style={[{textDecorationLine:'line-through'}]}>{this.state.price}元</Text></Text>
                     <Text style={[styles.text,styles.text1]}>折扣优惠价：{this.state.discountprice}元</Text>
                 </View>
                 <View style={[styles.payMethod]}>
@@ -61,39 +74,41 @@ export default class IndexView extends PageComponent {
                     </View>
 
 
-
-                    <View style={[styles.payBox]}>
-                        <View style={{flex:1,flexDirection:'row',alignItems:'center'}}>
-                            <Image style={[styles.payIcon2]} source={Icon.get('ICON_ZFB_PAY')}/>
-                            <Text style={[styles.text1,styles.text4]}>支付宝支付</Text>
-                        </View>
-                        <Image style={[styles.hookIcon]} source={Icon.get('ICON_HOOK')}/>
-                    </View>
-                    <SimpleButton onPress={()=>this.getPaySign()} style={{marginTop:pxToDp(150),borderRadius:pxToDp(5),backgroundColor:'#3397fb',borderColor:'#3397fb',height:pxToDp(80),width:pxToDp(690)}} >立即支付</SimpleButton>
+                    {/*<View style={[styles.payBox]}>*/}
+                    {/*<View style={{flex:1,flexDirection:'row',alignItems:'center'}}>*/}
+                    {/*<Image style={[styles.payIcon2]} source={Icon.get('ICON_ZFB_PAY')}/>*/}
+                    {/*<Text style={[styles.text1,styles.text4]}>支付宝支付</Text>*/}
+                    {/*</View>*/}
+                    {/*<Image style={[styles.hookIcon]} source={Icon.get('ICON_HOOK')}/>*/}
+                    {/*</View>*/}
+                    <SimpleButton onPress={()=>this.getPaySign()}
+                                  style={{marginTop:pxToDp(150),borderRadius:pxToDp(5),backgroundColor:'#3397fb',borderColor:'#3397fb',height:pxToDp(80),width:pxToDp(690)}}>立即支付</SimpleButton>
                 </View>
             </PageView>
         );
     }
+
     _renderList(data) {
         return (
             <View style={[styles.orderView]}>
                 <View style={[styles.timeView1]}>
                     <Text style={[styles.text,styles.text1]}>订单号：{data.dealName}（腾讯云）</Text>
-                    {data.goodsDetail.cpu == null ?(
+                    {data.goodsDetail.cpu == null ? (
                             null
-                        ):(
+                        ) : (
                             <Text style={[styles.text,styles.text2]}>机型：{data.goodsDetail.cpu}核{data.goodsDetail.mem}G（新购机型）</Text>
                         )
                     }
-                    {data.goodsDetail.name == null ?(
+                    {data.goodsDetail.name == null ? (
                             null
-                        ):(
-                            <Text style={[styles.text,styles.text2]}>{data.goodsDetail.productInfo[1].name}：{data.goodsDetail.productInfo[1].value}（续费订单）</Text>
+                        ) : (
+                            <Text
+                                style={[styles.text,styles.text2]}>{data.goodsDetail.productInfo[1].name}：{data.goodsDetail.productInfo[1].value}（续费订单）</Text>
                         )
                     }
-                    {data.goodsPrice.goodsNum == null ?(
+                    {data.goodsPrice.goodsNum == null ? (
                             null
-                        ):(
+                        ) : (
                             <Text style={[styles.text,styles.text2]}>数量：x{data.goodsPrice.goodsNum}</Text>
                         )
                     }
@@ -102,7 +117,7 @@ export default class IndexView extends PageComponent {
                     <Text style={[styles.text,styles.text2]}>下单时间：{data.createTime}</Text>
                 </View>
                 <View style={[styles.timeView2]}>
-                    <Text style={[styles.text3]}>{[data.platformPrice]*0.01}元</Text>
+                    <Text style={[styles.text3]}>{[data.platformPrice] * 0.01}元</Text>
                 </View>
                 <View style={[styles.timeView3]}>
                     <TouchableOpacity onPress={()=>{
@@ -141,84 +156,110 @@ export default class IndexView extends PageComponent {
             </View>
         );
     }
-    getPaySign(){
-        (async() => {
-            let data = await Services.Function10000401({dealName: this.state.orderNumber,payType:2});
-            if(!!data){
-                console.log("===========");
-                console.log(data);
-                this.go('/control/ResultView', '支付结果',{title:1},{
-                });
 
+    getPaySign() {
+        (async() => {
+            let isWXAppInstalled = await WeChat.isWXAppInstalled();
+            console.log(isWXAppInstalled)
+            if (!isWXAppInstalled){
+                Modal.showAlert('请您先安装微信！');
+                return;
+            }
+            let data = await Services.Function10000401({dealName: this.state.orderNumber, payType: 2});
+            let pstate=0;
+            if (!!data) {
+                try {
+                    const result = await WeChat.pay({
+                        appid: data.results.orderInfo.appid,
+                        partnerId: data.results.orderInfo.mch_id,       // 商家向财付通申请的商家id
+                        prepayId: data.results.orderInfo.prepay_id,     // 预支付订单
+                        package: 'Sign=WXPay',                          // 商家根据财付通文档填写的数据和签名
+                        nonceStr: data.results.orderInfo.nonce_str,     // 随机串，防重发
+                        timeStamp: data.results.orderInfo.timestamp,    // 时间戳，防重
+                        sign: data.results.orderInfo.sign               // 商家根据微信开放平台文档对数据做的签名
+                    });
+                    console.log(result)
+                    pstate=0;
+                }catch (error){
+                    console.log(error)
+                    if (error=== -2){
+                        Modal.showAlert('用户取消支付！');
+                        pstate=-2;
+                    }else{
+                        Modal.showAlert('支付失败！');
+                        pstate=-3;
+                    }
+                }
+
+                this.go('/control/ResultView', '支付结果', {pstate: pstate}, {});
             }
 
         })();
     }
 
-
 }
 
 const styles = StyleSheet.create({
     body: {
-        flex:1,
+        flex: 1,
         backgroundColor: '#f5f5f5',
 
-    },orderView:{
-        flexDirection:'row',
-        paddingHorizontal:pxToDp(30),
-        alignItems:'center',
-        borderTopColor:'#ccc',
-        borderTopWidth:StyleSheet.getMinLineWidth(),
-        backgroundColor:'#fff'
-    },timeView1:{
-        flex:3,
-    },timeView2:{
-        flex:2,
-    },timeView2:{
-        flex:1,
-    },hookIcon:{
-        width:pxToDp(40),
-        height:pxToDp(40),
-    },text:{
-        paddingVertical:pxToDp(10)
+    }, orderView: {
+        flexDirection: 'row',
+        paddingHorizontal: pxToDp(30),
+        alignItems: 'center',
+        borderTopColor: '#ccc',
+        borderTopWidth: StyleSheet.getMinLineWidth(),
+        backgroundColor: '#fff'
+    }, timeView1: {
+        flex: 3,
+    }, timeView2: {
+        flex: 2,
+    }, timeView2: {
+        flex: 1,
+    }, hookIcon: {
+        width: pxToDp(40),
+        height: pxToDp(40),
+    }, text: {
+        paddingVertical: pxToDp(10)
 
-    },text1:{
-        color:'#333',
-        fontSize:pxToDp(26),
+    }, text1: {
+        color: '#333',
+        fontSize: pxToDp(26),
 
-    },text2:{
-        color:'#999',
-        fontSize:pxToDp(24),
+    }, text2: {
+        color: '#999',
+        fontSize: pxToDp(24),
 
-    },text3:{
-        fontSize:pxToDp(30),
-        color:'#3397fb'
-    },priceView:{
-        padding:pxToDp(30),
-        backgroundColor:'#fff',
-        borderBottomColor:'#ccc',
-        borderBottomWidth:StyleSheet.getMinLineWidth(),
-        marginBottom:pxToDp(20)
-    },payMethod:{
-        backgroundColor:'#fff',
-        alignItems:'center',
-        height:pxToDp(900),
+    }, text3: {
+        fontSize: pxToDp(30),
+        color: '#3397fb'
+    }, priceView: {
+        padding: pxToDp(30),
+        backgroundColor: '#fff',
+        borderBottomColor: '#ccc',
+        borderBottomWidth: StyleSheet.getMinLineWidth(),
+        marginBottom: pxToDp(20)
+    }, payMethod: {
+        backgroundColor: '#fff',
+        alignItems: 'center',
+        height: pxToDp(900),
 
-    },payBox:{
-        flexDirection:'row',
-        alignItems:'center',
-        paddingVertical:pxToDp(20),
-        paddingHorizontal:pxToDp(30),
-        borderBottomColor:'#f5f5f5',
-        borderBottomWidth:StyleSheet.getMinLineWidth(),
-    },payIcon1:{
-        width:pxToDp(68),
-        height:pxToDp(60),
-    },payIcon2:{
-        width:pxToDp(60),
-        height:pxToDp(60),
-    },text4:{
-        paddingLeft:pxToDp(40),
+    }, payBox: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        paddingVertical: pxToDp(20),
+        paddingHorizontal: pxToDp(30),
+        borderBottomColor: '#f5f5f5',
+        borderBottomWidth: StyleSheet.getMinLineWidth(),
+    }, payIcon1: {
+        width: pxToDp(68),
+        height: pxToDp(60),
+    }, payIcon2: {
+        width: pxToDp(60),
+        height: pxToDp(60),
+    }, text4: {
+        paddingLeft: pxToDp(40),
     }
 
 });

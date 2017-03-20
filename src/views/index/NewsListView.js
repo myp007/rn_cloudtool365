@@ -18,7 +18,10 @@ const {pxToDp} = StyleSheet;
 export default class NewsListView extends PageComponent {
     constructor(props) {
         super(props);
-        console.log('@@@@@@');
+    }
+
+    componentWillMount() {
+
     }
 
     // 获取列表数据
@@ -65,6 +68,7 @@ export default class NewsListView extends PageComponent {
     render() {
         return (
             <View style={styles.body}>
+                {this.props.index == 0 &&
                 <View style={{backgroundColor:'#000'}}>
                     <Swiper style={[styles.wrapper]}
                             showsButtons={false}
@@ -96,6 +100,7 @@ export default class NewsListView extends PageComponent {
                         </TouchableOpacity>
                     </Swiper>
                 </View>
+                }
                 <Pagination
                     rowView={(...args)=>this._renderRowView(...args)}
                     onFetch={(...args)=>this._fetchList(...args)}/>
@@ -144,20 +149,30 @@ const styles = StyleSheet.create({
         paddingBottom: pxToDp(9)
     },
     //轮播图样式
-    wrapper:{
-
-    },slide: {
+    wrapper: {}, slide: {
         flex: 1,
         backgroundColor: '#FFFFFF',
-        height:pxToDp(360),
-    },bannnerImg:{
-        width:pxToDp(750),
-        height:pxToDp(360)
-    },dot_default:{
-        backgroundColor:'#FFFFFF',
-        width: pxToDp(10), height: pxToDp(10),borderRadius: pxToDp(5), marginLeft: pxToDp(6), marginRight: pxToDp(6), marginTop: pxToDp(6), marginBottom: pxToDp(6),
-    },dot_active:{
-        backgroundColor:'#cccccc',
-        width: pxToDp(10), height: pxToDp(10),borderRadius: pxToDp(5), marginLeft: pxToDp(6), marginRight: pxToDp(6), marginTop: pxToDp(6), marginBottom: pxToDp(6),
+        height: pxToDp(360),
+    }, bannnerImg: {
+        width: pxToDp(750),
+        height: pxToDp(360)
+    }, dot_default: {
+        backgroundColor: '#FFFFFF',
+        width: pxToDp(10),
+        height: pxToDp(10),
+        borderRadius: pxToDp(5),
+        marginLeft: pxToDp(6),
+        marginRight: pxToDp(6),
+        marginTop: pxToDp(6),
+        marginBottom: pxToDp(6),
+    }, dot_active: {
+        backgroundColor: '#cccccc',
+        width: pxToDp(10),
+        height: pxToDp(10),
+        borderRadius: pxToDp(5),
+        marginLeft: pxToDp(6),
+        marginRight: pxToDp(6),
+        marginTop: pxToDp(6),
+        marginBottom: pxToDp(6),
     },
 });

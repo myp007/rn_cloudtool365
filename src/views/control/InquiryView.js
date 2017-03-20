@@ -90,11 +90,11 @@ export default class IndexView extends PageComponent {
         (async() => {
             let data = await Services.Function10000301({qq: this.state.inputText});
             console.log(this.state.inputText);
+            console.log(data);
             if(!!data){
-                console.log(data.results.orders)
+
                 this.go('/control/OrderDetailsView', '订单详细',{datas:data.results.orders},{
                 });
-
             }
 
         })();

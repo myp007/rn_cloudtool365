@@ -10,7 +10,7 @@ import React from 'react';
 import ReactNative from 'react-native';
 const {Text, View,Image,TouchableOpacity} = ReactNative;
 // 引入blue-book工具包
-import {PageComponent, StyleSheet, Components, Icon, Services,Storage} from 'react-native-blue-book';
+import {PageComponent, StyleSheet, Components, Icon,ImagePicker, Services,Storage} from 'react-native-blue-book';
 const {pxToDp} = StyleSheet;
 const {PageView, RowMore} = Components;
 export default class EditDataView extends PageComponent {
@@ -20,13 +20,11 @@ export default class EditDataView extends PageComponent {
         let msg = this.getRouteParams()['msg'] || '';
 
         this.state = {
-
+            // 用户信息
             userInfo:{
                 nickName: '',
-                // 用户信息
-                userInfo: {
-                    filePaths: ''
-                }
+
+                filePaths: require('../../assets/images/hand.png')
             },
         };
     }
@@ -43,9 +41,9 @@ export default class EditDataView extends PageComponent {
                     <View style={styles.styleView}>
                       <Text style={styles.itemText}>头像</Text>
                     <TouchableOpacity
-                        onPress={()=>this._selectPicture(0)}
+                        onPress={()=>this._selectPicture()}
                         style={[styles.pictureItem, {marginLeft:0}]}>
-                        <Image style={styles.headImg} source={{uri: this.state.userInfo.filePaths}}/>
+                         <Image style={styles.headImg} source={{uri: this.state.filePaths}}/>
                     </TouchableOpacity>
                     </View>
                 </RowMore>
@@ -98,20 +96,21 @@ export default class EditDataView extends PageComponent {
 
     /**
      * 选择图片
-     * @param index 图片框索引
      * @private
      */
-    _selectPicture(index) {
+    _selectPicture() {
         (async() => {
-            // 图片数组
-            let files = this.state.userInfo.filePaths;
+            console.log('111111111111111111');
             let data = await this._uploadPicture();
+            console.log(data)
             if (!!data) {
-                files.push(data.results.filePath);
                 this.setState({
-                    filePaths: files
+                    userInfo: {...this.state, userInfo: {filePaths: data.results.filePath}}
+
                 });
             }
+            console.log('123456789')
+            console.log(this.state.userInfo)
         })();
     }
 }
@@ -140,15 +139,11 @@ const styles = StyleSheet.create({
     },text:{
         fontSize:pxToDp(24),
         color:'#333'
+    },pictureItem:{
+        backgroundColor:'#ccc'
     },headImg:{
-        width:pxToDp(30),
-        height:pxToDp(30)
-    }, pictureItem: {
-        width: pxToDp(50),
-        height: pxToDp(50),
-        marginRight: pxToDp(15),
-        backgroundColor: '#eeeeee',
-        justifyContent: 'center',
-        alignItems: 'center'
+        width:pxToDp(50),
+        height:pxToDp(50),
+
     }
 });
