@@ -13,7 +13,7 @@ Config.config({
     TENCENT_API_PATH:'https://apim.cloudtool365.com/bbsoft-qcloud365/',//新闻
 
 
-    BLUE_BOOK_API_PATH:'http://192.168.2.8:9999/qcloud365-api/',//张煌本地
+    BLUE_BOOK_API_PATH:'http://192.168.2.8:9999/bluebooksoft-api365/',//张煌本地
     // BLUE_BOOK_API_PATH:'http://192.168.1.28:8080/qcloud365-api/',//服务器
 
 

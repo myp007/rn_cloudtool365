@@ -88,7 +88,7 @@ const styles = StyleSheet.create({
         height:pxToDp(80),
     },text1:{
         color:'#666',
-        fontSize:pxToDp(22),
+        fontSize:pxToDp(26),
         paddingVertical:pxToDp(10),
     }
 

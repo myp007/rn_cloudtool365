@@ -83,19 +83,19 @@ export default class NewsListView extends PageComponent {
                         <TouchableOpacity style={styles.slide}>
                             <Image
                                 style={styles.bannnerImg}
-                                source={{uri:'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1488867231321&di=17410487cadb1458272e235a7acf847d&imgtype=0&src=http%3A%2F%2Fimages2.china.com%2Fgrab%2Fimg%2F20151012%2F87431444640185.png'}}
+                                source={{uri:'https://www.cloudtool365.com/images/appad/ct01.jpg'}}
                             />
                         </TouchableOpacity>
                         <TouchableOpacity style={styles.slide}>
                             <Image
                                 style={styles.bannnerImg}
-                                source={{uri:'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1488867231318&di=2bd60e14f3f66ee01fdf81665fb9639d&imgtype=0&src=http%3A%2F%2Fwww.hui.net%2Fstatic%2Fuploads%2Fcontents%2Fimages%2F20150910%2F1441877913563710.png'}}
+                                source={{uri:'https://www.cloudtool365.com/images/appad/ct02.jpg'}}
                             />
                         </TouchableOpacity>
                         <TouchableOpacity style={styles.slide}>
                             <Image
                                 style={styles.bannnerImg}
-                                source={{uri:'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1488867231319&di=b61653894688a17c89d9f88b6b0e70e9&imgtype=0&src=http%3A%2F%2Ftmtimg.lanjinger.com%2Fueditor%2Fupload1%2F20160321%2F1458557169501873.jpg'}}
+                                source={{uri:'https://www.cloudtool365.com/images/appad/ct03.jpg'}}
                             />
                         </TouchableOpacity>
                     </Swiper>
@@ -130,14 +130,14 @@ const styles = StyleSheet.create({
         flex: 1,
         height: pxToDp(135)
     }, text1: {
-        fontSize: pxToDp(30),
+        fontSize: pxToDp(32),
         color: '#000'
     }, text2: {
-        fontSize: pxToDp(24),
+        fontSize: pxToDp(30),
         color: '#737373',
         marginTop: pxToDp(5)
     }, text3: {
-        fontSize: pxToDp(22),
+        fontSize: pxToDp(26),
         color: '#777777',
         textAlign: 'right'
     }, itemBox1: {

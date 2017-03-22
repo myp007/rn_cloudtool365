@@ -42,9 +42,6 @@ export default class IndexView extends PageComponent {
     componentWillMount() {
         (async() => {
             let refister = await WeChat.registerApp(appid);
-            console.info('oooooooooooooooooo');
-            console.info(refister);
-            console.info('oooooooooooooooooo');
         })();
     }
 
@@ -117,7 +114,7 @@ export default class IndexView extends PageComponent {
                     <Text style={[styles.text,styles.text2]}>下单时间：{data.createTime}</Text>
                 </View>
                 <View style={[styles.timeView2]}>
-                    <Text style={[styles.text3]}>{[data.platformPrice] * 0.01}元</Text>
+                    <Text style={[styles.text3]}>{[data.orderPrice] * 0.01}元</Text>
                 </View>
                 <View style={[styles.timeView3]}>
                     <TouchableOpacity onPress={()=>{
@@ -134,13 +131,13 @@ export default class IndexView extends PageComponent {
                                 }
                             }
                             if(columns[i].checked){
-                                price +=(columns[i].goodsPrice.price)*0.01;
-                                discountprice +=(columns[i].platformPrice)*0.01;
+                                price +=(columns[i].orderPrice)*0.01;
+                                discountprice +=(columns[i].realPrice)*0.01;
                                 orderNumber =columns[i].dealName
+                                console.log(price)
+                                console.log(discountprice)
                             }
-
                         }
-
                         this.setState({
                             orderNumber:orderNumber,
                             columns: columns,
@@ -218,21 +215,21 @@ const styles = StyleSheet.create({
     }, timeView2: {
         flex: 1,
     }, hookIcon: {
-        width: pxToDp(40),
-        height: pxToDp(40),
+        width: pxToDp(60),
+        height: pxToDp(60),
     }, text: {
         paddingVertical: pxToDp(10)
 
     }, text1: {
         color: '#333',
-        fontSize: pxToDp(26),
+        fontSize: pxToDp(30),
 
     }, text2: {
         color: '#999',
-        fontSize: pxToDp(24),
+        fontSize: pxToDp(28),
 
     }, text3: {
-        fontSize: pxToDp(30),
+        fontSize: pxToDp(34),
         color: '#3397fb'
     }, priceView: {
         padding: pxToDp(30),

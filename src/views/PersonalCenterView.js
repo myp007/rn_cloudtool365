@@ -8,7 +8,7 @@
  */
 import React from 'react';
 import ReactNative  from 'react-native';
-let {View, Text,Image,ListView} = ReactNative;
+let {View,TouchableOpacity, Text,Image,ListView} = ReactNative;
 // 导入blue-book工具包{页面组件}
 import {PageComponent, StyleSheet,Components,Icon,Services,Storage} from 'react-native-blue-book';
 const {pxToDp} = StyleSheet;
@@ -82,15 +82,15 @@ export default class PersonalCenterView extends PageComponent {
         return (
            <PageView style={{backgroundColor: '#FFFFFF'}}>
             <View style={styles.infoBg}>
-                <View style={styles.infoBox}>
+                <TouchableOpacity style={styles.infoBox} onPress={()=>this.isLogin()}>
                     <View style={styles.infoHead}>
                         <Image
                             style={styles.headImg}
                             source={require('../assets/images/hand.png')}
                         />
                     </View>
-                    <Text style={styles.infoText} onPress={()=>this.isLogin()}>{this.state.userInfo.phone}</Text>
-                </View>
+                    <Text style={styles.infoText}>{this.state.userInfo.phone}</Text>
+                </TouchableOpacity>
 
             </View>
             <ListView
@@ -192,7 +192,7 @@ const styles = StyleSheet.create({
         flex: 1,
         textAlign: 'center',
         color: '#FFFFFF',
-        fontSize: pxToDp(30),
+        fontSize: pxToDp(32),
         marginTop:pxToDp(15),
     },globalBody:{
         marginTop:pxToDp(115),
@@ -207,7 +207,7 @@ const styles = StyleSheet.create({
         paddingRight: pxToDp(30),
         borderBottomWidth: StyleSheet.getMinLineWidth(),
     }, itemText: {
-        fontSize: pxToDp(30),
+        fontSize: pxToDp(32),
         color: '#999999',
     },titleView:{
         padding:0,

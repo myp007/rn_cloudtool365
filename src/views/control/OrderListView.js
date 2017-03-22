@@ -8,42 +8,35 @@
  */
 import React from 'react';
 import ReactNative  from 'react-native';
-const {View,Text,TouchableOpacity,Image} = ReactNative;
+const {View,Text,TouchableOpacity,Image,ListView} = ReactNative;
 // 导入blue-book工具包{页面组件}
 import {PageComponent, StyleSheet, Services, Storage, Components,Icon} from 'react-native-blue-book';
 const {pxToDp} = StyleSheet;
-const {SimpleButton} = Components;
+const {SimpleButton}=Components;
 
 export default class IndexView extends PageComponent {
 
     constructor(props) {
         super(props);
-
+        let data = new Array();
         this.state = {
-
+            data:data,
+        ds: new ListView.DataSource({rowHasChanged: (r1, r2) => r1 != r2})
         };
+
     }
 
     componentWillMount() {
-
+        this._getOrderList();
     }
 
     render() {
         return (
             <View style={styles.body}>
-                <View style={[styles.boxView]}>
-                    <View style={[styles.timeView]}>
-                        <Text style={[styles.text,styles.text1]}>订单号：3456786543</Text>
-                        <Text style={[styles.text,styles.text3]}>65元</Text>
-                    </View>
-                    <View style={[styles.timeView]}>
-                        <Text style={[styles.text,styles.text2]}>服务器：1核心1G</Text>
-                    </View>
-                    <View style={[styles.timeView]}>
-                        <Text style={[styles.text,styles.text2]}>订单号：234567324567（腾讯云）</Text>
-                        <Text style={[styles.text,styles.text4]}>支付成功</Text>
-                    </View>
-                </View>
+                <ListView
+                    style={styles.globalBody}
+                    dataSource={this.state.ds.cloneWithRows(this.state.data)}
+                    renderRow={(...args)=>this._renderRow(...args)}/>
 
             </View>
         );
@@ -58,6 +51,31 @@ export default class IndexView extends PageComponent {
             </TouchableOpacity>
         );
     }
+    _renderRow(data) {
+        return (
+            <View style={[styles.boxView]}>
+                <View style={[styles.timeView]}>
+                    <Text style={[styles.text,styles.text1]}>订单号：{[key].id}</Text>
+                    <Text style={[styles.text,styles.text3]}>{realTotal}元</Text>
+                </View>
+                <View style={[styles.timeView]}>
+                    <Text style={[styles.text,styles.text2]}>服务器：1核心1G</Text>
+                </View>
+                <View style={[styles.timeView]}>
+                    <Text style={[styles.text,styles.text2]}>订单号：234567324567（腾讯云）</Text>
+                    <Text style={[styles.text,styles.text4]}>支付成功</Text>
+                </View>
+            </View>
+        );
+    }
+    _getOrderList(){
+        (async() => {
+            let data = await Services.Function10000402();
+            console.log(data.results.items)
+            this.setState.data=data.results.items
+
+        })();
+    }
 }
 
 const styles = StyleSheet.create({
@@ -65,7 +83,6 @@ const styles = StyleSheet.create({
         flex:1,
         backgroundColor: '#f5f5f5',
     },boxView:{
-        flex:1,
         backgroundColor:'#fff',
         marginTop:pxToDp(20),
         padding:pxToDp(20)

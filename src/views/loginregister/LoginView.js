@@ -82,7 +82,8 @@ export default class LoginView extends PageComponent {
     }
     _login() {
         (async() => {
-            let data = await Services.Function10000100({phone: this.state.phone, password: this.state.password});
+            let data = await Services.Function10000100({phone: 18823796666, password: 111111});
+            // let data = await Services.Function10000100({phone: this.state.phone, password: this.state.password});
             if (!!data) {
                 this.goBackRoot(true);
             }
@@ -121,7 +122,7 @@ const styles = StyleSheet.create({
      height: pxToDp(70),
      paddingLeft: pxToDp(15),
      marginTop: pxToDp(10),
-     backgroundColor: '#00000000',
+     backgroundColor: '#ffffff',
      color: '#000000',
      fontSize:pxToDp(30),
  }, textCenter: {
@@ -132,7 +133,7 @@ const styles = StyleSheet.create({
  }, goText: {
      backgroundColor: 'transparent',
      color: '#999999',
-     fontSize: pxToDp(26)
+     fontSize: pxToDp(30)
  }, buttonBox: {
      alignItems: 'center',
      marginTop: pxToDp(50),

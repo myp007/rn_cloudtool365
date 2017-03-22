@@ -116,7 +116,7 @@ const styles = StyleSheet.create({
         width: pxToDp(80),
         height: pxToDp(69)
     }, nothingText: {
-        fontSize: pxToDp(30),
+        fontSize: pxToDp(34),
         color: '#999999',
         marginTop: pxToDp(15)
     }, loadMoreButton: {
@@ -127,6 +127,6 @@ const styles = StyleSheet.create({
         color: '#ccc'
     }, loadFinishText: {
         color: '#CCC',
-        fontSize: pxToDp(26)
+        fontSize: pxToDp(30)
     }
 });

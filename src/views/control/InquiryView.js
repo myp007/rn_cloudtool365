@@ -18,31 +18,18 @@ export default class IndexView extends PageComponent {
 
     constructor(props) {
         super(props);
-
+        let columns = new Array();
         this.state = {
             inputText:'',
-            columns: [
-                {
-                    "id": "1",
-                    "account": "23456734567",
-
-                }, {
-                    "id": "2",
-                    "account": "23456734567",
-                }, {
-                    "id": "3",
-                    "account": "23456734567",
-                }, {
-                    "id": "4",
-                    "account": "23456734567",
-                }
-            ],
+            defaultValue:'输入的账号:',
+            columns: columns,
             ds: new ListView.DataSource({rowHasChanged: (r1, r2) => r1 != r2})
         };
+
     }
 
     componentWillMount() {
-
+        this._getOrderCloud();
     }
 
     render() {
@@ -58,7 +45,8 @@ export default class IndexView extends PageComponent {
                           this.setState({inputText: text});
                       }}
                             //站位符
-                            placeholder='输入的账号：'/>
+                            placeholder={this.state.defaultValue}
+                        />
                     </View>
                 </View>
                 <View style={[styles.titleView]}>
@@ -68,6 +56,7 @@ export default class IndexView extends PageComponent {
                     <ListView
                         style={styles.globalBody}
                         dataSource={this.state.ds.cloneWithRows(this.state.columns)}
+                        enableEmptySections={true}
                         renderRow={(...args)=>this._renderRow(...args)}/>
                 </View>
                 <View style={[styles.butView]}>
@@ -81,9 +70,9 @@ export default class IndexView extends PageComponent {
     }
     _renderRow(data) {
         return (
-            <View style={[styles.itmeView]}>
-                <Text style={styles.titleText}>{data.account}</Text>
-            </View>
+            <TouchableOpacity style={[styles.itmeView]} onPress={()=>this.onNumber(data)}>
+                <Text style={styles.titleText}>{data}</Text>
+            </TouchableOpacity>
         );
     }
     getOrder() {
@@ -99,7 +88,19 @@ export default class IndexView extends PageComponent {
 
         })();
     }
+    _getOrderCloud() {
+        (async() => {
+            let data = await Services.Function10000403();
 
+            this.setState ({columns:data.results})
+
+        })();
+    }
+    onNumber(data){
+        (async() => {
+            this.setState ({inputText:data,defaultValue:data})
+        })();
+    }
 }
 
 const styles = StyleSheet.create({
@@ -123,19 +124,20 @@ const styles = StyleSheet.create({
         marginTop: pxToDp(10),
         backgroundColor: '#00000000',
         color: '#999',
-        fontSize:pxToDp(26),
+        fontSize:pxToDp(30),
     },titleView:{
-        padding:pxToDp(30),
+        padding:pxToDp(32),
         backgroundColor:'#fff',
         borderBottomWidth:StyleSheet.getMinLineWidth(),
         borderBottomColor:'#f5f5f5'
     },titleText:{
         color: '#999',
-        fontSize:pxToDp(26),
+        fontSize:pxToDp(30),
     },listView:{
-        height:pxToDp(500),
+        height:pxToDp(550),
         backgroundColor:'#fff',
         paddingHorizontal:pxToDp(30),
+        paddingBottom:pxToDp(30),
     },itmeView:{
         height:pxToDp(50),
         paddingVertical:pxToDp(10),
@@ -152,7 +154,7 @@ const styles = StyleSheet.create({
         marginTop:pxToDp(20),
     },text1:{
         color:'#3397fb',
-        fontSize:pxToDp(22),
+        fontSize:pxToDp(30),
     }
 
 });

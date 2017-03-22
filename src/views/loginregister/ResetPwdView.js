@@ -18,7 +18,6 @@ export default class RegisterView extends PageComponent {
     constructor(props) {
         super(props);
 
-        let msg = this.getRouteParams()['msg'] || '';
         let phone = this.getRouteParams()['phone'] || '';
         console.log('============phone:'+phone);
         this.state = {
