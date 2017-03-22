@@ -31,7 +31,7 @@ public class ArcTypeServiceImpl implements ArcTypeServiceI {
 	@Autowired
 	private ArcTypeMapper arcTypeMapper;
 
-	@Override
+	@SuppressWarnings("rawtypes")
 	public PageUtil<Map> getArcTypeList(Integer pageNum, Integer pageSize) {
 		Integer total = arcTypeMapper.getArcTypeListCount();
 		PageUtil<Map> page = new PageUtil<Map>(pageNum, pageSize, total);

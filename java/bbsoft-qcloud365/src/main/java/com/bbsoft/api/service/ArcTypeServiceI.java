@@ -19,6 +19,7 @@ import com.bbsoft.api.common.util.PageUtil;
  */
 public interface ArcTypeServiceI {
 	
+	@SuppressWarnings("rawtypes")
 	public PageUtil<Map> getArcTypeList(Integer pageNum, Integer pageSize);
 
 }

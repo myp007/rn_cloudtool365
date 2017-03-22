@@ -34,7 +34,7 @@ public class ArchivesServiceImpl implements ArchivesServiceI{
 	@Autowired
 	private ArchivesMapper archivesMapper;
 	
-	@Override
+	@SuppressWarnings("rawtypes")
 	public PageUtil<Map> getArcList(Integer typeId, Integer pageNum,
 			Integer pageSize) {
 		Map<String,Object> map = new HashMap<String,Object>();
@@ -59,7 +59,6 @@ public class ArchivesServiceImpl implements ArchivesServiceI{
 		return page;
 	}
 
-	@Override
 	public Map<String, Object> getArcById(Integer id) {
 		Map<String,Object> map = archivesMapper.getArcById(id);
 		if(map!=null){
@@ -76,7 +75,6 @@ public class ArchivesServiceImpl implements ArchivesServiceI{
 		return map;
 	}
 
-	@Override
 	public List<Map<String, Object>> getBannerPic(String type) {
 		List<Map<String,Object>> listMap = archivesMapper.getBannerPic(type);
 		for (int i = 0; i < listMap.size(); i++) {

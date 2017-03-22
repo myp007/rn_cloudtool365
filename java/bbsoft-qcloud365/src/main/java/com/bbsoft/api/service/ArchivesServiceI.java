@@ -20,6 +20,7 @@ import com.bbsoft.api.common.util.PageUtil;
  */
 public interface ArchivesServiceI {
 	
+	@SuppressWarnings("rawtypes")
 	public PageUtil<Map> getArcList(Integer typeId,Integer pageNum, Integer pageSize);
 	
 	public Map<String,Object>getArcById(Integer id);

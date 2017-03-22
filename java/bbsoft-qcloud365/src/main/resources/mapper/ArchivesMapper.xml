@@ -10,7 +10,7 @@
 	
 	<select id="getArcList" parameterType="map" resultType="map">
 		select 
-		a.id as id ,a.typeid as typeId,a.title as title,
+		a.id as id ,a.typeid as typeId,a.title as title,a.flag as flag,
 		a.litpic as litpic,a.writer as writer ,
 		a.pubdate as pubDate,a.description as description
 		 FROM dede_archives a where 
@@ -21,7 +21,7 @@
 	
 	<select id="getArcById" parameterType="String" resultType="map">
 	select 
-		a.id as id ,a.typeid as typeId,a.title as title,
+		a.id as id ,a.typeid as typeId,a.title as title,a.flag as flag,
 		a.litpic as litpic,a.writer as writer ,
 		a.pubdate as pubDate,a.description as description,
 		(SELECT b.body from dede_addonarticle b where b.aid=a.id) info
