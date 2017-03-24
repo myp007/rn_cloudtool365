@@ -60,7 +60,7 @@ export default class IndexView extends PageComponent {
             <View style={[styles.boxView]}>
                 <View style={[styles.timeView]}>
                     <Text style={[styles.text,styles.text1]}>订单号：{data.id}</Text>
-                    <Text style={[styles.text,styles.text3]}>{[data.realTotal]*0.01}元</Text>
+                    <Text style={[styles.text,styles.text3]}>{([data.realTotal]*0.01).toFixed(2)}元</Text>
                 </View>
                 <View style={[styles.timeView]}>
                     <Text style={[styles.text,styles.text2]}>订单类型：{data.productName}</Text>

@@ -3,81 +3,49 @@
     {
       "size" : "20x20",
       "idiom" : "iphone",
-<<<<<<< HEAD
-      "filename" : "cloudtool365logoiPhoneNotification_20pt@2x.png",
-=======
       "filename" : "120x120-3.png",
->>>>>>> mm2
       "scale" : "2x"
     },
     {
       "size" : "20x20",
       "idiom" : "iphone",
-<<<<<<< HEAD
-      "filename" : "cloudtool365logoiPhoneNotification_20pt@3x.png",
-=======
       "filename" : "180x180.png",
->>>>>>> mm2
       "scale" : "3x"
     },
     {
       "size" : "29x29",
       "idiom" : "iphone",
-<<<<<<< HEAD
-      "filename" : "cloudtool365logoiPhoneSpootlight5_29pt@2x.png",
-=======
       "filename" : "120x120-2.png",
->>>>>>> mm2
       "scale" : "2x"
     },
     {
       "size" : "29x29",
       "idiom" : "iphone",
-<<<<<<< HEAD
-      "filename" : "cloudtool365logoiPhoneSpootlight5_29pt@3x.png",
-=======
       "filename" : "180x180-1.png",
->>>>>>> mm2
       "scale" : "3x"
     },
     {
       "size" : "40x40",
       "idiom" : "iphone",
-<<<<<<< HEAD
-      "filename" : "cloudtool365logoiPhoneSpootlight7_40pt@2x.png",
-=======
       "filename" : "120x120-1.png",
->>>>>>> mm2
       "scale" : "2x"
     },
     {
       "size" : "40x40",
       "idiom" : "iphone",
-<<<<<<< HEAD
-      "filename" : "cloudtool365logoiPhoneSpootlight7_40pt@3x.png",
-=======
       "filename" : "180x180-3.png",
->>>>>>> mm2
       "scale" : "3x"
     },
     {
       "size" : "60x60",
       "idiom" : "iphone",
-<<<<<<< HEAD
-      "filename" : "cloudtool365logoiPhoneApp_60pt@2x.png",
-=======
       "filename" : "120x120.png",
->>>>>>> mm2
       "scale" : "2x"
     },
     {
       "size" : "60x60",
       "idiom" : "iphone",
-<<<<<<< HEAD
-      "filename" : "cloudtool365logoiPhoneApp_60pt@3x.png",
-=======
       "filename" : "180x180-2.png",
->>>>>>> mm2
       "scale" : "3x"
     }
   ],
