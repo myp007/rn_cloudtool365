@@ -82,8 +82,7 @@ export default class LoginView extends PageComponent {
     }
     _login() {
         (async() => {
-            let data = await Services.Function10000100({phone: 18823796666, password: 111111});
-            // let data = await Services.Function10000100({phone: this.state.phone, password: this.state.password});
+            let data = await Services.Function10000100({phone: this.state.phone, password: this.state.password});
             if (!!data) {
                 this.goBackRoot(true);
             }

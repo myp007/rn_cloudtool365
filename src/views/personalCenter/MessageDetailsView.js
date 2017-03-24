@@ -17,24 +17,21 @@ export default class AboutView extends PageComponent {
     constructor(props) {
         super(props);
 
-        let msg = this.getRouteParams()['msg'] || '';
-
+        let data = this.getRouteParams();
         this.state = {
-            msg: msg
+            data:data.data
         };
     }
 
     componentWillMount() {
-        (async function () {
-            let data = await Services.Function10000100();
-            console.log('===');
-        })();
+
     }
 
     render() {
         return (
             <View style={styles.conter}>
-              <Text style={styles.contertext}>12月工信部执行新一轮的检查。。。。</Text>
+                <Text style={[styles.title]}>{this.state.data.title}</Text>
+              <Text style={styles.contertext}>{this.state.data.content}</Text>
             </View>
         );
     }
@@ -46,9 +43,15 @@ const styles = StyleSheet.create({
        backgroundColor:'#FFFFFF',
        paddingLeft:pxToDp(30),
        paddingRight:pxToDp(30),
-       paddingTop:pxToDp(50),
-     },contertext:{
+       paddingTop:pxToDp(30),
+     },title:{
+       fontSize:pxToDp(34),
+        color:'#333',
+        marginBottom:pxToDp(10),
+        textAlign:'center'
+    },contertext:{
        color:'#999999',
-       fontSize:pxToDp(28),
+       fontSize:pxToDp(30),
+        lineHeight:pxToDp(35)
      }
 });

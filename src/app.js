@@ -19,6 +19,10 @@ import './config/icons';
 import './config/services';
 // 初始化本地存储配置
 import './config/storage';
+//导入微信支付组件
+import * as WeChat  from 'react-native-wechat';
+
+let appid = 'wxf4e3a238b2f5265a';
 // 引入blue-book工具包
 import {StyleSheet, Components, Icon, Router} from 'react-native-blue-book';
 const {pxToDp} = StyleSheet;
@@ -33,7 +37,9 @@ const PersonalCenterView = Router.getRoute('/PersonalCenterView');
 class App extends React.Component {
     constructor(props) {
         super(props);
-
+        (async() => {
+            let refister = await WeChat.registerApp(appid);
+        })();
     }
 
     render() {

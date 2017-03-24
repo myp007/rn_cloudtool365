@@ -60,7 +60,7 @@ export default class IndexView extends PageComponent {
 
                 <ScrollableTab
                     style={styles.tab}
-                    initialPage={1}
+                    initialPage={0}
                     tabBarStyle={{backgroundColor:'#3397fb', height: 40}}
                     tabBarItemStyle={{paddingBottom:0}}
                     tabBarTextStyle={{fontSize:pxToDp(32)}}
@@ -84,7 +84,7 @@ export default class IndexView extends PageComponent {
     //顶部标题
     setNavigatorTitle(route, navigator, home, navState) {
         return (
-            <View style={styles.titleView}><Text style={styles.titleText}>565云助手</Text></View>
+            <View style={styles.titleView}><Text style={styles.titleText}>365云助手</Text></View>
         );
     }
 }
@@ -98,12 +98,12 @@ const styles = StyleSheet.create({
         top: 0,
         bottom: 0
     }, tab: {
-
     },titleView:{
         padding:0,
         paddingTop:pxToDp(30),
     },titleText:{
-        color:'#fff'
+        color:'#fff',
+        fontSize:pxToDp(40)
     },
 
 });

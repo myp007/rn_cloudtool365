@@ -33,8 +33,7 @@ export default class IndexView extends PageComponent {
         return (
             <View style={styles.body}>
                 <View style={[styles.imgView]}>
-                    <Image style={styles.img} source={this.props ===0 ? require('../../assets/images/success.png'):require('../../assets/images/success1.png')}
-                    />
+                    {this.state.pstate=== 0 ? <Image style={styles.img} source={require('../../assets/images/success.png')}/> : <Image style={styles.img} source={require('../../assets/images/success1.png')}/>}
                 </View>
                 <SimpleButton onPress={()=>this.go('/control/OrderListView', '订单列表')} style={{marginTop:pxToDp(250),borderRadius:pxToDp(5),backgroundColor:'#3397fb',borderColor:'#3397fb',height:pxToDp(80),width:pxToDp(690)}} >确定</SimpleButton>
 

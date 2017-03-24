@@ -40,9 +40,7 @@ export default class IndexView extends PageComponent {
     }
 
     componentWillMount() {
-        (async() => {
-            let refister = await WeChat.registerApp(appid);
-        })();
+
     }
 
     render() {
@@ -114,14 +112,14 @@ export default class IndexView extends PageComponent {
                     <Text style={[styles.text,styles.text2]}>下单时间：{data.createTime}</Text>
                 </View>
                 <View style={[styles.timeView2]}>
-                    <Text style={[styles.text3]}>{[data.orderPrice] * 0.01}元</Text>
+                    <Text style={[styles.text3]}>{([data.orderPrice] * 0.01).toFixed(2)}元</Text>
                 </View>
                 <View style={[styles.timeView3]}>
                     <TouchableOpacity onPress={()=>{
                         let columns = this.state.columns;
                         let price = 0;
                         let discountprice = 0;
-                        let orderNumber= null;
+                        let orderNumber= '';
                         for(let i=0;i <columns.length;i++) {
                             if(columns[i]['id'] == data['id']) {
                                 if(columns[i].checked){
@@ -133,16 +131,14 @@ export default class IndexView extends PageComponent {
                             if(columns[i].checked){
                                 price +=(columns[i].orderPrice)*0.01;
                                 discountprice +=(columns[i].realPrice)*0.01;
-                                orderNumber =columns[i].dealName
-                                console.log(price)
-                                console.log(discountprice)
+                                orderNumber +=columns[i].dealName+','
                             }
                         }
                         this.setState({
                             orderNumber:orderNumber,
                             columns: columns,
-                            price:price,//原总价
-                            discountprice:discountprice,//优惠总价
+                            price:(price).toFixed(2),//原总价
+                            discountprice:(discountprice).toFixed(2),//优惠总价
                         });
                     }}>
 

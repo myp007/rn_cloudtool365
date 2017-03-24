@@ -98,7 +98,7 @@ const GLOBAL_STYLES = {
         height: StyleSheet.pxToDp(40)
     }, globalFont: {},
     globalFontBlack: {
-        color: '#000'
+        color: '#000',
     }, globalBody: {
         backgroundColor: '#eeeeee',
         flex: 1

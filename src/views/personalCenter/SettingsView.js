@@ -92,7 +92,7 @@ const styles = StyleSheet.create({
       alignItems: 'center',
     },itemText: {
       flex:7,
-      fontSize: pxToDp(24),
+      fontSize: pxToDp(30),
       color: '#000000',
     },flexend:{
       flex:1,

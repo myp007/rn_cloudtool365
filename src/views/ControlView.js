@@ -72,7 +72,8 @@ const styles = StyleSheet.create({
         padding:0,
         paddingTop:pxToDp(30),
     },titleText:{
-        color:'#fff'
+        color:'#fff',
+        fontSize:pxToDp(40)
     },boxT:{
         alignItems:'center',
     },boxView:{

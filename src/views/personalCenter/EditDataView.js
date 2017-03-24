@@ -17,20 +17,15 @@ export default class EditDataView extends PageComponent {
     constructor(props) {
         super(props);
 
-        let msg = this.getRouteParams()['msg'] || '';
-
+        let params = this.getRouteParams();
+        console.log(params.headImg)
         this.state = {
             // 用户信息
             userInfo:{
-                nickName: '',
-
-                filePaths: require('../../assets/images/hand.png')
+                nickName: params.nickName,
+                filePath: params.headImg
             },
         };
-    }
-
-    componentWillMount() {
-        this._getUserInfo();
     }
 
     render() {
@@ -43,7 +38,7 @@ export default class EditDataView extends PageComponent {
                     <TouchableOpacity
                         onPress={()=>this._selectPicture()}
                         style={[styles.pictureItem, {marginLeft:0}]}>
-                         <Image style={styles.headImg} source={{uri: this.state.filePaths}}/>
+                        {this._getPictureBy()}
                     </TouchableOpacity>
                     </View>
                 </RowMore>
@@ -57,41 +52,18 @@ export default class EditDataView extends PageComponent {
             </PageView>
         );
     }
-    /**
-     * 获取用户信息
-     * @private
-     */
-    _getUserInfo() {
-        (async() => {
-            let data = await Services.Function10000000(false);
-            if (!!data) {
-                // 结果集
-                let results = data.results;
-                // 保存用户信息到本地
-                await Storage.setItem('USER_INFO', results);
-                // 修改登陆状态
-                this.setState({
-                    isLogin: true,
-                    userInfo: results,
-                });
-
-            }
-        })();
-    }
 
 
+    _getPictureBy() {
 
-    /**
-     * 上传图片
-     * @returns {Promise.<*>}
-     * @private
-     */
-    async _uploadPicture() {
-        // 图片信息
-        let info = await ImagePicker.showImagePicker();
-        return Services.Function11000140({
-            filePath: info.uri
-        });
+        let files = this.state.userInfo.filePath;
+        console.log(files)
+        if (files=='') {
+            return <Image style={styles.headImg} source={require('../../assets/images/hand.png')}/>;
+        } else  {
+            return <Image style={styles.headImg} source={{uri: files}}/>;
+        }
+        console.log(files)
     }
 
     /**
@@ -100,17 +72,20 @@ export default class EditDataView extends PageComponent {
      */
     _selectPicture() {
         (async() => {
-            console.log('111111111111111111');
-            let data = await this._uploadPicture();
-            console.log(data)
+            // 图片信息
+            let info = await ImagePicker.showImagePicker();
+            // 上传图片
+            let data = await Services.Function11000140({filePath: info.uri});
             if (!!data) {
                 this.setState({
-                    userInfo: {...this.state, userInfo: {filePaths: data.results.filePath}}
-
+                    userInfo: {...this.state.userInfo, filePath: data.results.filePath}
                 });
+                // 更改服务器头像
+                let headInfo = await Services.Function10000105({headImg: data.results.filePath});
+                if (!!headInfo) {
+                    this.goBackRoot(true);
+                }
             }
-            console.log('123456789')
-            console.log(this.state.userInfo)
         })();
     }
 }
@@ -133,11 +108,11 @@ const styles = StyleSheet.create({
         justifyContent: 'center'
     },itemText: {
         flex:1,
-        fontSize: pxToDp(24),
+        fontSize: pxToDp(30),
         color: '#999999',
         alignItems: 'center',
     },text:{
-        fontSize:pxToDp(24),
+        fontSize:pxToDp(28),
         color:'#333'
     },pictureItem:{
         backgroundColor:'#ccc'

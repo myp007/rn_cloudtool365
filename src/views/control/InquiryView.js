@@ -57,6 +57,7 @@ export default class IndexView extends PageComponent {
                         style={styles.globalBody}
                         dataSource={this.state.ds.cloneWithRows(this.state.columns)}
                         enableEmptySections={true}
+                        removeClippedSubviews={false}
                         renderRow={(...args)=>this._renderRow(...args)}/>
                 </View>
                 <View style={[styles.butView]}>

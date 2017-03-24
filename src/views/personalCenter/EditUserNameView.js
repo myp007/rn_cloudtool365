@@ -12,7 +12,7 @@ const {Text, View, TextInput} = ReactNative;
 // 引入blue-book工具包
 import {PageComponent, StyleSheet, Components, Icon, Services} from 'react-native-blue-book';
 const {pxToDp} = StyleSheet;
-const {PageView, SimpleButton} = Components;
+const {PageView, SimpleButton,Modal} = Components;
 export default class EditDataView extends PageComponent {
     constructor(props) {
         super(props);
@@ -50,7 +50,12 @@ export default class EditDataView extends PageComponent {
     //
     updateUserName() {
         (async() => {
+            if (this.state.name=='') {
+                Modal.showAlert('用户名不能为空');
+                return;
+            }
             let data = await Services.Function10000105({nickName: this.state.name});
+
             if (!!data) {
                 this.goBackRoot(true);
             }

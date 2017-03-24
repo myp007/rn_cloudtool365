@@ -30,6 +30,9 @@ const styles = StyleSheet.create({
     }, navText: {
         fontSize: 18,
         color: '#FFFFFF'
+    },globalIcon:{
+        width:25,
+        height:25
     }
 });
 
