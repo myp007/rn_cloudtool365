@@ -22,6 +22,18 @@ class IconClass {
 
         // 没有东西
         this.BLUE_BOOK_NOTHING = require('../assets/images/icon/nothing.png');
+        // 返回
+        this.ICON_BACK = require('../assets/images/icon/back.png');
+        // 星星
+        this.ICON_STAR = require('../assets/images/icon/star.png');
+        // 星星(亮)
+        this.ICON_STAR_LIGHT = require('../assets/images/icon/star_light.png');
+        // 列表项
+        this.ICON_ITEM = require('../assets/images/icon/item.png');
+        // 列表项(选中)
+        this.ICON_ITEM_SELECTED = require('../assets/images/icon/item_selected.png');
+        // 更多
+        this.ICON_MORE = require('../assets/images/icon/more.png');
     }
 
     // 获取一个指定图标
@@ -38,7 +50,7 @@ class IconClass {
         return this[key] = value;
     }
 
-    // 获取所有路由列表
+    // 获取所有图标列表
     getIcons() {
         return this;
     }

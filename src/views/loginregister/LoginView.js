@@ -121,7 +121,7 @@ const styles = StyleSheet.create({
      height: pxToDp(70),
      paddingLeft: pxToDp(15),
      marginTop: pxToDp(10),
-     backgroundColor: '#00000000',
+     backgroundColor: '#ffffff',
      color: '#000000',
      fontSize:pxToDp(30),
  }, textCenter: {
@@ -132,7 +132,7 @@ const styles = StyleSheet.create({
  }, goText: {
      backgroundColor: 'transparent',
      color: '#999999',
-     fontSize: pxToDp(26)
+     fontSize: pxToDp(30)
  }, buttonBox: {
      alignItems: 'center',
      marginTop: pxToDp(50),

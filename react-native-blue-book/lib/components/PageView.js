@@ -18,10 +18,6 @@ export default class PageView extends React.Component {
         super(props);
     }
 
-    test() {
-        console.log('######################');
-    }
-
     render() {
         return (
             <View style={styles.body}>

@@ -176,7 +176,7 @@ const styles = StyleSheet.create({
       borderTopRightRadius:pxToDp(8),
       borderBottomRightRadius:pxToDp(8)
   },codeText:{
-    fontSize:pxToDp(26),
+    fontSize:pxToDp(30),
     color:'#FFFFFF'
   }, buttonBox: {
      alignItems: 'center',

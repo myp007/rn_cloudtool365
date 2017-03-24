@@ -8,106 +8,90 @@
  */
 import React from 'react';
 import ReactNative  from 'react-native';
-let {View, Text,Image,ListView} = ReactNative;
+let {View, TouchableOpacity, Text, Image, ListView} = ReactNative;
 // 导入blue-book工具包{页面组件}
-import {PageComponent, StyleSheet,Components,Icon,Services,Storage} from 'react-native-blue-book';
+import {PageComponent, StyleSheet, Components, Icon, Services, Storage} from 'react-native-blue-book';
 const {pxToDp} = StyleSheet;
-const {PageView,RowMore}= Components;
+const {PageView, RowMore}= Components;
 export default class PersonalCenterView extends PageComponent {
     constructor(props) {
         super(props);
 
         this.state = {
-            isLOgin:false,
-            headImg:'',
-            userInfo:{
-                phone:'点击登录',
+            userInfo: {
+                phone: '点击登录',
+                headImg: '',
+                nickName: ''
             },
             columns: [
                 {
-                    "createBy": "1",
-                    "groupName": "userList",
-                    "iconClass": "",
+
                     "id": "1",
                     "name": "编辑资料",
-                    "parentId": "0",
-                    "sn": "",
-                    "sortNum": 1,
-                    "type": "F",
                     "url": "/personalCenter/EditDataView"
                 }, {
-                    "createBy": "1",
-                    "groupName": "sysUserList",
-                    "iconClass": "",
                     "id": "2",
                     "name": "消息提示",
-                    "parentId": "0",
-                    "sn": "",
-                    "sortNum": 2,
-                    "type": "F",
                     "url": "/personalCenter/MessageView"
                 }, {
-                    "createBy": "1",
-                    "groupName": "userExam",
-                    "iconClass": "",
                     "id": "3",
                     "name": "系统设置",
-                    "parentId": "0",
-                    "sn": "",
-                    "sortNum": 3,
-                    "type": "F",
                     "url": "/personalCenter/SettingsView"
                 }, {
-                    "createBy": "1",
-                    "groupName": "orderList",
-                    "iconClass": "",
                     "id": "4",
                     "name": "关于我们",
-                    "parentId": "0",
-                    "sn": "",
-                    "sortNum": 4,
-                    "type": "F",
                     "url": "/personalCenter/AboutView"
                 }
             ],
             ds: new ListView.DataSource({rowHasChanged: (r1, r2) => r1 != r2})
+        }
     }
-}
+
     componentWillMount() {
         this._getUserInfo();
     }
 
     render() {
         return (
-           <PageView style={{backgroundColor: '#FFFFFF'}}>
-            <View style={styles.infoBg}>
-                <View style={styles.infoBox}>
-                    <View style={styles.infoHead}>
-                        <Image
-                            style={styles.headImg}
-                            source={require('../assets/images/hand.png')}
-                        />
-                    </View>
-                    <Text style={styles.infoText} onPress={()=>this.isLogin()}>{this.state.userInfo.phone}</Text>
-                </View>
+            <PageView style={{backgroundColor: '#FFFFFF'}}>
+                <View style={styles.infoBg}>
+                    <TouchableOpacity style={styles.infoBox} onPress={()=>this.isLogin()}>
+                        <View style={styles.infoHead}>
+                            {!this.state.userInfo.headImg
+                                ? <Image style={styles.headImg} source={require('../assets/images/hand.png')}/>
+                                : <Image style={styles.headImg} source={{uri: this.state.userInfo.headImg}}/>}
+                        </View>
+                        <Text style={styles.infoText}>
+                            {!this.state.userInfo.nickName? this.state.userInfo.phone: this.state.userInfo.nickName}
+                        </Text>
+                    </TouchableOpacity>
 
-            </View>
-            <ListView
-                style={styles.globalBody}
-                dataSource={this.state.ds.cloneWithRows(this.state.columns)}
-                renderRow={(...args)=>this._renderRow(...args)}/>
-          </PageView>
+                </View>
+                <ListView
+                    style={styles.globalBody}
+                    dataSource={this.state.ds.cloneWithRows(this.state.columns)}
+                    renderRow={(...args)=>this._renderRow(...args)}/>
+            </PageView>
         );
     }
+
+    //顶部标题
+    setNavigatorTitle(route, navigator, home, navState) {
+        return (
+            <View style={styles.titleView}><Text style={styles.titleText}>个人中心</Text></View>
+        );
+    }
+
     _renderRow(data) {
         return (
             <RowMore
-                onPress={()=>this.go(data.url, data.name)}
+                onPress={()=>this.go(data.url, data.name, this.state.userInfo)}
                 style={styles.itemBox}>
                 <Text style={styles.itemText}>{data.name}</Text>
             </RowMore>
         );
     }
+
     /**
      * 获取用户信息
      * @private
@@ -115,24 +99,25 @@ export default class PersonalCenterView extends PageComponent {
     _getUserInfo() {
         (async() => {
             let data = await Services.Function10000000(false);
+            console.log(data)
             if (!!data) {
                 // 结果集
                 let results = data.results;
                 // 保存用户信息到本地
                 await Storage.setItem('USER_INFO', results);
-                // 修改登陆状态
+
+                // 修改用户信息
                 this.setState({
-                    isLogin: true,
-                    headImg: results.headImg,
-                    userInfo: results,
-                    phone:results.phone,
+                    userInfo: {
+                        phone: results.phone,
+                        headImg: results.headImg,
+                        nickName: results.nickName
+                    },
                 });
-                console.info('================phone');
-                console.info(results.phone);
-                console.info(data);
             }
         })();
     }
+
     /**
      * 判断是否登录
      * @private
@@ -143,35 +128,23 @@ export default class PersonalCenterView extends PageComponent {
             console.info(userInfo)
             if (!userInfo) {
                 // Modal.showAlert('登陆过期，请重新登陆！');
-                this.go('/loginregister/LoginView', '用户登录',{
-                });
+                this.go('/loginregister/LoginView', '用户登录', {});
             }
-            // let isLOgin = this.setState.isLogin;
-            // console.info("==============")
-            // console.info(isLOgin)
-            // if (isLOgin){
-            //     this._getUserInfo();
-            //     this.go('/personalCenter/EditDataView', '编辑资料', {
-            //     });
-            // }else {
-            //     this.go('/loginregister/LoginView', '用户登录', {
-            //     });
-            // }
 
-      })();
+        })();
 
     }
 }
 
 const styles = StyleSheet.create({
-  infoBg: {
-        width:pxToDp(750),
-        height:pxToDp(410),
-        paddingTop:pxToDp(120),
-        paddingBottom:pxToDp(70),
+    infoBg: {
+        width: pxToDp(750),
+        height: pxToDp(410),
+        paddingTop: pxToDp(120),
+        paddingBottom: pxToDp(70),
         backgroundColor: '#3397fb',
-  }, infoBox: {
-        flex:1,
+    }, infoBox: {
+        flex: 1,
         backgroundColor: '#3397fb',
         alignItems: 'center',
     }, infoHead: {
@@ -180,18 +153,19 @@ const styles = StyleSheet.create({
         borderRadius: pxToDp(75),
         backgroundColor: '#FFFFFF',
         alignItems: 'center',
-    },headImg:{
+    }, headImg: {
         width: pxToDp(150),
         height: pxToDp(150),
+        borderRadius: pxToDp(75),
     }, infoText: {
         flex: 1,
         textAlign: 'center',
         color: '#FFFFFF',
-        fontSize: pxToDp(30),
-        marginTop:pxToDp(15),
-    },globalBody:{
-        marginTop:pxToDp(115),
-        borderTopWidth:StyleSheet.getMinLineWidth(),
+        fontSize: pxToDp(32),
+        marginTop: pxToDp(15),
+    }, globalBody: {
+        marginTop: pxToDp(115),
+        borderTopWidth: StyleSheet.getMinLineWidth(),
         borderTopColor: '#CCCCCC',
     }, itemBox: {
         flexDirection: 'row',
@@ -202,7 +176,13 @@ const styles = StyleSheet.create({
         paddingRight: pxToDp(30),
         borderBottomWidth: StyleSheet.getMinLineWidth(),
     }, itemText: {
-        fontSize: pxToDp(30),
+        fontSize: pxToDp(34),
         color: '#999999',
+    }, titleView: {
+        padding: 0,
+        paddingTop: pxToDp(30),
+    }, titleText: {
+        color: '#fff',
+        fontSize: pxToDp(40)
     }
 });

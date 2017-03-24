@@ -17,18 +17,14 @@ export default class AboutView extends PageComponent {
     constructor(props) {
         super(props);
 
-        let msg = this.getRouteParams()['msg'] || '';
+
 
         this.state = {
-            msg: msg
         };
     }
 
     componentWillMount() {
-        (async function () {
-            let data = await Services.Function10000100();
-            console.log('===');
-        })();
+
     }
 
     render() {

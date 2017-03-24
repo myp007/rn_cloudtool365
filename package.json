@@ -14,7 +14,9 @@
     "react-native": "0.41.2",
     "react-native-blue-book": "file:react-native-blue-book",
     "react-native-scrollable-tab-view": "^0.7.1",
-    "react-native-tab-navigator": "^0.3.3"
+    "react-native-swiper": "^1.5.4",
+    "react-native-tab-navigator": "^0.3.3",
+    "react-native-wechat": "^1.9.0"
   },
   "devDependencies": {
     "babel-jest": "18.0.0",

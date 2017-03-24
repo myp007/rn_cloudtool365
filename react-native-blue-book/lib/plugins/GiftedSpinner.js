@@ -8,7 +8,7 @@
  */
 import React from 'react';
 import ReactNative from 'react-native';
-const {View, ActivityIndicatorIOS, Platform, ActivityIndicator} = ReactNative;
+const {View, ActivityIndicator} = ReactNative;
 
 class GiftedSpinner extends React.Component {
     constructor(props) {

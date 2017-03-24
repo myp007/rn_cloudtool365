@@ -21,6 +21,20 @@ Router.addRoute('/index/NewsListView', require('./../views/index/NewsListView'))
 // 主页-新闻详情
 Router.addRoute('/index/NewsView', require('./../views/index/NewsView'));
 
+// =====================================控制台
+// 控制台
+Router.addRoute('/ControlView', require('./../views/ControlView'));
+// 自助开通服务
+Router.addRoute('/control/InquiryView', require('./../views/control/InquiryView'));
+// 订单详细
+Router.addRoute('/control/OrderDetailsView', require('./../views/control/OrderDetailsView'));
+// 订单列表
+Router.addRoute('/control/OrderListView', require('./../views/control/OrderListView'))
+// 支付结果
+Router.addRoute('/control/ResultView', require('./../views/control/ResultView'));
+// 支付-关于我们
+Router.addRoute('/control/AboutView', require('./../views/control/AboutView'));
+
 // =====================================个人中心
 // 编辑资料
 Router.addRoute('/personalCenter/EditDataView', require('./../views/personalCenter/EditDataView'));

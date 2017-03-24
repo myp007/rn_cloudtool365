@@ -8,7 +8,7 @@
  */
 import React from 'react';
 import ReactNative from 'react-native';
-const {Text, View, Image} = ReactNative;
+const {Text, View, Image,ListView} = ReactNative;
 // 引入blue-book工具包
 import {PageComponent, StyleSheet, Components, Icon, Services} from 'react-native-blue-book';
 const {pxToDp} = StyleSheet;
@@ -16,54 +16,53 @@ const {PageView, RowMore} = Components;
 export default class MessageView extends PageComponent {
     constructor(props) {
         super(props);
-
-        let msg = this.getRouteParams()['msg'] || '';
-
+        let data = new Array();
         this.state = {
-            msg: msg
+            data:data,
+            ds: new ListView.DataSource({rowHasChanged: (r1, r2) => r1 != r2})
         };
     }
 
     componentWillMount() {
-        (async function () {
-            let data = await Services.Function10000100();
-            console.log('===');
-        })();
+        this._getMessageList()
     }
 
     render() {
         return (
-            <PageView style={{backgroundColor: '#FFFFFF'}}>
-                <RowMore
-                    onPress={()=>this.go('/personalCenter/MessageDetailsView', '详情')}
-                    style={styles.itemBox}>
-                    <View style={styles.styleView}>
-                      <Text style={styles.itemText}>系统消息：12月工信部执行新一轮的检查</Text>
-                    </View>
-                </RowMore>
-                <RowMore
-                    onPress={()=>this.go('/personalCenter/MessageDetailsView', '详情')}
-                    style={styles.itemBox}>
-                    <View style={styles.styleView}>
-                      <Text style={styles.itemText}>系统消息：12月工信部执行新一轮的检查</Text>
-                    </View>
-                </RowMore>
-                <RowMore
-                    onPress={()=>this.go('/personalCenter/MessageDetailsView', '详情')}
-                    style={styles.itemBox}>
-                    <View style={styles.styleView}>
-                      <Text style={styles.itemText}>系统消息：12月工信部执行新一轮的检查</Text>
-                    </View>
-                </RowMore>
-                <RowMore
-                    onPress={()=>this.go('/personalCenter/MessageDetailsView', '详情')}
-                    style={styles.itemBox}>
-                    <View style={styles.styleView}>
-                      <Text style={styles.itemText}>系统消息：12月工信部执行新一轮的检查</Text>
-                    </View>
-                </RowMore>
-            </PageView>
+            <View style={{backgroundColor: '#FFFFFF', flex:1}}>
+                <ListView
+                    style={styles.globalBody}
+                    dataSource={this.state.ds.cloneWithRows(this.state.data)}
+                    enableEmptySections={true}
+                    removeClippedSubviews={false}
+                    renderRow={(...args)=>this._renderRow(...args)}/>
+
+            </View>
         );
+    }
+    _renderRow(data) {
+        return (
+            <RowMore
+                onPress={()=>this.go('/personalCenter/MessageDetailsView', '详情',{data:data})}
+                style={styles.itemBox}>
+                <View style={styles.styleView}>
+                    {console.log(data.title)}
+                    <Text style={styles.itemText}>{data.title}</Text>
+                </View>
+            </RowMore>
+        );
+    }
+    _getMessageList() {
+        (async() => {
+            let data = await Services.Function10000106(false);
+
+            if (!!data) {
+                console.log(data)
+                this.setState({
+                    data:data.results
+                })
+            }
+        })();
     }
 }
 
@@ -85,8 +84,10 @@ const styles = StyleSheet.create({
         justifyContent: 'center'
     },itemText: {
         flex:1,
-        fontSize: pxToDp(24),
+        fontSize: pxToDp(30),
         color: '#999999',
         alignItems: 'center',
+    },globalBody:{
+        flex:1,
     }
 });

@@ -8,6 +8,7 @@
  */
 import React from 'react';
 import ReactNative from 'react-native';
+import Swiper from 'react-native-swiper';
 const {Text, Image, View, TouchableOpacity} = ReactNative;
 // 引入blue-book工具包
 import {PageComponent, StyleSheet, Components, Services, StringUtils} from 'react-native-blue-book';
@@ -17,7 +18,10 @@ const {pxToDp} = StyleSheet;
 export default class NewsListView extends PageComponent {
     constructor(props) {
         super(props);
-        console.log('@@@@@@');
+    }
+
+    componentWillMount() {
+
     }
 
     // 获取列表数据
@@ -64,6 +68,39 @@ export default class NewsListView extends PageComponent {
     render() {
         return (
             <View style={styles.body}>
+                {this.props.index == 0 &&
+                <View style={{backgroundColor:'#000'}}>
+                    <Swiper style={[styles.wrapper]}
+                            showsButtons={false}
+                            height={pxToDp(360)}
+                            loop={true}
+                            index={0}
+                            autoplay={true}
+                            horizontal={true}
+                            paginationStyle={{bottom:10}}
+                            dot={<View style={styles.dot_default}></View>}
+                            activeDot={<View style={styles.dot_active}></View>}>
+                        <TouchableOpacity style={styles.slide}>
+                            <Image
+                                style={styles.bannnerImg}
+                                source={{uri:'https://www.cloudtool365.com/images/appad/ct01.jpg'}}
+                            />
+                        </TouchableOpacity>
+                        <TouchableOpacity style={styles.slide}>
+                            <Image
+                                style={styles.bannnerImg}
+                                source={{uri:'https://www.cloudtool365.com/images/appad/ct02.jpg'}}
+                            />
+                        </TouchableOpacity>
+                        <TouchableOpacity style={styles.slide}>
+                            <Image
+                                style={styles.bannnerImg}
+                                source={{uri:'https://www.cloudtool365.com/images/appad/ct03.jpg'}}
+                            />
+                        </TouchableOpacity>
+                    </Swiper>
+                </View>
+                }
                 <Pagination
                     rowView={(...args)=>this._renderRowView(...args)}
                     onFetch={(...args)=>this._fetchList(...args)}/>
@@ -93,14 +130,14 @@ const styles = StyleSheet.create({
         flex: 1,
         height: pxToDp(135)
     }, text1: {
-        fontSize: pxToDp(30),
+        fontSize: pxToDp(32),
         color: '#000'
     }, text2: {
-        fontSize: pxToDp(24),
+        fontSize: pxToDp(30),
         color: '#737373',
         marginTop: pxToDp(5)
     }, text3: {
-        fontSize: pxToDp(22),
+        fontSize: pxToDp(26),
         color: '#777777',
         textAlign: 'right'
     }, itemBox1: {
@@ -110,5 +147,32 @@ const styles = StyleSheet.create({
         borderBottomColor: '#CCC',
         borderBottomWidth: StyleSheet.getMinLineWidth(),
         paddingBottom: pxToDp(9)
-    }
+    },
+    //轮播图样式
+    wrapper: {}, slide: {
+        flex: 1,
+        backgroundColor: '#FFFFFF',
+        height: pxToDp(360),
+    }, bannnerImg: {
+        width: pxToDp(750),
+        height: pxToDp(360)
+    }, dot_default: {
+        backgroundColor: '#FFFFFF',
+        width: pxToDp(10),
+        height: pxToDp(10),
+        borderRadius: pxToDp(5),
+        marginLeft: pxToDp(6),
+        marginRight: pxToDp(6),
+        marginTop: pxToDp(6),
+        marginBottom: pxToDp(6),
+    }, dot_active: {
+        backgroundColor: '#cccccc',
+        width: pxToDp(10),
+        height: pxToDp(10),
+        borderRadius: pxToDp(5),
+        marginLeft: pxToDp(6),
+        marginRight: pxToDp(6),
+        marginTop: pxToDp(6),
+        marginBottom: pxToDp(6),
+    },
 });

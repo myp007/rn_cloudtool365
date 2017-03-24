@@ -17,9 +17,8 @@ export default class RadioButton extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            list: this.props.dataSource || [],
             ds: new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2}),
-            select: this.props.defaultValue
+            defaultValue: this.props.defaultValue
         }
     }
 
@@ -29,26 +28,66 @@ export default class RadioButton extends React.Component {
                 style={[styles.starBox, this.props.style]}
                 contentContainerStyle={{ justifyContent: 'center', alignItems:'center', flex: 1}}
                 horizontal={true}
-                dataSource={this.state.ds.cloneWithRows(this.state.list)}
-                renderRow={(...args)=>this._renderRow(...args)}/>
+                dataSource={this.state.ds.cloneWithRows(this._getDataSource())}
+                enableEmptySections={true}
+                renderRow={(data)=>this.props.renderView(data)}/>
         );
     }
 
     // 渲染一行
-    _renderRow(rowData, sectionID, rowID, highlightRow) {
+    _renderRow(rowData) {
         return (
             <TouchableOpacity
                 onPress={()=>{
                     this.setState({
-                        select: rowID
+                        defaultValue: rowData.key
                     });
+                    if(!!this.props.onSelect) {
+                        this.props.onSelect(rowData.key, rowData.value);
+                    }
                 }}
                 style={styles.itemBox}>
-                <Image style={styles.globalIcon}
-                       source={this.state.select == rowID?Icon.get('ICON_ITEM_SELECTED'):Icon.get('ICON_ITEM')}/>
+                <Image style={styles.globalIcon} source={this.state.defaultValue == rowData.key ? Icon.get('ICON_ITEM_SELECTED') : Icon.get('ICON_ITEM')}/>
                 <Text style={styles.text}>{rowData.value}</Text>
             </TouchableOpacity>
         );
+    }
+
+    // 多行
+    _renderView(rowData,is) {
+        return (
+            <TouchableOpacity
+                onPress={()=>{
+                    this.setState({
+                        defaultValue: rowData.key
+                    });
+                    if(!!this.props.onSelect) {
+                        this.props.onSelect(rowData.key, rowData.value);
+                    }
+                }}
+                style={styles.itemBox}>
+                <Image style={styles.globalIcon} source={this.state.defaultValue == rowData.key ? Icon.get('ICON_ITEM_SELECTED') : Icon.get('ICON_ITEM')}/>
+                <Text style={styles.text}>{rowData.value}</Text>
+            </TouchableOpacity>
+        );
+    }
+
+    /**
+     * 获取数据源
+     * @private
+     */
+    _getDataSource() {
+        // 数据map
+        let d = this.props.dataSource;
+        // 数据源
+        let dataSource = [];
+        for (let [key, value] of d) {
+            dataSource.push({
+                key: key,
+                value: value
+            });
+        }
+        return dataSource;
     }
 }
 

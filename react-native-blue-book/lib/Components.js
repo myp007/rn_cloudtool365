@@ -8,7 +8,6 @@
  */
 // 声明组件对象
 const Components = {};
-
 // 页面视图组件
 Components.PageView = require('./components/PageView')['default'];
 // 简单按钮
@@ -29,5 +28,9 @@ Components.MainView = require('./components/MainView')['default'];
 Components.Pagination = require('./components/Pagination')['default'];
 // 可滑动行
 Components.ScrollRow = require('./components/ScrollRow')['default'];
+// 可滑动Tab组件
+Components.ScrollableTab = require('./components/ScrollableTab')['default'];
+// 状态切换组件
+Components.Switch = require('./components/Switch')['default'];
 
 export  {Components};

@@ -1,2 +1,3 @@
-引入的组件：react-timer-mixin 用来做定时器
-安装命令：npm i react-timer-mixin
+引入的组件：
+1.轮播：react-native-swiper  ---$ npm install react-native-swiper  1.5.4
+2.微信支付（ios）：react-native-wechat-ios  ---$ npm i react-native-wechat-ios  0.3.1

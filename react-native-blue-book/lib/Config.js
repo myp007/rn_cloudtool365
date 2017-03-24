@@ -18,6 +18,8 @@ export default class BlueBookConfigClass {
         this.BLUE_BOOK_API_DEFAULT_METHOD = 'POST';
         // UI总宽度
         this.BLUE_BOOK_STYLESHEET_UI_ALL_WIDTH = 750;
+        // 默认语言(zh: 简体中文,en: 英语)
+        this.BLUE_BOOK_LANGUAGE = 'zh';
     }
 
     /**

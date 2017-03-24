@@ -6,25 +6,38 @@
  * 版本: 1.0.0
  * 创建时间: 2017/1/1 14:49
  */
+const BlueBook = {};
 // 全局配置
-export const {Config} = require('./lib/Config');
+export const {Config} = BlueBook.Config = require('./lib/Config');
 // 页面组件
-export const {PageComponent} = require('./lib/PageComponent');
+export const {PageComponent} = BlueBook.PageComponent = require('./lib/PageComponent');
 // 路由器
-export const {Router} = require('./lib/Router');
+export const {Router} = BlueBook.Router = require('./lib/Router');
 // 图标管理器
-export const {Icon} = require('./lib/Icon');
+export const {Icon} = BlueBook.Icon = require('./lib/Icon');
 // 样式工具
-export const {StyleSheet} = require('./lib/StyleSheet');
+export const {StyleSheet} = BlueBook.StyleSheet = require('./lib/StyleSheet');
 // 组件集
-export const {Components} = require('./lib/Components');
+export const {Components} = BlueBook.Components = require('./lib/Components');
 // 接口调用工具
-export const {Api} = require('./lib/Api');
+export const {Api} = BlueBook.Api = require('./lib/Api');
 // 服务管理器
-export const {Services} = require('./lib/Services');
+export const {Services} = BlueBook.Services = require('./lib/Services');
 // 本地存储控制
-export const {Storage} = require('./lib/Storage');
+export const {Storage} = BlueBook.Storage = require('./lib/Storage');
+// 相册工具
+export const {ImagePicker} = BlueBook.ImagePicker = require('./lib/ImagePicker');
 // 字串工具
-export const {StringUtils} = require('./lib/StringUtils');
+export const {StringUtils} = BlueBook.StringUtils = require('./lib/StringUtils');
+// 自定义Map
+export const {SimpleMap} = BlueBook.SimpleMap = require('./lib/SimpleMap');
+// 地理位置工具
+export const {Geolocation} = BlueBook.Geolocation = require('./lib/Geolocation');
+// 支付工具
+export const {Pay} = BlueBook.Pay = require('./lib/Pay');
+// 语言工具
+export const {Language} = BlueBook.Language = require('./lib/Language');
+// ReactNative 重写
+export const {ReactNativeComponent} = BlueBook.ReactNativeComponent = require('./lib/ReactNativeComponent');
 
-export default {Config, PageComponent, Router, Icon, StyleSheet, Components, Api, Services, Storage, StringUtils};
+export default BlueBook;

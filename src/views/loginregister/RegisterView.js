@@ -220,7 +220,7 @@ const styles = StyleSheet.create({
    paddingRight:pxToDp(25),
    marginTop:pxToDp(5),
  },agreementtext:{
-   fontSize:pxToDp(20),
+   fontSize:pxToDp(28),
    color:'#CCCCCC',
  },agreement:{
    color:'#3397fb',

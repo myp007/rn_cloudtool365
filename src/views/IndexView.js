@@ -8,11 +8,12 @@
  */
 import React from 'react';
 import ReactNative  from 'react-native';
-const {View} = ReactNative;
+const {View,Text,TouchableOpacity,Image} = ReactNative;
 // 导入blue-book工具包{页面组件}
-import {PageComponent, StyleSheet, Services, Storage} from 'react-native-blue-book';
+import {PageComponent, StyleSheet, Services, Storage, Components} from 'react-native-blue-book';
 import  ScrollableTabView from 'react-native-scrollable-tab-view';
 const {DefaultTabBar} = ScrollableTabView;
+const {ScrollableTab} = Components;
 import NewsListView from './index/NewsListView';
 const {pxToDp} = StyleSheet;
 
@@ -29,6 +30,8 @@ export default class IndexView extends PageComponent {
 
     componentWillMount() {
         this.getNewsTypes();
+        // Todo @@@@ 默认跳转，测试用
+        // this.go('/control/InquiryView', '自助开通', {type: Math.round(Math.random() * 10) % 2});
     }
 
     /**
@@ -40,35 +43,48 @@ export default class IndexView extends PageComponent {
             this.setState({
                 newsTypes: newsTypes || []
             });
-            let data = await Services.Function10000201({pageNum: 1, pageSize: 5});
+            let data = await Services.Function10000201({pageNum: 1, pageSize: 10});
             if (!!data) {
                 this.setState({
                     newsTypes: data.results.items
                 });
                 Storage.setItem('NEWS_TYPE', data.results.items);
             }
+
         })();
     }
 
     render() {
         return (
             <View style={styles.body}>
-                <ScrollableTabView
+
+                <ScrollableTab
                     style={styles.tab}
-                    renderTabBar={() => <DefaultTabBar style={{height: pxToDp(80), backgroundColor:'#3397fb'}} tabStyle={{paddingBottom:0, flex:1}}/>}
+                    initialPage={0}
+                    tabBarStyle={{backgroundColor:'#3397fb', height: 40}}
+                    tabBarItemStyle={{paddingBottom:0}}
                     tabBarTextStyle={{fontSize:pxToDp(32)}}
                     tabBarInactiveTextColor="#b7dafd"
                     tabBarUnderlineStyle={{height:0}}
+                    ScrollableTabBar={{true}}
                     tabBarActiveTextColor="#FFF">
-                    {this.state.newsTypes.map((newsType) => {
+
+                    {this.state.newsTypes.map((newsType, index) => {
                         return <NewsListView
                             tabLabel={newsType.typeName}
                             key={newsType.id}
+                            index={index}
                             newsType={newsType.id}
                             {...this.props} />;
                     })}
-                </ScrollableTabView>
+                </ScrollableTab>
             </View>
+        );
+    }
+    //顶部标题
+    setNavigatorTitle(route, navigator, home, navState) {
+        return (
+            <View style={styles.titleView}><Text style={styles.titleText}>365云助手</Text></View>
         );
     }
 }
@@ -82,6 +98,12 @@ const styles = StyleSheet.create({
         top: 0,
         bottom: 0
     }, tab: {
-        flex: 1
-    }
+    },titleView:{
+        padding:0,
+        paddingTop:pxToDp(30),
+    },titleText:{
+        color:'#fff',
+        fontSize:pxToDp(40)
+    },
+
 });
