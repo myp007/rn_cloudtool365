@@ -25,7 +25,7 @@ Config.config({
     BLUE_BOOK_STYLESHEET_UI_ALL_WIDTH: 750,
 
     // 默认打开主页面
-    DEFAULT_OPEN_VIEW: 'personalCenter'
+    DEFAULT_OPEN_VIEW: 'index'
 });
 
 console.disableYellowBox = true;

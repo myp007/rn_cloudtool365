@@ -119,6 +119,6 @@ const styles = StyleSheet.create({
     },headImg:{
         width:pxToDp(50),
         height:pxToDp(50),
-
+        borderRadius:pxToDp(25)
     }
 });

@@ -85,7 +85,7 @@ export default class PersonalCenterView extends PageComponent {
     _renderRow(data) {
         return (
             <RowMore
-                onPress={()=>this.go(data.url, data.name, this.state.userInfo)}
+                onPress={()=>this.jump(data)}
                 style={styles.itemBox}>
                 <Text style={styles.itemText}>{data.name}</Text>
             </RowMore>
@@ -117,7 +117,23 @@ export default class PersonalCenterView extends PageComponent {
             }
         })();
     }
+    /**
+     * 跳转判断
+     * @private
+     */
+    jump(data) {
+        (async() => {
+            let userInfo = await Services.getLocalUserInfo();
+            console.info(userInfo)
+            if (!userInfo) {
+                this.go('/loginregister/LoginView', '用户登录', {});
+            }else {
+                this.go(data.url, data.name, this.state.userInfo);
+            }
 
+        })();
+
+    }
     /**
      * 判断是否登录
      * @private
