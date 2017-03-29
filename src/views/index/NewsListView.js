@@ -112,7 +112,8 @@ export default class NewsListView extends PageComponent {
 const styles = StyleSheet.create({
     body: {
         flex: 1,
-        backgroundColor: '#FFF'
+        backgroundColor: '#FFF',
+        paddingBottom:pxToDp(120)
     }, itemBox: {
         height: pxToDp(145),
         marginTop: pxToDp(15),
