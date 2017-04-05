@@ -9,8 +9,8 @@
     "android-build-apk": "cd android & gradlew assembleRelease"
   },
   "dependencies": {
-    "react": "15.4.1",
-    "react-native": "0.41.2",
+    "react": "16.0.0-alpha.6",
+    "react-native": "0.43.0",
     "react-native-blue-book": "file:react-native-blue-book",
     "react-native-scrollable-tab-view": "^0.7.1",
     "react-native-swiper": "^1.5.4",
