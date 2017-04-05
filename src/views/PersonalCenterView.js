@@ -8,7 +8,7 @@
  */
 import React from 'react';
 import ReactNative  from 'react-native';
-let {View, TouchableOpacity, Text, Image, ListView} = ReactNative;
+let {View, TouchableOpacity, Text, Image, ListView,Platform} = ReactNative;
 // 导入blue-book工具包{页面组件}
 import {PageComponent, StyleSheet, Components, Icon, Services, Storage} from 'react-native-blue-book';
 const {pxToDp} = StyleSheet;
@@ -78,7 +78,10 @@ export default class PersonalCenterView extends PageComponent {
     //顶部标题
     setNavigatorTitle(route, navigator, home, navState) {
         return (
-            <View style={styles.titleView}><Text style={styles.titleText}>个人中心</Text></View>
+            <TouchableOpacity style={[
+                    styles.titleView,
+                    Platform.OS == 'android'?{position:'absolute',top:0,left:-76,right:0,bottom:0,alignItems:'center'}:{}
+                ]}><Text style={styles.titleText}>个人中心</Text></TouchableOpacity>
         );
     }
 
@@ -124,9 +127,8 @@ export default class PersonalCenterView extends PageComponent {
     jump(data) {
         (async() => {
             let userInfo = await Services.getLocalUserInfo();
-            console.info(userInfo)
             if (!userInfo) {
-                this.go('/loginregister/LoginView', '用户登录', {});
+                this.go('/loginregister/LoginView', '用户登录');
             }else {
                 this.go(data.url, data.name, this.state.userInfo);
             }
@@ -143,8 +145,9 @@ export default class PersonalCenterView extends PageComponent {
             let userInfo = await Services.getLocalUserInfo();
             console.info(userInfo)
             if (!userInfo) {
-                // Modal.showAlert('登陆过期，请重新登陆！');
-                this.go('/loginregister/LoginView', '用户登录', {});
+                this.go('/loginregister/LoginView', '用户登录');
+            }else {
+                this.go('/personalCenter/EditDataView', '编辑资料',this.state.userInfo);
             }
 
         })();
@@ -157,7 +160,6 @@ const styles = StyleSheet.create({
         width: pxToDp(750),
         height: pxToDp(410),
         paddingTop: pxToDp(120),
-        paddingBottom: pxToDp(70),
         backgroundColor: '#3397fb',
     }, infoBox: {
         flex: 1,
@@ -180,12 +182,12 @@ const styles = StyleSheet.create({
         fontSize: pxToDp(32),
         marginTop: pxToDp(15),
     }, globalBody: {
-        marginTop: pxToDp(115),
-        borderTopWidth: StyleSheet.getMinLineWidth(),
-        borderTopColor: '#CCCCCC',
+
+
     }, itemBox: {
         flexDirection: 'row',
-        height: pxToDp(88),
+        height: pxToDp(90),
+        marginBottom:pxToDp(1),
         backgroundColor: '#FFF',
         borderBottomColor: '#CCCCCC',
         paddingLeft: pxToDp(30),
@@ -199,6 +201,6 @@ const styles = StyleSheet.create({
         paddingTop: pxToDp(30),
     }, titleText: {
         color: '#fff',
-        fontSize: pxToDp(40)
+        fontSize: pxToDp(40),
     }
 });

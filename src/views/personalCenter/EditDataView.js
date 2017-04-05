@@ -31,12 +31,12 @@ export default class EditDataView extends PageComponent {
     render() {
         return (
             <PageView style={{backgroundColor: '#FFFFFF'}}>
-                <RowMore
+                <RowMore onPress={()=>this._selectPicture()}
                     style={styles.itemBox}>
                     <View style={styles.styleView}>
                       <Text style={styles.itemText}>头像</Text>
                     <TouchableOpacity
-                        onPress={()=>this._selectPicture()}
+
                         style={[styles.pictureItem, {marginLeft:0}]}>
                         {this._getPictureBy()}
                     </TouchableOpacity>

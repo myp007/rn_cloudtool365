@@ -8,7 +8,7 @@
  */
 import React from 'react';
 import ReactNative  from 'react-native';
-const {View,Text,TouchableOpacity,Image} = ReactNative;
+const {View,Text,TouchableOpacity,Image,Platform} = ReactNative;
 // 导入blue-book工具包{页面组件}
 import {PageComponent, StyleSheet, Services, Storage, Components,Icon} from 'react-native-blue-book';
 const {pxToDp} = StyleSheet;
@@ -51,7 +51,10 @@ export default class IndexView extends PageComponent {
     //顶部标题
     setNavigatorTitle(route, navigator, home, navState) {
         return (
-            <View style={styles.titleView}><Text style={styles.titleText}>云控制台</Text></View>
+            <TouchableOpacity style={[
+                    styles.titleView,
+                    Platform.OS == 'android'?{position:'absolute',top:0,left:-76,right:0,bottom:0,alignItems:'center'}:{}
+                ]}><Text style={styles.titleText}>云控制台</Text></TouchableOpacity>
         );
     }
 }

@@ -2,7 +2,7 @@
  * 描述: 视图：订单列表
  * 版权: Copyright (c) 2016
  * 公司: 深圳市蓝书信息技术有限公司
- * 作者: 陈元
+ * 作者: 毛耀平
  * 版本: 1.0.0
  * 创建时间: 2016/12/26 17:23
  */
@@ -29,7 +29,6 @@ export default class IndexView extends PageComponent {
     }
 
     componentWillMount() {
-
         this._getOrderList();
     }
 
@@ -45,13 +44,13 @@ export default class IndexView extends PageComponent {
             </View>
         );
     }
-    //顶部分类按钮
+    //顶部返回按钮
     setNavigatorLeftButton(route, navigator, home, navState) {
         return (
             <TouchableOpacity
                 onPress={()=>{this.goBackRoot()}}
                 style={styles.globalNavButton}>
-                <Image style={styles.globalIcon} source={Icon.get('ICON_FORK')}/>
+                <Image style={styles.globalIcon} source={Icon.get('ICON_BACK')}/>
             </TouchableOpacity>
         );
     }
@@ -120,7 +119,7 @@ export default class IndexView extends PageComponent {
             });
         })();
     }
-    //请求支付
+
     getPaySign(orderId) {
         (async() => {
             let isWXAppInstalled = await WeChat.isWXAppInstalled();
@@ -159,7 +158,7 @@ export default class IndexView extends PageComponent {
 
         })();
     }
-    //取消支付
+
     cancelPay(orderId){
         (async() => {
             console.log(orderId)

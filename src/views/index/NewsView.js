@@ -54,6 +54,7 @@ export default class NewsView extends PageComponent {
     _getContent() {
         (async() => {
             let data = await Services.Function10000204(this.state.id);
+            console.log(this.state.id)
             if (!!data) {
                 this.setState({
                     html: this._getHtmlCode(data.results)

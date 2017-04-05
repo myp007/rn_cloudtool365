@@ -8,7 +8,7 @@
  */
 import React from 'react';
 import ReactNative  from 'react-native';
-const {View,Text,TouchableOpacity,Image} = ReactNative;
+const {View,Text,TouchableOpacity,Image, Platform} = ReactNative;
 // 导入blue-book工具包{页面组件}
 import {PageComponent, StyleSheet, Services, Storage, Components} from 'react-native-blue-book';
 import  ScrollableTabView from 'react-native-scrollable-tab-view';
@@ -61,7 +61,7 @@ export default class IndexView extends PageComponent {
                 <ScrollableTab
                     style={styles.tab}
                     initialPage={0}
-                    tabBarStyle={{backgroundColor:'#3397fb', height: 40}}
+                    tabBarStyle={{backgroundColor:'#3397fb', height: 40,borderBottomWidth:0}}
                     tabBarItemStyle={{paddingBottom:0}}
                     tabBarTextStyle={{fontSize:pxToDp(32)}}
                     tabBarInactiveTextColor="#b7dafd"
@@ -84,7 +84,13 @@ export default class IndexView extends PageComponent {
     //顶部标题
     setNavigatorTitle(route, navigator, home, navState) {
         return (
-            <View style={styles.titleView}><Text style={styles.titleText}>365云助手</Text></View>
+            <TouchableOpacity
+                style={[
+                    styles.titleView,
+                    Platform.OS == 'android'?{position:'absolute',top:0,left:-76,right:0,bottom:0,alignItems:'center'}:{}
+                ]}>
+                <Text style={styles.titleText}>365云助手</Text>
+            </TouchableOpacity>
         );
     }
 }
@@ -100,10 +106,12 @@ const styles = StyleSheet.create({
     }, tab: {
     },titleView:{
         padding:0,
-        paddingTop:pxToDp(30),
+        paddingTop:pxToDp(25)
     },titleText:{
         color:'#fff',
         fontSize:pxToDp(40)
-    },
+    },globalNavButton:{
+        backgroundColor:'#ccc'
+    }
 
 });

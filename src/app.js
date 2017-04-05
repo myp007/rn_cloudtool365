@@ -88,13 +88,15 @@ const styles = StyleSheet.create({
         position: 'absolute',
         width: pxToDp(750),
         height: Platform.OS === 'ios' ? 68 : 48,
-        zIndex: -999
+        zIndex: -999,
     },
     barStyle: {
         borderTopWidth: 1,
         borderTopColor: '#cccccc',
     }, tabStyle: {
-        backgroundColor: '#FFFFFF',
+        backgroundColor: '#fff',
+        justifyContent:'center',
+        alignItems:'center'
     }, tabText: {
         color: "#333333",
         fontSize: pxToDp(22)

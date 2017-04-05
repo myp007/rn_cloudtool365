@@ -30,9 +30,6 @@ const styles = StyleSheet.create({
     }, navText: {
         fontSize: 18,
         color: '#FFFFFF'
-    },globalIcon:{
-        width:25,
-        height:25
     }
 });
 
@@ -174,7 +171,9 @@ const NavigationBarMapper = {
     Title(_route, navigator, index, navState) {
         function getTitle() {
             return (
-                <View style={styles.navContent}>
+                <View style={[styles.navContent,
+                    Platform.OS == 'android'?{position:'absolute',top:0,left:-76,right:0,bottom:0,alignItems:'center'}:{}
+                    ]}>
                     <Text style={styles.navText}>{ _route.title || ''}</Text>
                 </View>
             );

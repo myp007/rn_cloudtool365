@@ -135,8 +135,6 @@ const styles = StyleSheet.create({
   container: {
      width:StyleSheet.getWindowWidth(),
      height: StyleSheet.getWindowHeight(),
-     position: 'absolute',
-     top: 0,
      backgroundColor:'#FFFFFF',
      paddingLeft:pxToDp(30),
      paddingRight:pxToDp(30),

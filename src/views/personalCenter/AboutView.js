@@ -1,27 +1,31 @@
 /**
- * 描述: 视图：关于我们
+ * 描述: 视图：新闻详情
  * 版权: Copyright (c) 2016
  * 公司: 深圳市蓝书信息技术有限公司
- * 作者: 毛耀平
+ * 作者: 陈元
  * 版本: 1.0.0
- * 创建时间: 2017/2/4 17:14
+ * 创建时间: 2017/1/19 17:46
  */
 import React from 'react';
 import ReactNative from 'react-native';
-const {Text, View} = ReactNative;
+const {Image, WebView,View} = ReactNative;
 // 引入blue-book工具包
-
-import {PageComponent, StyleSheet, Icon, Services} from 'react-native-blue-book';
+import {PageComponent, StyleSheet, Services} from 'react-native-blue-book';
 const {pxToDp} = StyleSheet;
-export default class AboutView extends PageComponent {
+const url = "https://www.cloudtool365.com/about/2017/0401/1661.html?1491041639";
+export default class NewsView extends PageComponent {
     constructor(props) {
         super(props);
 
-
-
         this.state = {
-        };
+
+
+        }
     }
+
+
+
+
 
     componentWillMount() {
 
@@ -29,22 +33,23 @@ export default class AboutView extends PageComponent {
 
     render() {
         return (
-            <View style={styles.conter}>
-              <Text style={styles.contertext}>云助手365，提供最新的云资讯，云计算香港的服务器云主机等各种服务器</Text>
+            <View style={styles.body}>
+                <WebView
+                    style={{width:pxToDp(750),backgroundColor:'#fff'}}
+                    source={{uri:url,method: 'GET'}}
+                    javaScriptEnabled={true}
+                    domStorageEnabled={true}
+                    scalesPageToFit={false}
+                />
             </View>
         );
     }
 }
 
 const styles = StyleSheet.create({
-     conter:{
-       flex:1,
-       backgroundColor:'#FFFFFF',
-       paddingLeft:pxToDp(30),
-       paddingRight:pxToDp(30),
-       paddingTop:pxToDp(50),
-     },contertext:{
-       color:'#999999',
-       fontSize:pxToDp(24),
-     }
+    body: {
+        flex: 1,
+        backgroundColor: '#FFF',
+        padding: pxToDp(30)
+    }
 });

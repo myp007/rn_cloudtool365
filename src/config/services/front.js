@@ -48,7 +48,6 @@ Services.Function10000000 = async function (isShowErrorMsg) {
     let map = new Map();
     // 身份标识
     map.set('token', userInfo.token);
-    console.info('token===========')
     console.info(userInfo.token)
     // 获取接口数据
     let data = await Api.getService('user100005', map,'GET');
@@ -78,38 +77,9 @@ Services.Function10000100 = async function (params) {
     // 获取接口数据
     let data = await Api.getService('user100003', map,'POST');
     if (data.errorCode == 0) {
-        Modal.showAlert('登录成功')
-        //更新用户信息
-        Storage.setItem('USER_INFO', {
-            token: data.results.token || '',
-            tag: data.results.tag || '',
-            userName: data.results.userName || '',
-            nickName: data.results.nickName || '',
-            phone: data.results.phone || '',
-            headImg:data.results.headImg || '',
-        });
-        return data;
-    } else {
-        Modal.showAlert(data.errorMsg);
-    }
-};
-// 获取验证码
-Services.Function10000101 = async function (params) {
-    let map = new Map();
-    // 手机号
-    map.set('phone', params.phone);
-    map.set('time', params.time);
-    map.set('type', params.type);
-    if (StringUtils(map.get('phone')).isEmpty()) {
-        Modal.showAlert('手机号不能为空');
-        return;
-    }
-
-    // 获取接口数据
-    let data = await Api.getService('user100000', map,'GET');
-    if (data.errorCode == 0) {
-        Modal.showAlert('验证码已发送')
-        console.log(data);
+        Modal.showSimpleMsg('登录成功')
+        // 保存用户信息到本地
+        await Storage.setItem('USER_INFO', data.results);
         return data;
     } else {
         Modal.showAlert(data.errorMsg);
@@ -139,23 +109,35 @@ Services.Function10000102 = async function (params) {
         Modal.showAlert('确认密码不能为空');
         return;
     }
-
     // 获取接口数据
     let data = await Api.getService('user100002', map,'POST');
     if (data.errorCode == 0) {
-        Modal.showAlert('注册成功')
-        //更新用户信息
-        Storage.setItem('USER_INFO', {
-            token: data.results.token || '',
-            tag: data.results.tag || '',
-            userName: data.results.userName || '',
-            nickName: data.results.nickName || '',
-            phone: data.results.phone || '',
-            headImg:data.results.headImg || '',
-        });
+        Modal.showSimpleMsg('注册成功')
         return data;
     } else {
-        Modal.showAlert(data.errorMsg);
+        Modal.showSimpleMsg(data.errorMsg);
+    }
+};
+// 获取验证码
+Services.Function10000101 = async function (params) {
+    let map = new Map();
+    // 手机号
+    map.set('phone', params.phone);
+    map.set('time', params.time);
+    map.set('type', params.type);
+    if (StringUtils(map.get('phone')).isEmpty()) {
+        Modal.showAlert('手机号不能为空');
+        return;
+    }
+
+    // 获取接口数据
+    let data = await Api.getService('user100000', map,'GET');
+    if (data.errorCode == 0) {
+        Modal.showAlert('验证码已发送')
+        console.log(data);
+        return data;
+    } else {
+        Modal.showSimpleMsg(data.errorMsg);
     }
 };
 // 校验验证码
@@ -280,6 +262,7 @@ Services.Function10000301 = async function (params) {
     // 从本地获取用户信息
     let userInfo = await Storage.getItem('USER_INFO');
     if (!userInfo) {
+        this.go('/loginregister/LoginView', '用户登录');
         Modal.showAlert('请登录！');
         return;
     }
@@ -301,7 +284,6 @@ Services.Function10000401 = async function (params) {
     // 从本地获取用户信息
     let userInfo = await Storage.getItem('USER_INFO');
     if (!userInfo) {
-        Modal.showAlert('请登录！');
         return;
     }
     // 身份标识

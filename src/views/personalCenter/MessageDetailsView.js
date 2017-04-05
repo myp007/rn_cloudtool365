@@ -52,6 +52,6 @@ const styles = StyleSheet.create({
     },contertext:{
        color:'#999999',
        fontSize:pxToDp(30),
-        lineHeight:pxToDp(35)
+
      }
 });

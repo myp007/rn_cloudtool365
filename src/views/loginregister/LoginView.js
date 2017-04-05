@@ -18,8 +18,6 @@ export default class LoginView extends PageComponent {
     constructor(props) {
         super(props);
 
-        let msg = this.getRouteParams()['msg'] || '';
-
         this.state = {
             phone: '',
             password: ''
@@ -83,8 +81,8 @@ export default class LoginView extends PageComponent {
     _login() {
         (async() => {
             let data = await Services.Function10000100({phone: this.state.phone, password: this.state.password});
-            if (!!data) {
-                this.goBackRoot(true);
+            if (!!data) {this.goBackRoot(true);
+
             }
 
         })();
@@ -95,8 +93,7 @@ const styles = StyleSheet.create({
   container: {
      width:StyleSheet.getWindowWidth(),
      height: StyleSheet.getWindowHeight(),
-     position: 'absolute',
-     top: 0,
+
      backgroundColor:'#FFFFFF',
      paddingLeft:pxToDp(30),
      paddingRight:pxToDp(30),

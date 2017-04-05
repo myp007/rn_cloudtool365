@@ -9,10 +9,10 @@
 import React from 'react';
 import ReactNative from 'react-native';
 import Swiper from 'react-native-swiper';
-const {Text, Image, View, TouchableOpacity} = ReactNative;
+const {Text, Image, View, TouchableOpacity,Platform} = ReactNative;
 // 引入blue-book工具包
 import {PageComponent, StyleSheet, Components, Services, StringUtils} from 'react-native-blue-book';
-const {Pagination} = Components;
+const {Pagination,PageView} = Components;
 const {pxToDp} = StyleSheet;
 
 export default class NewsListView extends PageComponent {
@@ -67,7 +67,7 @@ export default class NewsListView extends PageComponent {
 
     render() {
         return (
-            <View style={styles.body}>
+            <PageView style={styles.body}>
                 {this.props.index == 0 &&
                 <View style={{backgroundColor:'#000'}}>
                     <Swiper style={[styles.wrapper]}
@@ -104,7 +104,7 @@ export default class NewsListView extends PageComponent {
                 <Pagination
                     rowView={(...args)=>this._renderRowView(...args)}
                     onFetch={(...args)=>this._fetchList(...args)}/>
-            </View>
+            </PageView>
         );
     }
 }
@@ -112,7 +112,9 @@ export default class NewsListView extends PageComponent {
 const styles = StyleSheet.create({
     body: {
         flex: 1,
-        backgroundColor: '#FFF'
+        backgroundColor: '#FFF',
+        paddingBottom:pxToDp(120),
+        marginBottom:50,
     }, itemBox: {
         height: pxToDp(145),
         marginTop: pxToDp(15),
@@ -121,7 +123,7 @@ const styles = StyleSheet.create({
         paddingRight: pxToDp(30),
         borderBottomColor: '#CCC',
         borderBottomWidth: StyleSheet.getMinLineWidth(),
-        paddingBottom: pxToDp(9)
+        paddingBottom: pxToDp(9),
     }, itemImg: {
         width: pxToDp(200),
         marginRight: pxToDp(45),
@@ -149,7 +151,9 @@ const styles = StyleSheet.create({
         paddingBottom: pxToDp(9)
     },
     //轮播图样式
-    wrapper: {}, slide: {
+    wrapper: {
+
+    }, slide: {
         flex: 1,
         backgroundColor: '#FFFFFF',
         height: pxToDp(360),

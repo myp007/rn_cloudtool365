@@ -29,6 +29,8 @@
     "react-native-gifted-listview": "^0.0.15",
     "react-native-image-picker": "0.25.1",
     "react-native-modal-dropdown": "^0.4.1",
-    "react-native-tab-navigator": "^0.3.3"
+    "react-native-swiper": "^1.5.4",
+    "react-native-tab-navigator": "^0.3.3",
+    "react-native-wechat": "^1.9.1"
   }
 }

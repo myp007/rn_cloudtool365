@@ -110,16 +110,13 @@ export default class RegisterView extends PageComponent {
      */
     getCode() {
         // 正在发送，则不发送验证码
-        if (this.state.sending === true) {
+        if (!this.state.sending) {
             return;
         }
         this._sendingState();
         (async() => {
             let data = await Services.Function10000101({phone:this.state.phone,time:1,type:2});
 
-            // if (!!data) {
-            //     this.showSimpleMsg('邮件发送成功');
-            // }
         })();
     }
 
@@ -157,8 +154,7 @@ export default class RegisterView extends PageComponent {
         (async() => {
             let data = await Services.Function10000102({phone:this.state.phone,code:this.state.code,pwd:this.state.pwd,cpwd:this.state.cpwd});
             if (!!data) {
-                this.goBackRoot(true);
-                console.info(data);
+                this.go('/loginregister/LoginView', '用户登录');
             }
         })();
     }
@@ -168,8 +164,6 @@ const styles = StyleSheet.create({
   container: {
      width:StyleSheet.getWindowWidth(),
      height: StyleSheet.getWindowHeight(),
-     position: 'absolute',
-     top: 0,
      backgroundColor:'#FFFFFF',
      paddingLeft:pxToDp(30),
      paddingRight:pxToDp(30),
@@ -196,7 +190,6 @@ const styles = StyleSheet.create({
      marginTop: pxToDp(8),
      backgroundColor: '#fff',
      color: '#000000',
-    marginHorizontal:pxToDp(5),
      fontSize:pxToDp(30),
  },codeinput:{
    flex:4,

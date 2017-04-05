@@ -45,7 +45,7 @@ export default class IndexView extends PageComponent {
 
     render() {
         return (
-            <PageView style={styles.body}>
+            <TouchableOpacity style={styles.body}>
                 <View
                     style={{backgroundColor:'#fff',paddingTop:pxToDp(30),marginBottom:pxToDp(20),borderBottomColor:'#ccc',borderBottomWidth:StyleSheet.getMinLineWidth()}}>
 
@@ -79,7 +79,7 @@ export default class IndexView extends PageComponent {
                     <SimpleButton onPress={()=>this.getPaySign()}
                                   style={{marginTop:pxToDp(150),borderRadius:pxToDp(5),backgroundColor:'#3397fb',borderColor:'#3397fb',height:pxToDp(80),width:pxToDp(690)}}>立即支付</SimpleButton>
                 </View>
-            </PageView>
+            </TouchableOpacity>
         );
     }
 

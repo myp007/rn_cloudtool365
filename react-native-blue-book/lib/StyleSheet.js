@@ -94,8 +94,8 @@ StyleSheet.getStatusBarHeight = function () {
 // 全局样式
 const GLOBAL_STYLES = {
     globalIcon: {
-        width: StyleSheet.pxToDp(40),
-        height: StyleSheet.pxToDp(40)
+        width: StyleSheet.pxToDp(36),
+        height: StyleSheet.pxToDp(36)
     }, globalFont: {},
     globalFontBlack: {
         color: '#000',
