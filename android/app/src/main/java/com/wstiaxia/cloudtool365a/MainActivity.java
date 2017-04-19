@@ -1,4 +1,4 @@
-package com.app;
+package com.wstiaxia.cloudtool365a;
 
 import com.facebook.react.ReactActivity;
 

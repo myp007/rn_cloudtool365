@@ -156,7 +156,7 @@ const styles = StyleSheet.create({
      width: pxToDp(690),
      height: pxToDp(70),
      //内边距
-     paddingLeft: pxToDp(45),
+     paddingLeft: pxToDp(15),
      paddingRight: pxToDp(30),
      marginTop: pxToDp(8),
      backgroundColor: '#00000000',

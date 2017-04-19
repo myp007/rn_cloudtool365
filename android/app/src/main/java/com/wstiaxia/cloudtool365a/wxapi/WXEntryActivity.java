@@ -1,5 +1,5 @@
 
-package com.app.wxapi;
+package com.wstiaxia.cloudtool365a.wxapi;
 
 import android.app.Activity;
 import android.os.Bundle;

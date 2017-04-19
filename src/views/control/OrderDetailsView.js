@@ -52,6 +52,8 @@ export default class IndexView extends PageComponent {
                     <ListView
                         style={styles.globalBody}
                         dataSource={this.state.ds.cloneWithRows(this.state.columns)}
+                        enableEmptySections={true}
+                        removeClippedSubviews={false}
                         renderRow={(...args)=>this._renderList(...args)}/>
                 </View>
                 <View style={[styles.priceView]}>
@@ -182,9 +184,10 @@ export default class IndexView extends PageComponent {
                         Modal.showAlert('支付失败！');
                         pstate=-3;
                     }
+                    this.go('/control/ResultView', '支付结果', {pstate: pstate}, {});
                 }
 
-                this.go('/control/ResultView', '支付结果', {pstate: pstate}, {});
+
             }
 
         })();
@@ -253,6 +256,8 @@ const styles = StyleSheet.create({
         height: pxToDp(60),
     }, text4: {
         paddingLeft: pxToDp(40),
+    },globalBody:{
+        backgroundColor:'#fff'
     }
 
 });

@@ -106,18 +106,17 @@ const styles = StyleSheet.create({
      borderColor: '#CCCCCC',
      //设置边框的宽度
      borderWidth: StyleSheet.getMinLineWidth(),
-
      //外边距
      marginTop: pxToDp(40),
      //设置相对父控件居中
      alignSelf: 'center',
      flexDirection: 'row',
+     paddingTop:pxToDp(10),
 
  }, input: {
      width: pxToDp(690),
      height: pxToDp(70),
      paddingLeft: pxToDp(15),
-     marginTop: pxToDp(10),
      backgroundColor: '#ffffff',
      color: '#000000',
      fontSize:pxToDp(30),

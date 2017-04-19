@@ -182,12 +182,11 @@ const styles = StyleSheet.create({
      flexDirection: 'row'
  }, input: {
      width: pxToDp(690),
-     height: pxToDp(70),
+     height: pxToDp(83),
 
      //内边距
-     paddingLeft: pxToDp(45),
+     paddingLeft: pxToDp(15),
      paddingRight: pxToDp(30),
-     marginTop: pxToDp(8),
      backgroundColor: '#fff',
      color: '#000000',
      fontSize:pxToDp(30),
